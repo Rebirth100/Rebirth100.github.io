@@ -1,0 +1,43 @@
+# 首页（根路径）：每次都向服务器验证更新
+/
+  Cache-Control: no-cache, must-revalidate
+
+# 所有子目录页面（文章、分类、标签页）：每次验证更新
+/*/
+  Cache-Control: no-cache, must-revalidate
+
+# 所有带 .html 后缀的文件：每次验证更新
+/*.html
+  Cache-Control: no-cache, must-revalidate
+
+# CSS 样式文件：一年强缓存，内容更新自动换版本号
+*.css
+  Cache-Control: max-age=31536000, immutable
+
+# JS 脚本文件：一年强缓存
+*.js
+  Cache-Control: max-age=31536000, immutable
+
+# 图片资源：一年强缓存
+*.png
+  Cache-Control: max-age=31536000, immutable
+*.jpg
+  Cache-Control: max-age=31536000, immutable
+*.jpeg
+  Cache-Control: max-age=31536000, immutable
+*.gif
+  Cache-Control: max-age=31536000, immutable
+*.svg
+  Cache-Control: max-age=31536000, immutable
+*.ico
+  Cache-Control: max-age=31536000, immutable
+*.webp
+  Cache-Control: max-age=31536000, immutable
+
+# 字体文件：一年强缓存
+*.woff2
+  Cache-Control: max-age=31536000, immutable
+*.woff
+  Cache-Control: max-age=31536000, immutable
+*.ttf
+  Cache-Control: max-age=31536000, immutable
