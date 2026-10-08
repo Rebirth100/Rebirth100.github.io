@@ -1,0 +1,738 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>C语言教程-57.局部变量与全局变量 | Rebirth100</title><meta name="keywords" content="基础,编程,C语言教程"><meta name="author" content="rebirth100"><meta name="copyright" content="rebirth100"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="C语言教程-57.局部变量与全局变量"><meta name="application-name" content="C语言教程-57.局部变量与全局变量"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="C语言教程-57.局部变量与全局变量"><meta property="og:url" content="https://rebirth100.github.io/posts/a268554f.html"><meta property="og:site_name" content="Rebirth100"><meta property="og:description" content="【若北辰-C语言】《C语言教程》057｜局部变量与全局变量  原文：微信公众号 · 若北辰-C语言 · 2026-08-14 07:17 原文链接：http:&amp;#x2F;&amp;#x2F;mp.weixin.qq.com&amp;#x2F;s?__biz&amp;#x3D;MzUyMDE2ODQ1Mg&amp;#x3D;&amp;#x3D;&amp;amp;mid&amp;#x3D;2247484109&amp;amp;i"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://rebirth100.github.io/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png"><meta property="article:author" content="rebirth100"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://rebirth100.github.io/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png"><meta name="description" content="【若北辰-C语言】《C语言教程》057｜局部变量与全局变量  原文：微信公众号 · 若北辰-C语言 · 2026-08-14 07:17 原文链接：http:&amp;#x2F;&amp;#x2F;mp.weixin.qq.com&amp;#x2F;s?__biz&amp;#x3D;MzUyMDE2ODQ1Mg&amp;#x3D;&amp;#x3D;&amp;amp;mid&amp;#x3D;2247484109&amp;amp;i"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://rebirth100.github.io/posts/a268554f.html"><link rel="preconnect" href="//cdn.cbd.int"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/swiper/swiper.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: undefined,
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: {"enable":true,"default":"晚上好👋","list":[{"greeting":"晚安😴","startTime":0,"endTime":5},{"greeting":"早上好鸭👋, 祝你一天好心情！","startTime":6,"endTime":9},{"greeting":"上午好👋, 状态很好，鼓励一下～","startTime":10,"endTime":10},{"greeting":"11点多啦, 在坚持一下就吃饭啦～","startTime":11,"endTime":11},{"greeting":"午安👋, 宝贝","startTime":12,"endTime":14},{"greeting":"🌈充实的一天辛苦啦！","startTime":14,"endTime":18},{"greeting":"19点喽, 奖励一顿丰盛的大餐吧🍔。","startTime":19,"endTime":19},{"greeting":"晚上好👋, 在属于自己的时间好好放松😌~","startTime":20,"endTime":24}]},
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: {"mode":"both","api":"https://img2color-go.vercel.app/api?img=","cover_change":true},
+  authorStatus: {"skills":["🤖️ 数码科技爱好者","🔍 分享与热心帮助","🏠 智能家居小能手","🔨 设计开发一条龙","🤝 专修交互与设计","🏃 脚踏实地行动派","🧱 团队小组发动机","💢 壮汉人狠话不多"]},
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: {"limitDay":60,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章的内容可能已经过时了。"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: rebirth100","link":"链接: ","source":"来源: Rebirth100","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'Rebirth100',
+  title: 'C语言教程-57.局部变量与全局变量',
+  postAI: '',
+  pageFillDescription: '【若北辰-C语言】《C语言教程》057｜局部变量与全局变量若北辰语言语言教程局部变量与全局变量原文微信公众号若北辰语言原文链接为什么要区分局部变量和全局变量前面我们写函数时经常会在函数里面定义变量这里的只能在函数里使用但有时我们也会看到变量写在所有函数外面这里的好像可以被多个函数访问这就涉及两个重要概念局部变量全局变量它们的区别不只是写的位置不同还关系到变量能在哪里用什么时候创建什么时候销毁会不会被其他函数修改如果这部分没弄清楚后面写项目时很容易出现一种问题变量明明定义了却提示找不到某个函数改了变量其他地方也被影响程序越写越乱不知道数据到底在哪里变了这一章就把局部变量和全局变量讲清楚什么是局部变量局部变量就是定义在函数内部的变量例如这里的就是局部变量因为它定义在函数内部再看一个函数这里的也是局部变量它只属于函数简单理解在哪个函数里定义就主要在哪个函数里使用函数外面看不到它局部变量只能在自己的范围内使用看下面这段代码这段代码是错误的因为定义在函数内部只能在函数里使用函数里没有这个变量即使函数和函数写在同一个文件里也不代表它们能随便使用对方的局部变量局部变量的作用范围很小这既是限制也是保护它能避免不同函数里的变量互相干扰不同函数里可以有同名局部变量看这个例子运行结果里有一个里也有一个它们名字一样但不是同一个变量就像两个不同房间里都可以有一张桌子名字可以都叫桌子但它们不是同一张局部变量属于自己的函数不同函数之间的局部变量互不影响代码块内部也可以有局部变量局部变量不只可以定义在函数内部还可以定义在代码块内部代码块就是一对花括号包起来的区域例如这里的定义在语句的花括号里所以只能在这个代码块中使用如果写成这样就会出错因为已经超出了自己的作用范围循环中的局部变量在较新的标准中可以在循环里定义变量这里的只在循环中有效循环结束后就不能再使用例如最后一行会出错因为的作用范围只在循环里这种写法的好处是不会污染外面的代码如果后面还有另一个循环也可以继续写两个互不影响什么是全局变量全局变量就是定义在所有函数外面的变量例如运行结果这里的定义在函数外面所以它是全局变量函数可以访问它函数也可以访问它全局变量的作用范围更大通常从定义位置开始到文件结束都可以使用全局变量的特点全局变量有几个明显特点第一它定义在函数外部第二它可以被多个函数访问第三它的生命周期很长程序开始运行时全局变量就存在程序结束时全局变量才消失第四如果没有显式初始化全局变量会自动初始化为例如这个全局变量默认值是这和局部变量不一样局部变量如果没有初始化里面的值是不确定的局部变量没有初始化会怎样看这段代码是局部变量但没有初始化它的值是不确定的你可能看到一个奇怪的数字也可能不同运行环境显示不同结果所以局部变量使用前一定要初始化推荐写法或者在真正需要时赋值请输入成绩总之不要直接使用没有初始化的局部变量这是语言里非常常见的错误全局变量没有初始化会自动为看这个例子运行结果通常是因为是全局变量没有手动初始化时会被自动初始化为如果是全局数组也会被初始化为数组里的元素默认都是不过即便全局变量会自动初始化也不代表可以随便依赖这一点为了代码清楚很多时候仍然建议显式写出来这样别人一看就知道你的意图局部变量和全局变量同名会怎样如果局部变量和全局变量同名在局部范围内局部变量会优先看例子运行结果虽然外面有一个全局变量值是但函数内部又定义了一个局部变量值是在里使用时优先使用局部变量这叫遮蔽也可以理解为局部变量把全局变量挡住了同名变量会让代码变难读虽然语言允许局部变量和全局变量同名但不建议这样写因为代码容易让人误解例如这里改的是局部变量不是全局变量如果代码复杂一点很容易看错更好的做法是避免重名全局变量可以起更明确的名字比如局部变量则根据当前函数用途起名名字清楚比写完再猜强得多全局变量方便但也危险全局变量的好处很明显很多函数都能用比如一个简单计数器和都能操作这样写很方便但问题也在这里任何能访问的函数都可能修改它当程序变大后你可能很难判断到底在哪里被改了这会让排错变得麻烦所以全局变量不是不能用而是要谨慎用为什么不建议滥用全局变量如果一个程序里到处都是全局变量代码会变得很难维护比如然后很多函数都直接修改这些变量刚开始看起来少传参数很省事但过一段时间你会发现函数之间关系变得混乱一个函数偷偷影响另一个函数调试时不知道变量在哪被修改代码很难拆分和复用好的函数应该尽量通过参数接收数据通过返回值交回结果不要过度依赖全局变量比如比下面这种更好第二种写法太依赖外部状态函数不够独立用参数代替不必要的全局变量看一个不太好的写法这个程序能运行但依赖全局变量更好的写法是这样不关心外面有没有全局变量调用者传什么它就处理什么这种函数更容易复用也更容易测试用返回值代替不必要的全局变量再看一个例子不推荐写法这里函数把结果放进全局变量更好的写法是函数应该尽量把结果通过返回这样数据流更清楚参数进去结果出来不用到处找全局变量在哪里变了什么时候可以使用全局变量全局变量并不是洪水猛兽有些场景下它确实有用比如程序级别的配置多个函数都需要读取的状态统计整个程序运行过程中的次数嵌入式程序中的硬件寄存器映射一些小型练习里的共享数据但即便使用也要注意控制范围如果只是一个函数内部要用就不要写成全局变量如果可以通过参数传递也优先考虑参数如果确实多个函数都要共享再考虑全局变量简单原则能局部就不要全局能传参就不要共享能返回就不要靠外部变量接结果全局常量比全局变量更安全有些数据在程序运行过程中不应该被修改比如圆周率它定义在函数外面多个函数都可以使用但加了后程序不能随便修改它例如这样会报错相比可修改的全局变量全局常量更安全例如最大容量如果一个全局数据只是用来表示固定值建议加这能减少误修改的风险局部变量的生命周期生命周期说的是变量从什么时候存在到什么时候消失局部变量的生命周期通常很短函数被调用时局部变量创建函数执行结束时局部变量销毁例如每次调用都会创建一个新的结束后这个就不存在了再次调用又会重新创建新的这也是为什么局部变量不会记住上一次函数调用时的值如果你想让函数里的变量记住上一次的值后面会学习关键字全局变量的生命周期全局变量的生命周期几乎贯穿整个程序运行过程例如从程序开始运行时就存在函数结束后仍然存在函数结束后程序结束才消失所以全局变量适合保存一些需要长期存在的状态但也正因为它存在时间长能被多个函数访问所以更要谨慎修改局部变量更适合保存临时数据大多数变量都应该优先设计成局部变量比如只是为了计算临时结果它没有必要暴露给整个程序再比如只是循环控制变量它也没必要成为全局变量局部变量范围小影响小错误也更容易控制写程序时变量能放小范围就不要放大范围全局变量会影响函数独立性函数如果依赖全局变量就不够独立看这个函数没有参数但它依赖外面的和别人调用这个函数时不看全局变量就不知道它怎么算更好的写法是这样函数需要什么数据一眼就能看出来调用也更清楚函数越独立越容易复用如果一个函数离开某几个全局变量就不能工作说明它被外部状态绑住了一个小例子统计函数调用次数有时全局变量确实很方便比如统计某个函数被调用了几次被调用了次运行结果被调用了次这个例子里保存的是整个程序中的累计状态用全局变量可以实现不过后面学后还可以把这个计数限制在函数内部让它更安全常见错误总结错误一在函数外使用局部变量局部变量只在自己的作用范围内有效错误二局部变量没有初始化就使用局部变量未初始化时值不确定错误三滥用全局变量全局变量方便但会让函数之间耦合变强错误四局部变量和全局变量同名这样容易造成遮蔽让代码变难读错误五该用参数的地方用了全局变量这样函数不独立后续不好维护错误六该用返回值的地方用了全局变量接结果这会让数据流变得不清楚记住一句话变量的作用范围越小程序越容易控制本章小结局部变量和全局变量的区别是语言变量管理中非常基础的一环局部变量定义在函数或代码块内部只能在对应范围内使用它通常用于保存临时数据生命周期较短函数结束后就会消失全局变量定义在函数外部可以被多个函数访问生命周期贯穿整个程序它适合保存程序级共享状态但不能滥用写代码时建议优先使用局部变量函数需要数据时优先通过参数传入函数产生结果时优先通过返回值传出只有确实需要多个函数共享长期存在的数据才考虑使用全局变量这样写出来的程序变量关系更清楚函数更独立后期也更容易维护',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-10-06 16:37:46',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><script>MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["\\[","\\]"]]}};</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><meta name="generator" content="Hexo 7.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="https://npm.elemecdn.com/anzhiyu-blog-static@1.0.4/img/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><div class="back-home-button"><i class="anzhiyufont anzhiyu-icon-grip-vertical"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" href="https://rebirth100.github.io/" title="博客"><img class="back-menu-item-icon" src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">Github</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/Rebirth100" title="个人主页"><img class="back-menu-item-icon" src="https://image.anheyu.com/favicon.ico" alt="个人主页"/><span class="back-menu-item-text">个人主页</span></a></div></div></div></div><a id="site-name" href="/" accesskey="h"><div class="title">Rebirth100</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索🔍" accesskey="s"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span> 搜索</span></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/C/" style="font-size: 1.05rem;">C<sup>13</sup></a><a href="/tags/C/" style="font-size: 1.05rem;">C++<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 1.05rem;">C语言<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">C语言教程<sup>69</sup></a><a href="/tags/Linux/" style="font-size: 1.05rem;">Linux<sup>14</sup></a><a href="/tags/MySQL/" style="font-size: 1.05rem;">MySQL<sup>11</sup></a><a href="/tags/Python/" style="font-size: 1.05rem;">Python<sup>3</sup></a><a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 1.05rem;">基础<sup>112</sup></a><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 1.05rem;">数据结构<sup>6</sup></a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" style="font-size: 1.05rem;">系统编程<sup>5</sup></a><a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 1.05rem;">编程<sup>109</sup></a><a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 1.05rem;">网络编程<sup>3</sup></a><a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" style="font-size: 1.05rem;">项目实战<sup>3</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/10/"><span class="card-archive-list-date">十月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">7</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/09/"><span class="card-archive-list-date">九月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">32</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/08/"><span class="card-archive-list-date">八月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">50</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/07/"><span class="card-archive-list-date">七月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">14</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/06/"><span class="card-archive-list-date">六月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">20</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" itemprop="url">C语言教程</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E5%9F%BA%E7%A1%80/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>基础</span></a><a class="article-meta__tags" href="/tags/%E7%BC%96%E7%A8%8B/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>编程</span></a><a class="article-meta__tags" href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>C语言教程</span></a></span></div></div><h1 class="post-title" itemprop="name headline">C语言教程-57.局部变量与全局变量</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-08-13T23:17:00.000Z" title="发表于 2026-08-14 07:17:00">2026-08-14</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-10-06T08:37:46.647Z" title="更新于 2026-10-06 16:37:46">2026-10-06</time></span></div><div class="meta-secondline"><span class="post-meta-separator"></span><span class="post-meta-wordcount"><i class="anzhiyufont anzhiyu-icon-file-word post-meta-icon" title="文章字数"></i><span class="post-meta-label" title="文章字数">字数总计:</span><span class="word-count" title="文章字数">4.3k</span><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-clock post-meta-icon" title="阅读时长"></i><span class="post-meta-label" title="阅读时长">阅读时长:</span><span>15分钟</span></span><span class="post-meta-separator"></span><span class="post-meta-pv-cv" id="" data-flag-title="C语言教程-57.局部变量与全局变量"><i class="anzhiyufont anzhiyu-icon-fw-eye post-meta-icon"></i><span class="post-meta-label" title="阅读量">阅读量:</span><span id="busuanzi_value_page_pv"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-spin"></i></span></span><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为西安"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>西安</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png"></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="https://rebirth100.github.io/posts/a268554f.html"><header><a class="post-meta-categories" href="/categories/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" itemprop="url">C语言教程</a><a href="/tags/%E5%9F%BA%E7%A1%80/" tabindex="-1" itemprop="url">基础</a><a href="/tags/%E7%BC%96%E7%A8%8B/" tabindex="-1" itemprop="url">编程</a><a href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url">C语言教程</a><h1 id="CrawlerTitle" itemprop="name headline">C语言教程-57.局部变量与全局变量</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">rebirth100</span><time itemprop="dateCreated datePublished" datetime="2026-08-13T23:17:00.000Z" title="发表于 2026-08-14 07:17:00">2026-08-14</time><time itemprop="dateCreated datePublished" datetime="2026-10-06T08:37:46.647Z" title="更新于 2026-10-06 16:37:46">2026-10-06</time></header><h1
+id="若北辰-c语言c语言教程057局部变量与全局变量">【若北辰-C语言】《C语言教程》057｜局部变量与全局变量</h1>
+<blockquote>
+<p><strong>原文</strong>：微信公众号 · 若北辰-C语言 · 2026-08-14 07:17
+<strong>原文链接</strong>：http://mp.weixin.qq.com/s?__biz=MzUyMDE2ODQ1Mg==&amp;mid=2247484109&amp;idx=1&amp;sn=c8f34d7dc516ed30a4f8cebea0e589fb&amp;chksm=f9ef37a6ce98beb0ef9405e8c83a46bfb67ad5fd50e649280765758f780862778be7fb5ee83d#rd</p>
+</blockquote>
+<p><strong>1. 为什么要区分局部变量和全局变量</strong></p>
+<p>前面我们写函数时，经常会在函数里面定义变量：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> add(<span class="built_in">int</span> a, <span class="built_in">int</span> b) &#123;  </span><br><span class="line">    <span class="built_in">int</span> <span class="built_in">sum</span> = a + b;  </span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的sum只能在add函数里使用。</p>
+<p>但有时我们也会看到变量写在所有函数外面：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> count = <span class="number">0</span>;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    count++;  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的count好像可以被多个函数访问。</p>
+<p>这就涉及两个重要概念：</p>
+<p>局部变量 全局变量</p>
+<p>它们的区别不只是写的位置不同，还关系到变量能在哪里用、什么时候创建、什么时候销毁、会不会被其他函数修改。</p>
+<p>如果这部分没弄清楚，后面写项目时很容易出现一种问题：</p>
+<p>变量明明定义了，却提示找不到 某个函数改了变量，其他地方也被影响
+程序越写越乱，不知道数据到底在哪里变了</p>
+<p>这一章就把局部变量和全局变量讲清楚。</p>
+<p><strong>2. 什么是局部变量</strong></p>
+<p>局部变量，就是定义在函数内部的变量。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    <span class="built_in">int</span> age = <span class="number">18</span>;  </span><br><span class="line">  </span><br><span class="line">    printf(<span class="string">&quot;age = %d\n&quot;</span>, age);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的age就是局部变量。</p>
+<p>因为它定义在main函数内部。</p>
+<p>再看一个函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> add(<span class="built_in">int</span> a, <span class="built_in">int</span> b) &#123;  </span><br><span class="line">    <span class="built_in">int</span> <span class="built_in">sum</span> = a + b;  </span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的sum也是局部变量。</p>
+<p>它只属于add函数。</p>
+<p>简单理解：</p>
+<p>在哪个函数里定义，就主要在哪个函数里使用。</p>
+<p>函数外面看不到它。</p>
+<p><strong>3. 局部变量只能在自己的范围内使用</strong></p>
+<p>看下面这段代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line">void test(void) &#123;  </span><br><span class="line">    <span class="built_in">int</span> x = <span class="number">10</span>;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    printf(<span class="string">&quot;%d\n&quot;</span>, x);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码是错误的。</p>
+<p>因为x定义在test函数内部，只能在test函数里使用。</p>
+<p>main函数里没有x这个变量。</p>
+<p>即使test函数和main函数写在同一个文件里，也不代表它们能随便使用对方的局部变量。</p>
+<p>局部变量的作用范围很小。</p>
+<p>这既是限制，也是保护。</p>
+<p>它能避免不同函数里的变量互相干扰。</p>
+<p><strong>4. 不同函数里可以有同名局部变量</strong></p>
+<p>看这个例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line">void funcA(void) &#123;  </span><br><span class="line">    <span class="built_in">int</span> x = <span class="number">10</span>;  </span><br><span class="line">    printf(<span class="string">&quot;funcA: x = %d\n&quot;</span>, x);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">void funcB(void) &#123;  </span><br><span class="line">    <span class="built_in">int</span> x = <span class="number">20</span>;  </span><br><span class="line">    printf(<span class="string">&quot;funcB: x = %d\n&quot;</span>, x);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    funcA();  </span><br><span class="line">    funcB();  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">funcA: x = <span class="number">10</span>  </span><br><span class="line">funcB: x = <span class="number">20</span></span><br></pre></td></tr></table></figure>
+<p>funcA里有一个x，funcB里也有一个x。</p>
+<p>它们名字一样，但不是同一个变量。</p>
+<p>就像两个不同房间里都可以有一张桌子，名字可以都叫桌子，但它们不是同一张。</p>
+<p>局部变量属于自己的函数。</p>
+<p>不同函数之间的局部变量互不影响。</p>
+<p><strong>5. 代码块内部也可以有局部变量</strong></p>
+<p>局部变量不只可以定义在函数内部，还可以定义在代码块内部。</p>
+<p>代码块就是一对花括号包起来的区域。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    <span class="built_in">int</span> x = <span class="number">10</span>;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> (x &gt; <span class="number">0</span>) &#123;  </span><br><span class="line">        <span class="built_in">int</span> y = <span class="number">20</span>;  </span><br><span class="line">        printf(<span class="string">&quot;y = %d\n&quot;</span>, y);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的y定义在if语句的花括号里。</p>
+<p>所以y只能在这个if代码块中使用。</p>
+<p>如果写成这样：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    <span class="built_in">int</span> x = <span class="number">10</span>;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> (x &gt; <span class="number">0</span>) &#123;  </span><br><span class="line">        <span class="built_in">int</span> y = <span class="number">20</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    printf(<span class="string">&quot;%d\n&quot;</span>, y);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>就会出错。</p>
+<p>因为y已经超出了自己的作用范围。</p>
+<p><strong>6. for循环中的局部变量</strong></p>
+<p>在较新的C标准中，可以在for循环里定义变量：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++) &#123;  </span><br><span class="line">        printf(<span class="string">&quot;%d\n&quot;</span>, i);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的i只在for循环中有效。</p>
+<p>循环结束后，i就不能再使用。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++) &#123;  </span><br><span class="line">    printf(<span class="string">&quot;%d\n&quot;</span>, i);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">printf(<span class="string">&quot;%d\n&quot;</span>, i);</span><br></pre></td></tr></table></figure>
+<p>最后一行会出错。</p>
+<p>因为i的作用范围只在for循环里。</p>
+<p>这种写法的好处是，i不会污染外面的代码。</p>
+<p>如果后面还有另一个循环，也可以继续写：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;  </span><br><span class="line">    printf(<span class="string">&quot;%d\n&quot;</span>, i);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>两个i互不影响。</p>
+<p><strong>7. 什么是全局变量</strong></p>
+<p>全局变量，就是定义在所有函数外面的变量。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> count = <span class="number">0</span>;  </span><br><span class="line">  </span><br><span class="line">void increase(void) &#123;  </span><br><span class="line">    count++;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    increase();  </span><br><span class="line">    increase();  </span><br><span class="line">  </span><br><span class="line">    printf(<span class="string">&quot;count = %d\n&quot;</span>, count);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">count = <span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p>这里的count定义在函数外面，所以它是全局变量。</p>
+<p>increase函数可以访问它。</p>
+<p>main函数也可以访问它。</p>
+<p>全局变量的作用范围更大，通常从定义位置开始，到文件结束都可以使用。</p>
+<p><strong>8. 全局变量的特点</strong></p>
+<p>全局变量有几个明显特点。</p>
+<p>第一，它定义在函数外部。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> count = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<p>第二，它可以被多个函数访问。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">void addOne(void) &#123;  </span><br><span class="line">    count++;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第三，它的生命周期很长。</p>
+<p>程序开始运行时，全局变量就存在。</p>
+<p>程序结束时，全局变量才消失。</p>
+<p>第四，如果没有显式初始化，全局变量会自动初始化为0。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> total;</span><br></pre></td></tr></table></figure>
+<p>这个全局变量默认值是0。</p>
+<p>这和局部变量不一样。</p>
+<p>局部变量如果没有初始化，里面的值是不确定的。</p>
+<p><strong>9. 局部变量没有初始化会怎样</strong></p>
+<p>看这段代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    <span class="built_in">int</span> x;  </span><br><span class="line">  </span><br><span class="line">    printf(<span class="string">&quot;x = %d\n&quot;</span>, x);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>x是局部变量，但没有初始化。</p>
+<p>它的值是不确定的。</p>
+<p>你可能看到一个奇怪的数字。</p>
+<p>也可能不同运行环境显示不同结果。</p>
+<p>所以局部变量使用前一定要初始化。</p>
+<p>推荐写法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> x = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<p>或者在真正需要时赋值：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> score;  </span><br><span class="line">  </span><br><span class="line">printf(<span class="string">&quot;请输入成绩：&quot;</span>);  </span><br><span class="line">scanf(<span class="string">&quot;%d&quot;</span>, &amp;score);</span><br></pre></td></tr></table></figure>
+<p>总之，不要直接使用没有初始化的局部变量。</p>
+<p>这是C语言里非常常见的错误。</p>
+<p><strong>10. 全局变量没有初始化会自动为0</strong></p>
+<p>看这个例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> globalValue;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    printf(<span class="string">&quot;globalValue = %d\n&quot;</span>, globalValue);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果通常是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">globalValue = <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>因为globalValue是全局变量，没有手动初始化时，会被自动初始化为0。</p>
+<p>如果是全局数组，也会被初始化为0。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> arr[<span class="number">5</span>];</span><br></pre></td></tr></table></figure>
+<p>数组里的元素默认都是0。</p>
+<p>不过即便全局变量会自动初始化，也不代表可以随便依赖这一点。</p>
+<p>为了代码清楚，很多时候仍然建议显式写出来：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> globalValue = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<p>这样别人一看就知道你的意图。</p>
+<p><strong>11. 局部变量和全局变量同名会怎样</strong></p>
+<p>如果局部变量和全局变量同名，在局部范围内，局部变量会优先。</p>
+<p>看例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> value = <span class="number">100</span>;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    <span class="built_in">int</span> value = <span class="number">10</span>;  </span><br><span class="line">  </span><br><span class="line">    printf(<span class="string">&quot;value = %d\n&quot;</span>, value);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">value = <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<p>虽然外面有一个全局变量value，值是100。</p>
+<p>但main函数内部又定义了一个局部变量value，值是10。</p>
+<p>在main里使用value时，优先使用局部变量。</p>
+<p>这叫遮蔽。</p>
+<p>也可以理解为局部变量把全局变量挡住了。</p>
+<p><strong>12. 同名变量会让代码变难读</strong></p>
+<p>虽然C语言允许局部变量和全局变量同名，但不建议这样写。</p>
+<p>因为代码容易让人误解。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> count = <span class="number">100</span>;  </span><br><span class="line">  </span><br><span class="line">void test(void) &#123;  </span><br><span class="line">    <span class="built_in">int</span> count = <span class="number">0</span>;  </span><br><span class="line">    count++;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里count++改的是局部变量count，不是全局变量count。</p>
+<p>如果代码复杂一点，很容易看错。</p>
+<p>更好的做法是避免重名。</p>
+<p>全局变量可以起更明确的名字，比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> totalCount = <span class="number">100</span>;</span><br></pre></td></tr></table></figure>
+<p>局部变量则根据当前函数用途起名：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> currentCount = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<p>名字清楚，比写完再猜强得多。</p>
+<p><strong>13. 全局变量方便，但也危险</strong></p>
+<p>全局变量的好处很明显：很多函数都能用。</p>
+<p>比如一个简单计数器：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> count = <span class="number">0</span>;  </span><br><span class="line">  </span><br><span class="line">void increase(void) &#123;  </span><br><span class="line">    count++;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">void reset(void) &#123;  </span><br><span class="line">    count = <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>increase和reset都能操作count。</p>
+<p>这样写很方便。</p>
+<p>但问题也在这里。</p>
+<p>任何能访问count的函数，都可能修改它。</p>
+<p>当程序变大后，你可能很难判断count到底在哪里被改了。</p>
+<p>这会让排错变得麻烦。</p>
+<p>所以全局变量不是不能用，而是要谨慎用。</p>
+<p><strong>14. 为什么不建议滥用全局变量</strong></p>
+<p>如果一个程序里到处都是全局变量，代码会变得很难维护。</p>
+<p>比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> score;  </span><br><span class="line"><span class="built_in">int</span> age;  </span><br><span class="line"><span class="built_in">int</span> choice;  </span><br><span class="line"><span class="built_in">int</span> result;</span><br></pre></td></tr></table></figure>
+<p>然后很多函数都直接修改这些变量。</p>
+<p>刚开始看起来少传参数，很省事。</p>
+<p>但过一段时间你会发现：</p>
+<p>函数之间关系变得混乱 一个函数偷偷影响另一个函数
+调试时不知道变量在哪被修改 代码很难拆分和复用</p>
+<p>好的函数应该尽量通过参数接收数据，通过返回值交回结果。</p>
+<p>不要过度依赖全局变量。</p>
+<p>比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> add(<span class="built_in">int</span> a, <span class="built_in">int</span> b) &#123;  </span><br><span class="line">    <span class="keyword">return</span> a + b;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>比下面这种更好：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> a;  </span><br><span class="line"><span class="built_in">int</span> b;  </span><br><span class="line"><span class="built_in">int</span> result;  </span><br><span class="line">  </span><br><span class="line">void add(void) &#123;  </span><br><span class="line">    result = a + b;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第二种写法太依赖外部状态，函数不够独立。</p>
+<p><strong>15. 用参数代替不必要的全局变量</strong></p>
+<p>看一个不太好的写法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> num;  </span><br><span class="line">  </span><br><span class="line">void printDouble(void) &#123;  </span><br><span class="line">    printf(<span class="string">&quot;%d\n&quot;</span>, num * <span class="number">2</span>);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    num = <span class="number">10</span>;  </span><br><span class="line">    printDouble();  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个程序能运行，但printDouble依赖全局变量num。</p>
+<p>更好的写法是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line">void printDouble(<span class="built_in">int</span> num) &#123;  </span><br><span class="line">    printf(<span class="string">&quot;%d\n&quot;</span>, num * <span class="number">2</span>);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    <span class="built_in">int</span> value = <span class="number">10</span>;  </span><br><span class="line">  </span><br><span class="line">    printDouble(value);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样printDouble不关心外面有没有全局变量。</p>
+<p>调用者传什么，它就处理什么。</p>
+<p>这种函数更容易复用，也更容易测试。</p>
+<p><strong>16. 用返回值代替不必要的全局变量</strong></p>
+<p>再看一个例子。</p>
+<p>不推荐写法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> result;  </span><br><span class="line">  </span><br><span class="line">void add(<span class="built_in">int</span> a, <span class="built_in">int</span> b) &#123;  </span><br><span class="line">    result = a + b;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    add(<span class="number">3</span>, <span class="number">5</span>);  </span><br><span class="line">    printf(<span class="string">&quot;%d\n&quot;</span>, result);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里add函数把结果放进全局变量result。</p>
+<p>更好的写法是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> add(<span class="built_in">int</span> a, <span class="built_in">int</span> b) &#123;  </span><br><span class="line">    <span class="keyword">return</span> a + b;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    <span class="built_in">int</span> result = add(<span class="number">3</span>, <span class="number">5</span>);  </span><br><span class="line">  </span><br><span class="line">    printf(<span class="string">&quot;%d\n&quot;</span>, result);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>函数应该尽量把结果通过return返回。</p>
+<p>这样数据流更清楚：</p>
+<p>参数进去，结果出来。</p>
+<p>不用到处找全局变量在哪里变了。</p>
+<p><strong>17. 什么时候可以使用全局变量</strong></p>
+<p>全局变量并不是洪水猛兽。</p>
+<p>有些场景下，它确实有用。</p>
+<p>比如：</p>
+<p>程序级别的配置 多个函数都需要读取的状态 统计整个程序运行过程中的次数
+嵌入式程序中的硬件寄存器映射 一些小型练习里的共享数据</p>
+<p>但即便使用，也要注意控制范围。</p>
+<p>如果只是一个函数内部要用，就不要写成全局变量。</p>
+<p>如果可以通过参数传递，也优先考虑参数。</p>
+<p>如果确实多个函数都要共享，再考虑全局变量。</p>
+<p>简单原则：</p>
+<p>能局部，就不要全局。</p>
+<p>能传参，就不要共享。</p>
+<p>能返回，就不要靠外部变量接结果。</p>
+<p><strong>18. 全局常量比全局变量更安全</strong></p>
+<p>有些数据在程序运行过程中不应该被修改。</p>
+<p>比如圆周率：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const double PI = <span class="number">3.1415926</span>;</span><br></pre></td></tr></table></figure>
+<p>它定义在函数外面，多个函数都可以使用。</p>
+<p>但加了const后，程序不能随便修改它。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PI = <span class="number">3.14</span>;</span><br></pre></td></tr></table></figure>
+<p>这样会报错。</p>
+<p>相比可修改的全局变量，全局常量更安全。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line">const <span class="built_in">int</span> MAX_SIZE = <span class="number">100</span>;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    printf(<span class="string">&quot;最大容量：%d\n&quot;</span>, MAX_SIZE);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果一个全局数据只是用来表示固定值，建议加const。</p>
+<p>这能减少误修改的风险。</p>
+<p><strong>19. 局部变量的生命周期</strong></p>
+<p>生命周期说的是变量从什么时候存在，到什么时候消失。</p>
+<p>局部变量的生命周期通常很短。</p>
+<p>函数被调用时，局部变量创建。</p>
+<p>函数执行结束时，局部变量销毁。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void test(void) &#123;  </span><br><span class="line">    <span class="built_in">int</span> x = <span class="number">10</span>;  </span><br><span class="line">    printf(<span class="string">&quot;%d\n&quot;</span>, x);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>每次调用test，都会创建一个新的x。</p>
+<p>test结束后，这个x就不存在了。</p>
+<p>再次调用test，又会重新创建新的x。</p>
+<p>这也是为什么局部变量不会记住上一次函数调用时的值。</p>
+<p>如果你想让函数里的变量记住上一次的值，后面会学习static关键字。</p>
+<p><strong>20. 全局变量的生命周期</strong></p>
+<p>全局变量的生命周期几乎贯穿整个程序运行过程。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> count = <span class="number">0</span>;  </span><br><span class="line">  </span><br><span class="line">void increase(void) &#123;  </span><br><span class="line">    count++;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    increase();  </span><br><span class="line">    increase();  </span><br><span class="line">  </span><br><span class="line">    printf(<span class="string">&quot;%d\n&quot;</span>, count);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>count从程序开始运行时就存在。</p>
+<p>increase函数结束后，count仍然存在。</p>
+<p>main函数结束后，程序结束，count才消失。</p>
+<p>所以全局变量适合保存一些需要长期存在的状态。</p>
+<p>但也正因为它存在时间长、能被多个函数访问，所以更要谨慎修改。</p>
+<p><strong>21. 局部变量更适合保存临时数据</strong></p>
+<p>大多数变量都应该优先设计成局部变量。</p>
+<p>比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> add(<span class="built_in">int</span> a, <span class="built_in">int</span> b) &#123;  </span><br><span class="line">    <span class="built_in">int</span> <span class="built_in">sum</span> = a + b;  </span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>sum只是为了计算临时结果。</p>
+<p>它没有必要暴露给整个程序。</p>
+<p>再比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">void printNumbers(void) &#123;  </span><br><span class="line">    <span class="built_in">int</span> i;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">10</span>; i++) &#123;  </span><br><span class="line">        printf(<span class="string">&quot;%d\n&quot;</span>, i);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>i只是循环控制变量。</p>
+<p>它也没必要成为全局变量。</p>
+<p>局部变量范围小，影响小，错误也更容易控制。</p>
+<p>写程序时，变量能放小范围，就不要放大范围。</p>
+<p><strong>22. 全局变量会影响函数独立性</strong></p>
+<p>函数如果依赖全局变量，就不够独立。</p>
+<p>看这个函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> price = <span class="number">100</span>;  </span><br><span class="line"><span class="built_in">int</span> count = <span class="number">3</span>;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> totalPrice(void) &#123;  </span><br><span class="line">    <span class="keyword">return</span> price * count;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>totalPrice没有参数，但它依赖外面的price和count。</p>
+<p>别人调用这个函数时，不看全局变量就不知道它怎么算。</p>
+<p>更好的写法是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> totalPrice(<span class="built_in">int</span> price, <span class="built_in">int</span> count) &#123;  </span><br><span class="line">    <span class="keyword">return</span> price * count;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样函数需要什么数据，一眼就能看出来。</p>
+<p>调用也更清楚：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> total = totalPrice(<span class="number">100</span>, <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+<p>函数越独立，越容易复用。</p>
+<p>如果一个函数离开某几个全局变量就不能工作，说明它被外部状态绑住了。</p>
+<p><strong>23. 一个小例子：统计函数调用次数</strong></p>
+<p>有时全局变量确实很方便。</p>
+<p>比如统计某个函数被调用了几次：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> callCount = <span class="number">0</span>;  </span><br><span class="line">  </span><br><span class="line">void sayHello(void) &#123;  </span><br><span class="line">    callCount++;  </span><br><span class="line">    printf(<span class="string">&quot;Hello C\n&quot;</span>);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    sayHello();  </span><br><span class="line">    sayHello();  </span><br><span class="line">    sayHello();  </span><br><span class="line">  </span><br><span class="line">    printf(<span class="string">&quot;sayHello被调用了%d次\n&quot;</span>, callCount);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Hello C  </span><br><span class="line">Hello C  </span><br><span class="line">Hello C  </span><br><span class="line">sayHello被调用了<span class="number">3</span>次</span><br></pre></td></tr></table></figure>
+<p>这个例子里，callCount保存的是整个程序中的累计状态。</p>
+<p>用全局变量可以实现。</p>
+<p>不过后面学static后，还可以把这个计数限制在函数内部，让它更安全。</p>
+<p><strong>24. 常见错误总结</strong></p>
+<p>错误一：在函数外使用局部变量。</p>
+<p>局部变量只在自己的作用范围内有效。</p>
+<p>错误二：局部变量没有初始化就使用。</p>
+<p>局部变量未初始化时，值不确定。</p>
+<p>错误三：滥用全局变量。</p>
+<p>全局变量方便，但会让函数之间耦合变强。</p>
+<p>错误四：局部变量和全局变量同名。</p>
+<p>这样容易造成遮蔽，让代码变难读。</p>
+<p>错误五：该用参数的地方用了全局变量。</p>
+<p>这样函数不独立，后续不好维护。</p>
+<p>错误六：该用返回值的地方用了全局变量接结果。</p>
+<p>这会让数据流变得不清楚。</p>
+<p>记住一句话：</p>
+<p>变量的作用范围越小，程序越容易控制。</p>
+<p><strong>25. 本章小结</strong></p>
+<p>局部变量和全局变量的区别，是C语言变量管理中非常基础的一环。</p>
+<p>局部变量定义在函数或代码块内部，只能在对应范围内使用。</p>
+<p>它通常用于保存临时数据，生命周期较短，函数结束后就会消失。</p>
+<p>全局变量定义在函数外部，可以被多个函数访问，生命周期贯穿整个程序。</p>
+<p>它适合保存程序级共享状态，但不能滥用。</p>
+<p>写代码时，建议优先使用局部变量。</p>
+<p>函数需要数据时，优先通过参数传入。</p>
+<p>函数产生结果时，优先通过返回值传出。</p>
+<p>只有确实需要多个函数共享、长期存在的数据，才考虑使用全局变量。</p>
+<p>这样写出来的程序，变量关系更清楚，函数更独立，后期也更容易维护。</p>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">rebirth100</div><div class="post-copyright__author_desc">爱我的人和我爱的人，都希望你有更好的明天❤️</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="https://rebirth100.github.io/posts/a268554f.html">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('https://rebirth100.github.io/posts/a268554f.html')">C语言教程-57.局部变量与全局变量</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"><div class="reward-link mode"><a class="reward-link-button" href="/wechat"><i class="anzhiyufont anzhiyu-icon-plant-fill"></i>运营模式与责任</a></div></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="https://rebirth100.github.io/posts/a268554f.html"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=C语言教程-57.局部变量与全局变量&amp;url=https://rebirth100.github.io/posts/a268554f.html&amp;pic=/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://rebirth100.github.io" target="_blank">Rebirth100</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__category-list"><a class="post-meta__box__categoryes" href="/categories/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/"><span class="categoryes-punctuation"> <i class="anzhiyufont anzhiyu-icon-inbox"></i></span>C语言教程<span class="categoryesPageCount">69</span></a></div><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/%E5%9F%BA%E7%A1%80/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>基础<span class="tagsPageCount">112</span></a><a class="post-meta__box__tags" href="/tags/%E7%BC%96%E7%A8%8B/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>编程<span class="tagsPageCount">109</span></a><a class="post-meta__box__tags" href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>C语言教程<span class="tagsPageCount">69</span></a></div></div><div class="post_share"><div class="social-share" data-image="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/9ac904e8.html"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">网络编程-1.Linux C TCP 网络编程学习笔记（四）</div></div></a></div><div class="next-post pull-right"><a href="/posts/d13412a3.html"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">C语言教程-58.变量生命周期：什么时候创建与销毁</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/posts/d3738343.html" title="C语言教程-105.结构体作为函数参数"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-01</div><div class="title">C语言教程-105.结构体作为函数参数</div></div></a></div><div><a href="/posts/6377da75.html" title="C语言教程-108.typedef用法：给类型起别名"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-04</div><div class="title">C语言教程-108.typedef用法：给类型起别名</div></div></a></div><div><a href="/posts/ff0c18e4.html" title="C语言教程-106.结构体指针：高效传递复杂数据"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-02</div><div class="title">C语言教程-106.结构体指针：高效传递复杂数据</div></div></a></div><div><a href="/posts/e9573a32.html" title="C语言教程-107.嵌套结构体：描述复杂实体"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-03</div><div class="title">C语言教程-107.嵌套结构体：描述复杂实体</div></div></a></div><div><a href="/posts/dc0fea1b.html" title="C语言教程-109.联合体union：共享内存的数据类型"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-05</div><div class="title">C语言教程-109.联合体union：共享内存的数据类型</div></div></a></div><div><a href="/posts/395745d4.html" title="C语言教程-110.枚举enum：让常量更可读"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-05</div><div class="title">C语言教程-110.枚举enum：让常量更可读</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/08/24/64e6ce9c507bb.png" alt="status"/></div></div><div class="author-info__description">学习笔记，成长记录</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">rebirth100</h1><div class="author-info__desc">爱我的人和我爱的人，都希望你有更好的明天❤️</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/Rebirth100" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="https://rebirth100.github.io/" target="_blank" title="BiliBili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a></div></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake"></i><span>公告</span></div><div class="announcement_content">我写不出细腻的文字了 换句话 我找不到我自己了</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%8B%A5%E5%8C%97%E8%BE%B0-c%E8%AF%AD%E8%A8%80c%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B057%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E4%B8%8E%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="toc-text">【若北辰-C语言】《C语言教程》057｜局部变量与全局变量</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/4340bc10.html" title="C语言教程-111.位域：按位存储与实现相关陷阱"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-111.位域：按位存储与实现相关陷阱"/></a><div class="content"><a class="title" href="/posts/4340bc10.html" title="C语言教程-111.位域：按位存储与实现相关陷阱">C语言教程-111.位域：按位存储与实现相关陷阱</a><time datetime="2026-10-05T23:18:00.000Z" title="发表于 2026-10-06 07:18:00">2026-10-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/395745d4.html" title="C语言教程-110.枚举enum：让常量更可读"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-110.枚举enum：让常量更可读"/></a><div class="content"><a class="title" href="/posts/395745d4.html" title="C语言教程-110.枚举enum：让常量更可读">C语言教程-110.枚举enum：让常量更可读</a><time datetime="2026-10-05T01:16:00.000Z" title="发表于 2026-10-05 09:16:00">2026-10-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/dc0fea1b.html" title="C语言教程-109.联合体union：共享内存的数据类型"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-109.联合体union：共享内存的数据类型"/></a><div class="content"><a class="title" href="/posts/dc0fea1b.html" title="C语言教程-109.联合体union：共享内存的数据类型">C语言教程-109.联合体union：共享内存的数据类型</a><time datetime="2026-10-04T23:15:00.000Z" title="发表于 2026-10-05 07:15:00">2026-10-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/6377da75.html" title="C语言教程-108.typedef用法：给类型起别名"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-108.typedef用法：给类型起别名"/></a><div class="content"><a class="title" href="/posts/6377da75.html" title="C语言教程-108.typedef用法：给类型起别名">C语言教程-108.typedef用法：给类型起别名</a><time datetime="2026-10-03T23:14:00.000Z" title="发表于 2026-10-04 07:14:00">2026-10-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/e9573a32.html" title="C语言教程-107.嵌套结构体：描述复杂实体"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-107.嵌套结构体：描述复杂实体"/></a><div class="content"><a class="title" href="/posts/e9573a32.html" title="C语言教程-107.嵌套结构体：描述复杂实体">C语言教程-107.嵌套结构体：描述复杂实体</a><time datetime="2026-10-02T23:14:00.000Z" title="发表于 2026-10-03 07:14:00">2026-10-03</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="workboard"><img class="workSituationImg boardsign" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-上班摸鱼中.svg" alt="距离月入25k也就还差一个大佬带我~" title="距离月入25k也就还差一个大佬带我~"/><div id="runtimeTextTip"></div></div></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2026 By <a class="footer-bar-link" href="/" title="rebirth100" target="_blank">rebirth100</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" href="/null"></a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">123</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">11</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" href="https://rebirth100.github.io/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">Github</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/Rebirth100" title="个人主页"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://image.anheyu.com/favicon.ico" alt="个人主页"/><span class="back-menu-item-text">个人主页</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/C/" style="font-size: 0.88rem;">C<sup>13</sup></a><a href="/tags/C/" style="font-size: 0.88rem;">C++<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 0.88rem;">C语言<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">C语言教程<sup>69</sup></a><a href="/tags/Linux/" style="font-size: 0.88rem;">Linux<sup>14</sup></a><a href="/tags/MySQL/" style="font-size: 0.88rem;">MySQL<sup>11</sup></a><a href="/tags/Python/" style="font-size: 0.88rem;">Python<sup>3</sup></a><a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 0.88rem;">基础<sup>112</sup></a><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 0.88rem;">数据结构<sup>6</sup></a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" style="font-size: 0.88rem;">系统编程<sup>5</sup></a><a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 0.88rem;">编程<sup>109</sup></a><a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 0.88rem;">网络编程<sup>3</sup></a><a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" style="font-size: 0.88rem;">项目实战<sup>3</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.7"></meting-js></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="anzhiyufont anzhiyu-icon-xmark"></i></button></nav><div class="is-center" id="loading-database"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.cbd.int/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("06/10/2026 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2026 By 安知鱼 V1.7.1",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 rebirth100 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><script async="async">(function () {
+  var grt = new Date("06/10/2026 00:00:00"); //设置网站上线时间
+  var now = new Date();
+  var dnum;
+  var hnum;
+  var mnum;
+  var snum;
+  var nowHour;
+
+  // 计算并更新天数、小时数、分钟数和秒数
+  function updateTime() {
+    now = new Date(); // 更新 now 的值
+    nowHour = now.getHours(); // 更新 nowHour 的值
+    var days = (now - grt) / 1000 / 60 / 60 / 24;
+    dnum = Math.floor(days);
+    var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+      hnum = "0" + hnum;
+    }
+    var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+      mnum = "0" + mnum;
+    }
+    var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+      snum = "0" + snum;
+    }
+  }
+
+  // 更新网页中显示的网站运行时间
+  function updateHtml() {
+    const footer = document.getElementById("footer");
+    if (!footer) return
+    let currentTimeHtml = "";
+    if (nowHour < 18 && nowHour >= 9) {
+      // 如果是上班时间，默认就是"安知鱼-上班摸鱼中.svg"图片，不需要更改
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    } else {
+      // 如果是下班时间，插入"安知鱼-下班啦.svg"图片
+      let img = document.querySelector("#workboard .workSituationImg");
+      if (img != null) {
+        img.src = "https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-下班啦.svg";
+        img.title = "下班了就该开开心心的玩耍，嘿嘿~";
+        img.alt = "下班了就该开开心心的玩耍，嘿嘿~";
+      }
+
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    }
+
+    if (document.getElementById("runtimeTextTip")) {
+      document.getElementById("runtimeTextTip").innerHTML = currentTimeHtml;
+    }
+  }
+
+  setInterval(() => {
+    updateTime();
+    updateHtml();
+  }, 1000);
+})();</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><input type="hidden" name="page-type" id="page-type" value="post"></div><script async data-pjax src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.1/bubble/bubble.js"></script><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://cdn.cbd.int/qrcodejs@1.0.0/qrcode.min.js"></script><script src="/js/anzhiyu/right_click_menu.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>

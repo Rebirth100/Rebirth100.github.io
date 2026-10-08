@@ -1,0 +1,956 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>系统编程-1.目录操作与多进程入门学习笔记 | Rebirth100</title><meta name="keywords" content="基础,编程,系统编程"><meta name="author" content="rebirth100"><meta name="copyright" content="rebirth100"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="系统编程-1.目录操作与多进程入门学习笔记"><meta name="application-name" content="系统编程-1.目录操作与多进程入门学习笔记"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="系统编程-1.目录操作与多进程入门学习笔记"><meta property="og:url" content="https://rebirth100.github.io/posts/18572915.html"><meta property="og:site_name" content="Rebirth100"><meta property="og:description" content="目录操作、自定义ls命令完成、设备号、程序与进程、进程状态、fork多进程"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://rebirth100.github.io/img/posts/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B.png"><meta property="article:author" content="rebirth100"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://rebirth100.github.io/img/posts/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B.png"><meta name="description" content="目录操作、自定义ls命令完成、设备号、程序与进程、进程状态、fork多进程"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://rebirth100.github.io/posts/18572915.html"><link rel="preconnect" href="//cdn.cbd.int"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/swiper/swiper.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: undefined,
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: {"enable":true,"default":"晚上好👋","list":[{"greeting":"晚安😴","startTime":0,"endTime":5},{"greeting":"早上好鸭👋, 祝你一天好心情！","startTime":6,"endTime":9},{"greeting":"上午好👋, 状态很好，鼓励一下～","startTime":10,"endTime":10},{"greeting":"11点多啦, 在坚持一下就吃饭啦～","startTime":11,"endTime":11},{"greeting":"午安👋, 宝贝","startTime":12,"endTime":14},{"greeting":"🌈充实的一天辛苦啦！","startTime":14,"endTime":18},{"greeting":"19点喽, 奖励一顿丰盛的大餐吧🍔。","startTime":19,"endTime":19},{"greeting":"晚上好👋, 在属于自己的时间好好放松😌~","startTime":20,"endTime":24}]},
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: {"mode":"both","api":"https://img2color-go.vercel.app/api?img=","cover_change":true},
+  authorStatus: {"skills":["🤖️ 数码科技爱好者","🔍 分享与热心帮助","🏠 智能家居小能手","🔨 设计开发一条龙","🤝 专修交互与设计","🏃 脚踏实地行动派","🧱 团队小组发动机","💢 壮汉人狠话不多"]},
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: {"limitDay":60,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章的内容可能已经过时了。"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: rebirth100","link":"链接: ","source":"来源: Rebirth100","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'Rebirth100',
+  title: '系统编程-1.目录操作与多进程入门学习笔记',
+  postAI: '',
+  pageFillDescription: '目录操作与多进程入门学习笔记, 一、目录操作, 1.1 目录合法性判断, 1.2 打开目录 opendir, 1.3 读取目录 readdir, 1.4 关闭目录 closedir, 1.5 跨目录遍历的路径问题, 1.6 bzero 内存清零, 二、自定义 ls 命令项目完成, 2.1 项目整体结构, 2.2 核心工具函数, 2.3 主函数参数分支逻辑, 2.4 参数场景覆盖, 2.5 待扩展功能, 2.6 测试要求, 三、设备号, 3.1 设备类型判断, 3.2 主设备号与次设备号, 3.3 设备号分解函数, 3.4 设备文件输出格式, 四、程序与进程, 4.1 核心概念区分, 4.2 进程加载流程, 4.3 调度器, 4.4 进程控制块 PCB, 4.5 线程, 4.6 进程创建流程, 五、进程状态, 5.1 三类核心状态, 5.2 状态转换规则, 5.3 进程退出, 5.4 信号基础, 六、多进程入门 — fork, 6.1 进程查看命令, 6.2 fork 函数, 6.3 获取进程 ID, 6.4 基础示例, 6.5 连续 fork 的进程数计算, 6.6 固定数量直属子进程实现, 6.7 注意事项, 七、函数速查表目录操作与多进程入门学习笔记一目录操作目录合法性判断方式一位运算判断是目录方式二系统宏判断推荐是目录是系统预定义宏函数传入即可判断实现逻辑更简洁直观打开目录成功返回结构体指针失败返回设置错误码读取目录结构体核心字段字段说明索引节点编号文件名文件类型并非所有文件系统都支持循环读取所有目录项关闭目录跨目录遍历的路径问题问题现象遍历非当前目录下的子文件时直接用子文件名调用属性获取函数会报文件不存在根因返回的子文件名仅是目标目录内的相对名称直接使用会被解析为当前工作目录下的文件方案一手动拼接路径方案二切换工作目录推荐切换到目标目录之后直接用即可正常访问无需手动拼接路径实现效果与系统原生命令的目录遍历逻辑一致内存清零环境下可用将指定内存区域清零相比调用参数更少使用更简便二自定义命令项目完成项目整体结构文件属性获取模块目录遍历模块主函数参数解析与分发核心工具函数判断路径是否为目录返回值目录非目录路径无效遍历目录输出所有文件属性传入目录路径和预分配的缓冲区实现目录下所有文件属性的批量解析切换工作目录主函数参数分支逻辑无参数输出当前目录内容扫描参数位置带输出目标路径自身属性不带目录则遍历文件则输出自身参数场景覆盖场景示例行为无参数输出当前目录内容单文件输出文件自身属性单目录遍历输出目录内容带输出目录自身属性混合参数逐一处理后路径输出自身多目录依次遍历每个目录待扩展功能功能实现思路块占用统计遍历目录所有文件字段累加除以分区块大小设备号展示设备文件读取主次设备号替换默认大小展示时间字段修改时间访问时间状态变更时间测试要求补充链接文件特殊设备文件等边界场景测试覆盖目录下的链接文件录制项目操作过程录屏三设备号设备类型判断字符设备块设备主设备号与次设备号主设备号标识设备驱动程序类型次设备号标识同类型下的具体设备硬盘设备约定硬盘类设备的主设备号固定为所有硬盘的分区不区分物理盘统一按顺序连续编号设备号分解函数提取主设备号提取次设备号禁止直接硬编码输出设备号数值必须调用系统专用函数分解后再输出设备文件输出格式设备文件场景下用调整输出格式将原有的大小字段替换为主设备号次设备号替换大小字段四程序与进程核心概念区分对比项可执行程序进程本质静态文件动态执行实例存储位置硬盘外存内存资源占用磁盘空间调度内存与关系无关联被调度执行数量一份文件可多次运行每次运行生成一个独立进程程序存储在硬盘上的可执行指令序列文件进程程序的一次动态执行过程进程加载流程硬盘上的可执行文件经缓冲区缓解硬盘与内存的速度空间差异内存页面存储技术边运行边加载取指执行进程运行缓冲区硬盘与内存之间的缓冲区域页面存储技术指令边运行边加载暂存保障指令流持续供给虚拟寻址每个进程拥有虚拟寻址空间通过存储管理模块动态分配回收物理内存调度器核心作用管理系统内所有运行进程的状态资源占用进程合理分配资源让用户感知多进程同时运行调度方式优先级调度方式说明普通时间片轮询单次时间片可执行数十万条指令高先进先出可抢占普通进程如系统关机进程进程控制块存储进程所有运行状态信息负责进程寻址空间管理为进程分配查找对应资源地址为调度器调度提供数据支撑线程定义可调度的最小执行单位关系进程内部可包含多个线程类比华罗庚统筹法烧开水的同时做准备工作提升效率多核支持多线程并行执行进程创建流程创建新进程实例系列函数装载可执行程序新进程初始化启动完成终端执行启动进程的底层逻辑终端程序调用完成进程启动五进程状态三类核心状态状态说明运行态正在上执行指令休眠态等待资源如锁时间片耗尽也会进入暂停挂起态被信号暂停等待恢复信号状态转换规则运行态休眠态暂停态所有状态切换均由调度器统一控制进程无法直接从暂停态跳转至休眠态两类状态的互相切换必须经过调度器的统一调度判定进程退出退出触发条件执行完所有指令正常结束收到退出信号如终端退出流程进程执行完指令前先做自定义清理工作进入待销毁状态父进程通过函数完成子进程资源回收进程正式销毁信号基础信号可实现进程暂停退出等控制本质是向进程发送退出信号后续多进程学习需覆盖创建装载信号发送与处理六多进程入门进程查看命令命令作用树形展示所有运行进程查看进程列表明细查看进程列表与父子关系查看所有进程详细信息函数返回值规则返回值含义出错子进程拿到的返回值父进程拿到的返回值即子进程的核心特性调用会生成一个完整复制父进程所有资源的新进程新进程从代码行的下一行开始执行父子进程均会执行后续代码对应语句会打印次获取进程获取自身进程获取父进程基础示例只打印次打印次父子子进程父进程连续的进程数计算规则每一次都会触发当前所有存活进程各自衍生一个新进程次数总进程数次次次次打印语句的执行次数需结合代码行具体位置计算不同逻辑下次数存在差异固定数量直属子进程实现需求仅生成父进程的个直属子进程禁止子进程再衍生孙代方案一子进程跳出循环子进程执行完逻辑后不再子进程父进程继续循环父进程生成子进程方案二子进程生成后直接暂停子进程不再执行后续逻辑两种打印主体主体效果父进程统一打印父进程获取所有子进程便于管理子进程自行打印子进程生成后自行上报自身注意事项测试前清理上一次未退出的遗留进程避免干扰测试子进程后仍会执行循环外的代码需注意逻辑隔离父进程获取子进程是管理子进程的必要前提七函数速查表分类函数头文件作用目录操作打开目录目录操作读取目录项目录操作关闭目录目录操作切换工作目录文件属性获取文件属性不跟随链接文件属性判断是否为目录内存操作内存清零设备号提取主设备号设备号提取次设备号进程创建子进程进程获取自身进程进程获取父进程进程系列装载可执行程序进程回收子进程资源进程查看命令行树形展示进程进程查看命令行查看进程明细文本统计命令行统计行数字节数单词数',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-10-06 16:37:47',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><script>MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["\\[","\\]"]]}};</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><meta name="generator" content="Hexo 7.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="https://npm.elemecdn.com/anzhiyu-blog-static@1.0.4/img/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><div class="back-home-button"><i class="anzhiyufont anzhiyu-icon-grip-vertical"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" href="https://rebirth100.github.io/" title="博客"><img class="back-menu-item-icon" src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">Github</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/Rebirth100" title="个人主页"><img class="back-menu-item-icon" src="https://image.anheyu.com/favicon.ico" alt="个人主页"/><span class="back-menu-item-text">个人主页</span></a></div></div></div></div><a id="site-name" href="/" accesskey="h"><div class="title">Rebirth100</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索🔍" accesskey="s"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span> 搜索</span></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/C/" style="font-size: 1.05rem;">C<sup>13</sup></a><a href="/tags/C/" style="font-size: 1.05rem;">C++<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 1.05rem;">C语言<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">C语言教程<sup>69</sup></a><a href="/tags/Linux/" style="font-size: 1.05rem;">Linux<sup>14</sup></a><a href="/tags/MySQL/" style="font-size: 1.05rem;">MySQL<sup>11</sup></a><a href="/tags/Python/" style="font-size: 1.05rem;">Python<sup>3</sup></a><a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 1.05rem;">基础<sup>112</sup></a><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 1.05rem;">数据结构<sup>6</sup></a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" style="font-size: 1.05rem;">系统编程<sup>5</sup></a><a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 1.05rem;">编程<sup>109</sup></a><a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 1.05rem;">网络编程<sup>3</sup></a><a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" style="font-size: 1.05rem;">项目实战<sup>3</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/10/"><span class="card-archive-list-date">十月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">7</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/09/"><span class="card-archive-list-date">九月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">32</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/08/"><span class="card-archive-list-date">八月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">50</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/07/"><span class="card-archive-list-date">七月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">14</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/06/"><span class="card-archive-list-date">六月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">20</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" itemprop="url">系统编程</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E5%9F%BA%E7%A1%80/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>基础</span></a><a class="article-meta__tags" href="/tags/%E7%BC%96%E7%A8%8B/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>编程</span></a><a class="article-meta__tags" href="/tags/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>系统编程</span></a></span></div></div><h1 class="post-title" itemprop="name headline">系统编程-1.目录操作与多进程入门学习笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-08-07T16:00:00.000Z" title="发表于 2026-08-08 00:00:00">2026-08-08</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-10-06T08:37:47.203Z" title="更新于 2026-10-06 16:37:47">2026-10-06</time></span></div><div class="meta-secondline"><span class="post-meta-separator"></span><span class="post-meta-wordcount"><i class="anzhiyufont anzhiyu-icon-file-word post-meta-icon" title="文章字数"></i><span class="post-meta-label" title="文章字数">字数总计:</span><span class="word-count" title="文章字数">3.1k</span><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-clock post-meta-icon" title="阅读时长"></i><span class="post-meta-label" title="阅读时长">阅读时长:</span><span>11分钟</span></span><span class="post-meta-separator"></span><span class="post-meta-pv-cv" id="" data-flag-title="系统编程-1.目录操作与多进程入门学习笔记"><i class="anzhiyufont anzhiyu-icon-fw-eye post-meta-icon"></i><span class="post-meta-label" title="阅读量">阅读量:</span><span id="busuanzi_value_page_pv"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-spin"></i></span></span><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为西安"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>西安</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src="/img/posts/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B.png"></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="https://rebirth100.github.io/posts/18572915.html"><header><a class="post-meta-categories" href="/categories/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" itemprop="url">系统编程</a><a href="/tags/%E5%9F%BA%E7%A1%80/" tabindex="-1" itemprop="url">基础</a><a href="/tags/%E7%BC%96%E7%A8%8B/" tabindex="-1" itemprop="url">编程</a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" tabindex="-1" itemprop="url">系统编程</a><h1 id="CrawlerTitle" itemprop="name headline">系统编程-1.目录操作与多进程入门学习笔记</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">rebirth100</span><time itemprop="dateCreated datePublished" datetime="2026-08-07T16:00:00.000Z" title="发表于 2026-08-08 00:00:00">2026-08-08</time><time itemprop="dateCreated datePublished" datetime="2026-10-06T08:37:47.203Z" title="更新于 2026-10-06 16:37:47">2026-10-06</time></header><h1 id="目录操作与多进程入门学习笔记">目录操作与多进程入门学习笔记</h1>
+<h2 id="一目录操作">一、目录操作</h2>
+<h3 id="目录合法性判断">1.1 目录合法性判断</h3>
+<p><strong>方式一：位运算判断</strong> <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">st</span>;</span></span><br><span class="line">lstat(path, &amp;st);</span><br><span class="line"><span class="keyword">if</span> ((st.st_mode &amp; S_IFMT) == S_IFDIR) &#123;</span><br><span class="line">    <span class="comment">// 是目录</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>方式二：系统宏判断（推荐）</strong> <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (S_ISDIR(st.st_mode)) &#123;</span><br><span class="line">    <span class="comment">// 是目录</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>S_ISDIR</code> 是系统预定义宏函数，传入 <code>st_mode</code>
+即可判断</li>
+<li>实现逻辑更简洁直观</li>
+</ul>
+<h3 id="打开目录-opendir">1.2 打开目录 opendir</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;dirent.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">DIR *<span class="title function_">opendir</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *name)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>成功：返回 <code>DIR</code> 结构体指针</li>
+<li>失败：返回 <code>NULL</code>，设置错误码</li>
+</ul>
+<h3 id="读取目录-readdir">1.3 读取目录 readdir</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> dirent *<span class="title function_">readdir</span><span class="params">(DIR *dirp)</span>;</span><br></pre></td></tr></table></figure>
+<p><strong>dirent 结构体核心字段</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>d_ino</code></td>
+<td>inode 索引节点编号</td>
+</tr>
+<tr>
+<td><code>d_name</code></td>
+<td>文件名</td>
+</tr>
+<tr>
+<td><code>d_type</code></td>
+<td>文件类型（并非所有文件系统都支持）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>循环读取所有目录项</strong> <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">dirent</span> *<span class="title">entry</span>;</span></span><br><span class="line"><span class="keyword">while</span> ((entry = readdir(dir)) != <span class="literal">NULL</span>) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, entry-&gt;d_name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="关闭目录-closedir">1.4 关闭目录 closedir</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">closedir</span><span class="params">(DIR *dirp)</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="跨目录遍历的路径问题">1.5 跨目录遍历的路径问题</h3>
+<p><strong>问题现象</strong>：遍历非当前目录下的子文件时，直接用子文件名调用属性获取函数，会报”文件不存在”。</p>
+<p><strong>根因</strong>：<code>readdir</code>
+返回的子文件名仅是目标目录内的<strong>相对名称</strong>，直接使用会被解析为当前工作目录下的文件。</p>
+<p><strong>方案一：手动拼接路径</strong> <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> fullpath[<span class="number">256</span>];</span><br><span class="line"><span class="keyword">if</span> (path[<span class="built_in">strlen</span>(path)<span class="number">-1</span>] == <span class="string">&#x27;/&#x27;</span>) &#123;</span><br><span class="line">    <span class="built_in">sprintf</span>(fullpath, <span class="string">&quot;%s%s&quot;</span>, path, entry-&gt;d_name);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">sprintf</span>(fullpath, <span class="string">&quot;%s/%s&quot;</span>, path, entry-&gt;d_name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>方案二：切换工作目录（推荐）</strong> <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">chdir(path);  <span class="comment">// 切换到目标目录</span></span><br><span class="line"><span class="comment">// 之后直接用 entry-&gt;d_name 即可正常访问</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>无需手动拼接路径</li>
+<li>实现效果与系统原生 <code>ls</code> 命令的目录遍历逻辑一致</li>
+</ul>
+<h3 id="bzero-内存清零">1.6 bzero 内存清零</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;strings.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">bzero</span><span class="params">(<span class="type">void</span> *s, <span class="type">size_t</span> n)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Linux 环境下可用，将指定内存区域清零</li>
+<li>相比 <code>memset</code> 调用参数更少，使用更简便</li>
+</ul>
+<hr />
+<h2 id="二自定义-ls-命令项目完成">二、自定义 ls 命令项目完成</h2>
+<h3 id="项目整体结构">2.1 项目整体结构</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">app/</span><br><span class="line">├── fileinfo.h      # 文件属性获取模块</span><br><span class="line">├── fileinfo.c</span><br><span class="line">├── dirinfo.h       # 目录遍历模块</span><br><span class="line">├── dirinfo.c</span><br><span class="line">├── main.c          # 主函数（参数解析与分发）</span><br><span class="line">└── Makefile</span><br></pre></td></tr></table></figure>
+<h3 id="核心工具函数">2.2 核心工具函数</h3>
+<p><strong>is_directory — 判断路径是否为目录</strong> <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 返回值：1=目录，0=非目录，-1=路径无效</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">is_directory</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *path)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (!path) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">st</span>;</span></span><br><span class="line">    <span class="keyword">if</span> (lstat(path, &amp;st) == <span class="number">-1</span>) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">return</span> S_ISDIR(st.st_mode) ? <span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>dirinfo — 遍历目录输出所有文件属性</strong>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 传入目录路径和预分配的缓冲区，实现目录下所有文件属性的批量解析</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">dirinfo</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *path, <span class="type">char</span> *buf)</span></span><br><span class="line">&#123;</span><br><span class="line">    DIR *dir = opendir(path);</span><br><span class="line">    <span class="keyword">if</span> (!dir) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    chdir(path);  <span class="comment">// 切换工作目录</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">dirent</span> *<span class="title">entry</span>;</span></span><br><span class="line">    <span class="keyword">while</span> ((entry = readdir(dir)) != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        fileinfo(entry-&gt;d_name, buf);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, buf);</span><br><span class="line">    &#125;</span><br><span class="line">    closedir(dir);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="主函数参数分支逻辑">2.3 主函数参数分支逻辑</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> buf[<span class="number">256</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (argc == <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="comment">// 无参数：输出当前目录内容</span></span><br><span class="line">        dirinfo(<span class="string">&quot;.&quot;</span>, buf);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 扫描 -d 参数位置</span></span><br><span class="line">    <span class="type">int</span> d_pos = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; argc; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">strcmp</span>(argv[i], <span class="string">&quot;-d&quot;</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">            d_pos = i;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (d_pos &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// 带 -d：输出目标路径自身属性</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; argc; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">strcmp</span>(argv[i], <span class="string">&quot;-d&quot;</span>) == <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">            fileinfo(argv[i], buf);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, buf);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 不带 -d：目录则遍历，文件则输出自身</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; argc; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (is_directory(argv[i]) == <span class="number">1</span>) &#123;</span><br><span class="line">                dirinfo(argv[i], buf);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                fileinfo(argv[i], buf);</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, buf);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="参数场景覆盖">2.4 参数场景覆盖</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>示例</th>
+<th>行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无参数</td>
+<td><code>./app</code></td>
+<td>输出当前目录内容</td>
+</tr>
+<tr>
+<td>单文件</td>
+<td><code>./app a.c</code></td>
+<td>输出文件自身属性</td>
+</tr>
+<tr>
+<td>单目录</td>
+<td><code>./app /home</code></td>
+<td>遍历输出目录内容</td>
+</tr>
+<tr>
+<td>带 -d</td>
+<td><code>./app -d /home</code></td>
+<td>输出目录自身属性</td>
+</tr>
+<tr>
+<td>混合参数</td>
+<td><code>./app a.c /home -d /tmp</code></td>
+<td>逐一处理，-d 后路径输出自身</td>
+</tr>
+<tr>
+<td>多目录</td>
+<td><code>./app /home /tmp</code></td>
+<td>依次遍历每个目录</td>
+</tr>
+</tbody>
+</table>
+<h3 id="待扩展功能">2.5 待扩展功能</h3>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>实现思路</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>块占用统计</td>
+<td>遍历目录所有文件 block 字段累加，除以分区块大小</td>
+</tr>
+<tr>
+<td>设备号展示</td>
+<td>设备文件读取主次设备号，替换默认大小展示</td>
+</tr>
+<tr>
+<td>时间字段</td>
+<td>Mtime=修改时间、Atime=访问时间、Ctime=状态变更时间</td>
+</tr>
+</tbody>
+</table>
+<h3 id="测试要求">2.6 测试要求</h3>
+<ul>
+<li>补充链接文件、特殊设备文件等边界场景测试</li>
+<li>覆盖 home 目录下的 <code>.c</code> 链接文件</li>
+<li>录制项目操作过程录屏</li>
+</ul>
+<hr />
+<h2 id="三设备号">三、设备号</h2>
+<h3 id="设备类型判断">3.1 设备类型判断</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">mode_t</span> type = st.st_mode &amp; S_IFMT;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (type == S_IFCHR) &#123;</span><br><span class="line">    <span class="comment">// 字符设备（c）</span></span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (type == S_IFBLK) &#123;</span><br><span class="line">    <span class="comment">// 块设备（b）</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="主设备号与次设备号">3.2 主设备号与次设备号</h3>
+<ul>
+<li><strong>主设备号</strong>：标识设备驱动程序类型</li>
+<li><strong>次设备号</strong>：标识同类型下的具体设备</li>
+</ul>
+<p><strong>硬盘设备约定</strong> - 硬盘类设备的主设备号固定为
+<code>8</code> - 所有硬盘的分区不区分物理盘，统一按顺序连续编号</p>
+<h3 id="设备号分解函数">3.3 设备号分解函数</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/sysmacros.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">unsigned</span> <span class="type">int</span> <span class="title function_">major</span><span class="params">(<span class="type">dev_t</span> dev)</span>;   <span class="comment">// 提取主设备号</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">int</span> <span class="title function_">minor</span><span class="params">(<span class="type">dev_t</span> dev)</span>;   <span class="comment">// 提取次设备号</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>禁止直接硬编码输出设备号数值</li>
+<li>必须调用系统专用函数分解后再输出</li>
+</ul>
+<h3 id="设备文件输出格式">3.4 设备文件输出格式</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设备文件场景下用 sprintf 调整输出格式</span></span><br><span class="line"><span class="comment">// 将原有的大小字段替换为 &quot;主设备号,次设备号&quot;</span></span><br><span class="line"><span class="built_in">sprintf</span>(buf, <span class="string">&quot;%c%s %2lu %-8s %-8s %3u,%3u %s %s&quot;</span>,</span><br><span class="line">        type_char, perm_str, st.st_nlink,</span><br><span class="line">        owner, group,</span><br><span class="line">        major(st.st_rdev), minor(st.st_rdev),  <span class="comment">// 替换大小字段</span></span><br><span class="line">        time_str, filename);</span><br></pre></td></tr></table></figure>
+<hr />
+<h2 id="四程序与进程">四、程序与进程</h2>
+<h3 id="核心概念区分">4.1 核心概念区分</h3>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>可执行程序</th>
+<th>进程</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>本质</td>
+<td>静态文件</td>
+<td>动态执行实例</td>
+</tr>
+<tr>
+<td>存储位置</td>
+<td>硬盘/外存</td>
+<td>内存</td>
+</tr>
+<tr>
+<td>资源占用</td>
+<td>磁盘空间</td>
+<td>CPU 调度 + 内存</td>
+</tr>
+<tr>
+<td>与 CPU 关系</td>
+<td>无关联</td>
+<td>被 CPU 调度执行</td>
+</tr>
+<tr>
+<td>数量</td>
+<td>一份文件可多次运行</td>
+<td>每次运行生成一个独立进程</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>程序：存储在硬盘上的可执行指令序列文件</li>
+<li>进程：程序的一次动态执行过程</li>
+</ul>
+<h3 id="进程加载流程">4.2 进程加载流程</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">硬盘上的可执行文件</span><br><span class="line">    ↓ 经 swap 缓冲区（缓解硬盘与内存的速度/空间差异）</span><br><span class="line">内存（页面存储技术，边运行边加载）</span><br><span class="line">    ↓ CPU 取指执行</span><br><span class="line">进程运行</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>swap 缓冲区</strong>：硬盘与内存之间的缓冲区域</li>
+<li><strong>页面存储技术</strong>：指令边运行边加载、暂存，保障 CPU
+指令流持续供给</li>
+<li><strong>虚拟寻址</strong>：每个进程拥有 4G
+虚拟寻址空间，通过存储管理模块动态分配回收物理内存</li>
+</ul>
+<h3 id="调度器">4.3 调度器</h3>
+<p><strong>核心作用</strong> -
+管理系统内所有运行进程的状态、资源占用、进程 ID - 合理分配 CPU
+资源，让用户感知多进程同时运行</p>
+<p><strong>调度方式</strong></p>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>调度方式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>普通</td>
+<td>时间片轮询</td>
+<td>单次时间片 50ms，CPU 可执行数十万条指令</td>
+</tr>
+<tr>
+<td>高</td>
+<td>先进先出</td>
+<td>可抢占普通进程，如系统关机进程</td>
+</tr>
+</tbody>
+</table>
+<h3 id="进程控制块-pcb">4.4 进程控制块 PCB</h3>
+<ul>
+<li>存储进程所有运行状态信息</li>
+<li>负责进程寻址空间管理</li>
+<li>为进程分配、查找对应资源地址</li>
+<li>为调度器调度提供数据支撑</li>
+</ul>
+<h3 id="线程">4.5 线程</h3>
+<ul>
+<li><strong>定义</strong>：CPU 可调度的最小执行单位</li>
+<li><strong>关系</strong>：进程内部可包含多个线程</li>
+<li><strong>类比</strong>：华罗庚统筹法——烧开水的同时做准备工作，提升效率</li>
+<li><strong>多核 CPU</strong>：支持多线程并行执行</li>
+</ul>
+<h3 id="进程创建流程">4.6 进程创建流程</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fork() 创建新进程实例</span><br><span class="line">    ↓</span><br><span class="line">exec 系列函数装载可执行程序</span><br><span class="line">    ↓</span><br><span class="line">新进程初始化启动完成</span><br></pre></td></tr></table></figure>
+<ul>
+<li>终端执行 <code>./app</code> 启动进程的底层逻辑：终端程序调用 fork +
+exec 完成进程启动</li>
+</ul>
+<hr />
+<h2 id="五进程状态">五、进程状态</h2>
+<h3 id="三类核心状态">5.1 三类核心状态</h3>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>运行态</td>
+<td>正在 CPU 上执行指令</td>
+</tr>
+<tr>
+<td>休眠态</td>
+<td>等待资源（如 IO、锁），时间片耗尽也会进入</td>
+</tr>
+<tr>
+<td>暂停/挂起态</td>
+<td>被信号暂停，等待恢复信号</td>
+</tr>
+</tbody>
+</table>
+<h3 id="状态转换规则">5.2 状态转换规则</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">运行态 ←→ 休眠态</span><br><span class="line">  ↑↓</span><br><span class="line">暂停态</span><br></pre></td></tr></table></figure>
+<ul>
+<li>所有状态切换均由<strong>调度器统一控制</strong></li>
+<li>进程<strong>无法直接</strong>从暂停态跳转至休眠态</li>
+<li>两类状态的互相切换必须经过调度器的统一调度判定</li>
+</ul>
+<h3 id="进程退出">5.3 进程退出</h3>
+<p><strong>退出触发条件</strong> - 执行完所有指令，正常结束 -
+收到退出信号（如终端 <code>Ctrl+C</code>）</p>
+<p><strong>退出流程</strong> 1. 进程执行完指令前先做自定义清理工作 2.
+进入待销毁状态 3. 父进程通过 <code>wait</code> 函数完成子进程资源回收 4.
+进程正式销毁</p>
+<h3 id="信号基础">5.4 信号基础</h3>
+<ul>
+<li>信号可实现进程暂停、退出等控制</li>
+<li><code>Ctrl+C</code> 本质是向进程发送退出信号</li>
+<li>后续多进程学习需覆盖：fork 创建、exec 装载、信号发送与处理</li>
+</ul>
+<hr />
+<h2 id="六多进程入门-fork">六、多进程入门 — fork</h2>
+<h3 id="进程查看命令">6.1 进程查看命令</h3>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pstree</code></td>
+<td>树形展示所有运行进程</td>
+</tr>
+<tr>
+<td><code>ps aux</code></td>
+<td>查看进程列表明细</td>
+</tr>
+<tr>
+<td><code>ps -auf</code></td>
+<td>查看进程列表与父子关系</td>
+</tr>
+<tr>
+<td><code>ps -AUX</code></td>
+<td>查看所有进程详细信息</td>
+</tr>
+</tbody>
+</table>
+<h3 id="fork-函数">6.2 fork 函数</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">pid_t</span> <span class="title function_">fork</span><span class="params">(<span class="type">void</span>)</span>;</span><br></pre></td></tr></table></figure>
+<p><strong>返回值规则</strong></p>
+<table>
+<thead>
+<tr>
+<th>返回值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-1</code></td>
+<td>出错</td>
+</tr>
+<tr>
+<td><code>0</code></td>
+<td>子进程拿到的返回值</td>
+</tr>
+<tr>
+<td><code>&gt;0</code></td>
+<td>父进程拿到的返回值（即子进程的 PID）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心特性</strong> - fork
+调用会生成一个<strong>完整复制父进程所有资源</strong>的新进程 - 新进程从
+fork 代码行的<strong>下一行</strong>开始执行 -
+父、子进程均会执行后续代码，对应语句会打印 2 次</p>
+<h3 id="获取进程-id">6.3 获取进程 ID</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">pid_t</span> <span class="title function_">getpid</span><span class="params">(<span class="type">void</span>)</span>;   <span class="comment">// 获取自身进程 ID</span></span><br><span class="line"><span class="type">pid_t</span> <span class="title function_">getppid</span><span class="params">(<span class="type">void</span>)</span>;  <span class="comment">// 获取父进程 ID</span></span><br></pre></td></tr></table></figure>
+<h3 id="基础示例">6.4 基础示例</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;before fork\n&quot;</span>);  <span class="comment">// 只打印1次</span></span><br><span class="line"></span><br><span class="line">    <span class="type">pid_t</span> pid = fork();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;after fork, pid=%d\n&quot;</span>, pid);  <span class="comment">// 打印2次（父+子）</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pid == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;子进程: my pid=%d, parent pid=%d\n&quot;</span>,</span><br><span class="line">               getpid(), getppid());</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (pid &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;父进程: my pid=%d, child pid=%d\n&quot;</span>,</span><br><span class="line">               getpid(), pid);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="连续-fork-的进程数计算">6.5 连续 fork 的进程数计算</h3>
+<p><strong>规则</strong>：每一次 fork
+都会触发当前所有存活进程各自衍生一个新进程。</p>
+<table>
+<thead>
+<tr>
+<th>fork 次数</th>
+<th>总进程数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 次</td>
+<td>2 = 2¹</td>
+</tr>
+<tr>
+<td>2 次</td>
+<td>4 = 2²</td>
+</tr>
+<tr>
+<td>3 次</td>
+<td>8 = 2³</td>
+</tr>
+<tr>
+<td>n 次</td>
+<td>2ⁿ</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>打印语句的执行次数需结合代码行具体位置计算，不同逻辑下次数存在差异。</p>
+</blockquote>
+<h3 id="固定数量直属子进程实现">6.6 固定数量直属子进程实现</h3>
+<p><strong>需求</strong>：仅生成父进程的 6
+个直属子进程，禁止子进程再衍生孙代。</p>
+<p><strong>方案一：子进程 break 跳出循环</strong> <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; i++) &#123;</span><br><span class="line">        <span class="type">pid_t</span> pid = fork();</span><br><span class="line">        <span class="keyword">if</span> (pid == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">// 子进程：执行完逻辑后 break，不再 fork</span></span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;子进程 %d: pid=%d\n&quot;</span>, i, getpid());</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 父进程：继续循环 fork</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;父进程: 生成子进程 pid=%d\n&quot;</span>, pid);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>方案二：子进程生成后直接暂停</strong> - 子进程不再执行后续
+fork 逻辑</p>
+<p><strong>两种打印主体</strong> | 主体 | 效果 | |——|——| |
+父进程统一打印 | 父进程获取所有子进程 PID，便于管理 | | 子进程自行打印 |
+子进程生成后自行上报自身 ID |</p>
+<h3 id="注意事项">6.7 注意事项</h3>
+<ul>
+<li>测试前清理上一次未退出的遗留进程，避免干扰测试</li>
+<li>子进程 break 后仍会执行循环外的代码，需注意逻辑隔离</li>
+<li>父进程获取子进程 PID 是管理子进程的必要前提</li>
+</ul>
+<hr />
+<h2 id="七函数速查表">七、函数速查表</h2>
+<table>
+<thead>
+<tr>
+<th>分类</th>
+<th>函数</th>
+<th>头文件</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>目录操作</td>
+<td><code>opendir</code></td>
+<td>dirent.h</td>
+<td>打开目录</td>
+</tr>
+<tr>
+<td>目录操作</td>
+<td><code>readdir</code></td>
+<td>dirent.h</td>
+<td>读取目录项</td>
+</tr>
+<tr>
+<td>目录操作</td>
+<td><code>closedir</code></td>
+<td>dirent.h</td>
+<td>关闭目录</td>
+</tr>
+<tr>
+<td>目录操作</td>
+<td><code>chdir</code></td>
+<td>unistd.h</td>
+<td>切换工作目录</td>
+</tr>
+<tr>
+<td>文件属性</td>
+<td><code>lstat</code></td>
+<td>sys/stat.h</td>
+<td>获取文件属性（不跟随链接）</td>
+</tr>
+<tr>
+<td>文件属性</td>
+<td><code>S_ISDIR</code></td>
+<td>sys/stat.h</td>
+<td>判断是否为目录</td>
+</tr>
+<tr>
+<td>内存操作</td>
+<td><code>bzero</code></td>
+<td>strings.h</td>
+<td>内存清零</td>
+</tr>
+<tr>
+<td>设备号</td>
+<td><code>major</code></td>
+<td>sys/sysmacros.h</td>
+<td>提取主设备号</td>
+</tr>
+<tr>
+<td>设备号</td>
+<td><code>minor</code></td>
+<td>sys/sysmacros.h</td>
+<td>提取次设备号</td>
+</tr>
+<tr>
+<td>进程</td>
+<td><code>fork</code></td>
+<td>unistd.h</td>
+<td>创建子进程</td>
+</tr>
+<tr>
+<td>进程</td>
+<td><code>getpid</code></td>
+<td>unistd.h</td>
+<td>获取自身进程 ID</td>
+</tr>
+<tr>
+<td>进程</td>
+<td><code>getppid</code></td>
+<td>unistd.h</td>
+<td>获取父进程 ID</td>
+</tr>
+<tr>
+<td>进程</td>
+<td><code>exec</code> 系列</td>
+<td>unistd.h</td>
+<td>装载可执行程序</td>
+</tr>
+<tr>
+<td>进程</td>
+<td><code>wait</code></td>
+<td>sys/wait.h</td>
+<td>回收子进程资源</td>
+</tr>
+<tr>
+<td>进程查看</td>
+<td><code>pstree</code></td>
+<td>命令行</td>
+<td>树形展示进程</td>
+</tr>
+<tr>
+<td>进程查看</td>
+<td><code>ps aux</code></td>
+<td>命令行</td>
+<td>查看进程明细</td>
+</tr>
+<tr>
+<td>文本统计</td>
+<td><code>wc</code></td>
+<td>命令行</td>
+<td>统计行数/字节数/单词数</td>
+</tr>
+</tbody>
+</table>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">rebirth100</div><div class="post-copyright__author_desc">爱我的人和我爱的人，都希望你有更好的明天❤️</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="https://rebirth100.github.io/posts/18572915.html">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('https://rebirth100.github.io/posts/18572915.html')">系统编程-1.目录操作与多进程入门学习笔记</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"><div class="reward-link mode"><a class="reward-link-button" href="/wechat"><i class="anzhiyufont anzhiyu-icon-plant-fill"></i>运营模式与责任</a></div></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="https://rebirth100.github.io/posts/18572915.html"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=系统编程-1.目录操作与多进程入门学习笔记&amp;url=https://rebirth100.github.io/posts/18572915.html&amp;pic=/img/posts/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B.png" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://rebirth100.github.io" target="_blank">Rebirth100</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__category-list"><a class="post-meta__box__categoryes" href="/categories/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/"><span class="categoryes-punctuation"> <i class="anzhiyufont anzhiyu-icon-inbox"></i></span>系统编程<span class="categoryesPageCount">5</span></a></div><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/%E5%9F%BA%E7%A1%80/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>基础<span class="tagsPageCount">112</span></a><a class="post-meta__box__tags" href="/tags/%E7%BC%96%E7%A8%8B/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>编程<span class="tagsPageCount">109</span></a><a class="post-meta__box__tags" href="/tags/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>系统编程<span class="tagsPageCount">5</span></a></div></div><div class="post_share"><div class="social-share" data-image="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/2f109530.html"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/sj%20(9).jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Linux应用开发初识-2.本地安装deb软件</div></div></a></div><div class="next-post pull-right"><a href="/posts/f2323baf.html"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">C语言教程-51.函数的概念：把代码封装起来</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/posts/180c872f.html" title="系统编程-4.Linux C 进程间通信与多线程学习笔记（二）"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-08-12</div><div class="title">系统编程-4.Linux C 进程间通信与多线程学习笔记（二）</div></div></a></div><div><a href="/posts/88ced556.html" title="系统编程-5.Linux C 多线程进阶学习笔记（三）"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-08-13</div><div class="title">系统编程-5.Linux C 多线程进阶学习笔记（三）</div></div></a></div><div><a href="/posts/91f9ee7d.html" title="系统编程-2.守护进程与进程间通信学习笔记"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-08-10</div><div class="title">系统编程-2.守护进程与进程间通信学习笔记</div></div></a></div><div><a href="/posts/6499bb5d.html" title="系统编程-3.Linux C 进程间通信学习笔记"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-08-11</div><div class="title">系统编程-3.Linux C 进程间通信学习笔记</div></div></a></div><div><a href="/posts/d3738343.html" title="C语言教程-105.结构体作为函数参数"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-01</div><div class="title">C语言教程-105.结构体作为函数参数</div></div></a></div><div><a href="/posts/6377da75.html" title="C语言教程-108.typedef用法：给类型起别名"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-04</div><div class="title">C语言教程-108.typedef用法：给类型起别名</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/08/24/64e6ce9c507bb.png" alt="status"/></div></div><div class="author-info__description">学习笔记，成长记录</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">rebirth100</h1><div class="author-info__desc">爱我的人和我爱的人，都希望你有更好的明天❤️</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/Rebirth100" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="https://rebirth100.github.io/" target="_blank" title="BiliBili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a></div></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake"></i><span>公告</span></div><div class="announcement_content">我写不出细腻的文字了 换句话 我找不到我自己了</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="toc-text">目录操作与多进程入门学习笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C"><span class="toc-text">一、目录操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E5%90%88%E6%B3%95%E6%80%A7%E5%88%A4%E6%96%AD"><span class="toc-text">1.1 目录合法性判断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%BC%80%E7%9B%AE%E5%BD%95-opendir"><span class="toc-text">1.2 打开目录 opendir</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96%E7%9B%AE%E5%BD%95-readdir"><span class="toc-text">1.3 读取目录 readdir</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%97%AD%E7%9B%AE%E5%BD%95-closedir"><span class="toc-text">1.4 关闭目录 closedir</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%A8%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E7%9A%84%E8%B7%AF%E5%BE%84%E9%97%AE%E9%A2%98"><span class="toc-text">1.5 跨目录遍历的路径问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bzero-%E5%86%85%E5%AD%98%E6%B8%85%E9%9B%B6"><span class="toc-text">1.6 bzero 内存清零</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E8%87%AA%E5%AE%9A%E4%B9%89-ls-%E5%91%BD%E4%BB%A4%E9%A1%B9%E7%9B%AE%E5%AE%8C%E6%88%90"><span class="toc-text">二、自定义 ls 命令项目完成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84"><span class="toc-text">2.1 项目整体结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0"><span class="toc-text">2.2 核心工具函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E5%88%86%E6%94%AF%E9%80%BB%E8%BE%91"><span class="toc-text">2.3 主函数参数分支逻辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E5%9C%BA%E6%99%AF%E8%A6%86%E7%9B%96"><span class="toc-text">2.4 参数场景覆盖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%85%E6%89%A9%E5%B1%95%E5%8A%9F%E8%83%BD"><span class="toc-text">2.5 待扩展功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E8%A6%81%E6%B1%82"><span class="toc-text">2.6 测试要求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E8%AE%BE%E5%A4%87%E5%8F%B7"><span class="toc-text">三、设备号</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E5%A4%87%E7%B1%BB%E5%9E%8B%E5%88%A4%E6%96%AD"><span class="toc-text">3.1 设备类型判断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E8%AE%BE%E5%A4%87%E5%8F%B7%E4%B8%8E%E6%AC%A1%E8%AE%BE%E5%A4%87%E5%8F%B7"><span class="toc-text">3.2 主设备号与次设备号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E5%A4%87%E5%8F%B7%E5%88%86%E8%A7%A3%E5%87%BD%E6%95%B0"><span class="toc-text">3.3 设备号分解函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E5%A4%87%E6%96%87%E4%BB%B6%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F"><span class="toc-text">3.4 设备文件输出格式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E7%A8%8B%E5%BA%8F%E4%B8%8E%E8%BF%9B%E7%A8%8B"><span class="toc-text">四、程序与进程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E5%8C%BA%E5%88%86"><span class="toc-text">4.1 核心概念区分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%8A%A0%E8%BD%BD%E6%B5%81%E7%A8%8B"><span class="toc-text">4.2 进程加载流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E5%BA%A6%E5%99%A8"><span class="toc-text">4.3 调度器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%9D%97-pcb"><span class="toc-text">4.4 进程控制块 PCB</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B"><span class="toc-text">4.5 线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%88%9B%E5%BB%BA%E6%B5%81%E7%A8%8B"><span class="toc-text">4.6 进程创建流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E8%BF%9B%E7%A8%8B%E7%8A%B6%E6%80%81"><span class="toc-text">五、进程状态</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E7%B1%BB%E6%A0%B8%E5%BF%83%E7%8A%B6%E6%80%81"><span class="toc-text">5.1 三类核心状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2%E8%A7%84%E5%88%99"><span class="toc-text">5.2 状态转换规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E9%80%80%E5%87%BA"><span class="toc-text">5.3 进程退出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E5%9F%BA%E7%A1%80"><span class="toc-text">5.4 信号基础</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%85%A5%E9%97%A8-fork"><span class="toc-text">六、多进程入门 — fork</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E6%9F%A5%E7%9C%8B%E5%91%BD%E4%BB%A4"><span class="toc-text">6.1 进程查看命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fork-%E5%87%BD%E6%95%B0"><span class="toc-text">6.2 fork 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E8%BF%9B%E7%A8%8B-id"><span class="toc-text">6.3 获取进程 ID</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%A4%BA%E4%BE%8B"><span class="toc-text">6.4 基础示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E7%BB%AD-fork-%E7%9A%84%E8%BF%9B%E7%A8%8B%E6%95%B0%E8%AE%A1%E7%AE%97"><span class="toc-text">6.5 连续 fork 的进程数计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BA%E5%AE%9A%E6%95%B0%E9%87%8F%E7%9B%B4%E5%B1%9E%E5%AD%90%E8%BF%9B%E7%A8%8B%E5%AE%9E%E7%8E%B0"><span class="toc-text">6.6 固定数量直属子进程实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">6.7 注意事项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E5%87%BD%E6%95%B0%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="toc-text">七、函数速查表</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/4340bc10.html" title="C语言教程-111.位域：按位存储与实现相关陷阱"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-111.位域：按位存储与实现相关陷阱"/></a><div class="content"><a class="title" href="/posts/4340bc10.html" title="C语言教程-111.位域：按位存储与实现相关陷阱">C语言教程-111.位域：按位存储与实现相关陷阱</a><time datetime="2026-10-05T23:18:00.000Z" title="发表于 2026-10-06 07:18:00">2026-10-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/395745d4.html" title="C语言教程-110.枚举enum：让常量更可读"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-110.枚举enum：让常量更可读"/></a><div class="content"><a class="title" href="/posts/395745d4.html" title="C语言教程-110.枚举enum：让常量更可读">C语言教程-110.枚举enum：让常量更可读</a><time datetime="2026-10-05T01:16:00.000Z" title="发表于 2026-10-05 09:16:00">2026-10-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/dc0fea1b.html" title="C语言教程-109.联合体union：共享内存的数据类型"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-109.联合体union：共享内存的数据类型"/></a><div class="content"><a class="title" href="/posts/dc0fea1b.html" title="C语言教程-109.联合体union：共享内存的数据类型">C语言教程-109.联合体union：共享内存的数据类型</a><time datetime="2026-10-04T23:15:00.000Z" title="发表于 2026-10-05 07:15:00">2026-10-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/6377da75.html" title="C语言教程-108.typedef用法：给类型起别名"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-108.typedef用法：给类型起别名"/></a><div class="content"><a class="title" href="/posts/6377da75.html" title="C语言教程-108.typedef用法：给类型起别名">C语言教程-108.typedef用法：给类型起别名</a><time datetime="2026-10-03T23:14:00.000Z" title="发表于 2026-10-04 07:14:00">2026-10-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/e9573a32.html" title="C语言教程-107.嵌套结构体：描述复杂实体"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-107.嵌套结构体：描述复杂实体"/></a><div class="content"><a class="title" href="/posts/e9573a32.html" title="C语言教程-107.嵌套结构体：描述复杂实体">C语言教程-107.嵌套结构体：描述复杂实体</a><time datetime="2026-10-02T23:14:00.000Z" title="发表于 2026-10-03 07:14:00">2026-10-03</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="workboard"><img class="workSituationImg boardsign" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-上班摸鱼中.svg" alt="距离月入25k也就还差一个大佬带我~" title="距离月入25k也就还差一个大佬带我~"/><div id="runtimeTextTip"></div></div></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2026 By <a class="footer-bar-link" href="/" title="rebirth100" target="_blank">rebirth100</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" href="/null"></a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">123</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">11</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" href="https://rebirth100.github.io/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">Github</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/Rebirth100" title="个人主页"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://image.anheyu.com/favicon.ico" alt="个人主页"/><span class="back-menu-item-text">个人主页</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/C/" style="font-size: 0.88rem;">C<sup>13</sup></a><a href="/tags/C/" style="font-size: 0.88rem;">C++<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 0.88rem;">C语言<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">C语言教程<sup>69</sup></a><a href="/tags/Linux/" style="font-size: 0.88rem;">Linux<sup>14</sup></a><a href="/tags/MySQL/" style="font-size: 0.88rem;">MySQL<sup>11</sup></a><a href="/tags/Python/" style="font-size: 0.88rem;">Python<sup>3</sup></a><a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 0.88rem;">基础<sup>112</sup></a><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 0.88rem;">数据结构<sup>6</sup></a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" style="font-size: 0.88rem;">系统编程<sup>5</sup></a><a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 0.88rem;">编程<sup>109</sup></a><a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 0.88rem;">网络编程<sup>3</sup></a><a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" style="font-size: 0.88rem;">项目实战<sup>3</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.7"></meting-js></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="anzhiyufont anzhiyu-icon-xmark"></i></button></nav><div class="is-center" id="loading-database"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.cbd.int/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("06/10/2026 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2026 By 安知鱼 V1.7.1",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 rebirth100 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><script async="async">(function () {
+  var grt = new Date("06/10/2026 00:00:00"); //设置网站上线时间
+  var now = new Date();
+  var dnum;
+  var hnum;
+  var mnum;
+  var snum;
+  var nowHour;
+
+  // 计算并更新天数、小时数、分钟数和秒数
+  function updateTime() {
+    now = new Date(); // 更新 now 的值
+    nowHour = now.getHours(); // 更新 nowHour 的值
+    var days = (now - grt) / 1000 / 60 / 60 / 24;
+    dnum = Math.floor(days);
+    var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+      hnum = "0" + hnum;
+    }
+    var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+      mnum = "0" + mnum;
+    }
+    var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+      snum = "0" + snum;
+    }
+  }
+
+  // 更新网页中显示的网站运行时间
+  function updateHtml() {
+    const footer = document.getElementById("footer");
+    if (!footer) return
+    let currentTimeHtml = "";
+    if (nowHour < 18 && nowHour >= 9) {
+      // 如果是上班时间，默认就是"安知鱼-上班摸鱼中.svg"图片，不需要更改
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    } else {
+      // 如果是下班时间，插入"安知鱼-下班啦.svg"图片
+      let img = document.querySelector("#workboard .workSituationImg");
+      if (img != null) {
+        img.src = "https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-下班啦.svg";
+        img.title = "下班了就该开开心心的玩耍，嘿嘿~";
+        img.alt = "下班了就该开开心心的玩耍，嘿嘿~";
+      }
+
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    }
+
+    if (document.getElementById("runtimeTextTip")) {
+      document.getElementById("runtimeTextTip").innerHTML = currentTimeHtml;
+    }
+  }
+
+  setInterval(() => {
+    updateTime();
+    updateHtml();
+  }, 1000);
+})();</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><input type="hidden" name="page-type" id="page-type" value="post"></div><script async data-pjax src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.1/bubble/bubble.js"></script><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://cdn.cbd.int/qrcodejs@1.0.0/qrcode.min.js"></script><script src="/js/anzhiyu/right_click_menu.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>

@@ -1,0 +1,836 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>C语言教程-68.数组下标：从0开始的原因 | Rebirth100</title><meta name="keywords" content="基础,编程,C语言教程"><meta name="author" content="rebirth100"><meta name="copyright" content="rebirth100"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="C语言教程-68.数组下标：从0开始的原因"><meta name="application-name" content="C语言教程-68.数组下标：从0开始的原因"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="C语言教程-68.数组下标：从0开始的原因"><meta property="og:url" content="https://rebirth100.github.io/posts/bf350c86.html"><meta property="og:site_name" content="Rebirth100"><meta property="og:description" content="【若北辰-C语言】《C语言教程》068｜数组下标：从0开始的原因  原文：微信公众号 · 若北辰-C语言 · 2026-08-25 07:12 原文链接：http:&amp;#x2F;&amp;#x2F;mp.weixin.qq.com&amp;#x2F;s?__biz&amp;#x3D;MzUyMDE2ODQ1Mg&amp;#x3D;&amp;#x3D;&amp;amp;mid&amp;#x3D;2247484125&amp;amp;am"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://rebirth100.github.io/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png"><meta property="article:author" content="rebirth100"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://rebirth100.github.io/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png"><meta name="description" content="【若北辰-C语言】《C语言教程》068｜数组下标：从0开始的原因  原文：微信公众号 · 若北辰-C语言 · 2026-08-25 07:12 原文链接：http:&amp;#x2F;&amp;#x2F;mp.weixin.qq.com&amp;#x2F;s?__biz&amp;#x3D;MzUyMDE2ODQ1Mg&amp;#x3D;&amp;#x3D;&amp;amp;mid&amp;#x3D;2247484125&amp;amp;am"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://rebirth100.github.io/posts/bf350c86.html"><link rel="preconnect" href="//cdn.cbd.int"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/swiper/swiper.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: undefined,
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: {"enable":true,"default":"晚上好👋","list":[{"greeting":"晚安😴","startTime":0,"endTime":5},{"greeting":"早上好鸭👋, 祝你一天好心情！","startTime":6,"endTime":9},{"greeting":"上午好👋, 状态很好，鼓励一下～","startTime":10,"endTime":10},{"greeting":"11点多啦, 在坚持一下就吃饭啦～","startTime":11,"endTime":11},{"greeting":"午安👋, 宝贝","startTime":12,"endTime":14},{"greeting":"🌈充实的一天辛苦啦！","startTime":14,"endTime":18},{"greeting":"19点喽, 奖励一顿丰盛的大餐吧🍔。","startTime":19,"endTime":19},{"greeting":"晚上好👋, 在属于自己的时间好好放松😌~","startTime":20,"endTime":24}]},
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: {"mode":"both","api":"https://img2color-go.vercel.app/api?img=","cover_change":true},
+  authorStatus: {"skills":["🤖️ 数码科技爱好者","🔍 分享与热心帮助","🏠 智能家居小能手","🔨 设计开发一条龙","🤝 专修交互与设计","🏃 脚踏实地行动派","🧱 团队小组发动机","💢 壮汉人狠话不多"]},
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: {"limitDay":60,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章的内容可能已经过时了。"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: rebirth100","link":"链接: ","source":"来源: Rebirth100","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'Rebirth100',
+  title: 'C语言教程-68.数组下标：从0开始的原因',
+  postAI: '',
+  pageFillDescription: '【若北辰-C语言】《C语言教程》068｜数组下标：从0开始的原因若北辰语言语言教程数组下标从开始的原因原文微信公众号若北辰语言原文链接下标到底是什么学习数组时最容易让人不习惯的一点就是数组不是从开始数而是从开始数比如这个数组有个元素但它们的下标是对应关系是很多初学者会下意识认为第一个元素应该是第五个元素应该是但在语言中不是这样数组下标不是日常生活里的第几个而是从数组起点开始偏移了几个位置这个理解非常关键的意思是从数组开头出发偏移个元素拿到第一个元素的意思是从数组开头出发偏移个元素拿到第二个元素的意思是从数组开头出发偏移个元素拿到第三个元素所以下标更像偏移量不是排名编号为什么从开始语言非常接近底层数组和内存地址关系紧密数组在内存中是一段连续空间假设有这样一个数组如果一个占个字节并且的地址是那么它们在内存中的位置可能是地址值地址值地址值地址值计算某个元素地址时大致可以这样理解元素地址数组起始地址下标每个元素占用的字节数如果访问第一个元素地址计算就是正好是数组起始地址如果访问第二个元素地址计算就是如果访问第三个元素地址计算就是这样看下标从开始就非常自然第一个元素距离起点没有偏移所以是如果数组从开始计算时反而要多减一次元素地址数组起始地址编号每个元素占用的字节数语言追求简单直接所以采用了从开始的下标设计数组下标和生活编号不一样生活中我们通常从开始数第个学生第个座位第本书第天但数组下标不是这种说法数组下标更接近距离比如你站在一排格子的开头你不移动看到的是第一个格子所以偏移是向右移动格看到第二个格子所以偏移是向右移动格看到第三个格子所以偏移是这就是数组下标从开始的直观解释以后看到不要马上把理解成第几个而要理解成从数组开头偏移几个元素这会让数组指针字符串的学习顺很多长度为的数组下标到数组长度和最后一个下标是两个不同概念定义这里的表示数组长度也就是有个元素合法下标是最后一个下标是也就是长度减所以第个元素第个元素第个元素第个元素第个元素错误的是不是第个元素而是第个位置这就是数组里最常见的坑只要记住一句话长度为的数组合法下标是到比如下标到下标到下标到看到数组长度就要立刻想到最后下标第几个和下标之间的转换写程序时经常要在人的编号和数组下标之间转换人习惯说第个第个第个数组使用下标它们的关系是第几个下标下标第几个例如数组第个成绩是第个成绩是第个成绩是如果用户输入想查看第几个成绩请输入要查看第几个成绩成绩是编号错误这里用户输入的是第几个所以范围是到访问数组时要用如果用户输入就访问如果用户输入就访问这是数组中非常常见的写法为什么循环通常从开始数组和循环经常一起使用比如遍历一个长度为的数组这里的循环变量从开始到结束正好对应数组下标循环过程是访问访问访问访问访问当变成时条件不成立循环结束这就是为什么遍历数组时最常见的循环写法是而不是后面这种写法不是绝对不能用但如果直接写就会漏掉第一个元素并且访问越界位置错误示例这段代码访问的是问题有两个漏掉了访问了不存在的正确写法是数组越界为什么危险数组越界就是访问了不属于数组的位置比如只有个元素合法下标是已经越界语言不会总是帮你检查这种错误程序可能还能运行甚至可能输出一个数字但这个数字不可信更危险的是越界访问可能破坏其他变量看一个例子这段代码中不属于数组写入这个位置可能影响旁边的内存有些环境下的值可能被改掉也有些环境下看起来没变化还有可能程序直接崩溃最麻烦的是它不一定稳定复现今天运行没问题换个编译器换个系统换个优化选项就可能出问题所以数组越界不是小错误而是语言里最危险的错误之一访问最后一个元素的正确方式很多人访问最后一个元素时容易写错假设数组长度是最后一个元素不是而是如果有一个变量保存长度最后一个元素应该写比如第一个元素最后一个元素输出第一个元素最后一个元素只要是访问最后一个元素就想起长度这个习惯能避免很多越界错误用配合下标如果数组在当前作用域中可以用计算数组长度数组长度最后一个元素这里数组长度由初始值决定不需要手动写以后如果改成会自动变成最后一个元素仍然可以用这比手写最后下标更可靠不过要注意这种计算方式只适合数组本体数组传给函数后不再表示整个数组大小后面讲数组作为函数参数时会详细说明下标可以是表达式数组下标不一定只能写具体数字也可以是变量或表达式例如输出因为的值是所以访问的是也可以写表达式如果是那么是访问的是还可以这样下标的本质是一个整数表达式只要最终结果是合法范围内的整数就可以访问对应元素但如果表达式结果越界就会出问题这里越界所以使用变量做下标时一定要检查范围输入下标时必须检查范围如果下标来自用户输入必须判断是否合法错误写法如果用户输入到程序正常如果用户输入就会越界正确写法请输入下标元素值下标超出范围合法下标条件是数组长度这条判断非常重要如果用户输入的是第几个而不是下标判断方式要换成数组长度访问时再写一定要分清用户输入的是编号还是数组下标负数下标也不行数组下标不能是负数比如这是错误的表示从数组起点往前偏移一个元素这个位置不属于数组和访问一样也是越界不要觉得负数下标只是输出奇怪一点它同样可能破坏程序使用用户输入做下标时必须检查只检查不够比如当用户输入时条件也成立因为小于这样仍然会越界正确判断应该是下标和数组长度的经典错误错误一把长度当成最后下标正确写法错误二循环多访问一次如果数组长度是正确写法是错误三从开始循环却直接用下标访问这会漏掉并访问如果只是为了显示第几个可以这样写第个元素错误四用户输入第几个却直接当下标如果用户输入本来想看第个元素结果访问了也就是第个元素正确写法当然前提是先检查是否在到数组长度之间下标从开始带来的好处下标从开始不只是历史习惯它在编程中有不少好处第一和偏移量一致第一个元素偏移第二个元素偏移计算地址简单直接第二循环边界更自然长度为的数组遍历写成这个范围正好包含到第三适合做计数和分组比如统计数字到出现次数可以直接用数字当下标表示数字出现次数表示数字出现次数表示数字出现次数如果下标从开始反而不方便表示数字第四和指针运算关系紧密后面学习指针时会看到本质上和下面的形式关系很近这里的就是从数组开头向后偏移几个元素所以现在把下标从开始理解透后面学指针会轻松很多用下标统计数字出现次数数组下标可以用来做统计比如统计一组数字中到每个数字出现了多少次出现了次这段代码里数组的下标很有意思统计数字统计数字统计数字统计数字当程序遇到数字数字的出现次数加这种写法非常常见下标不仅能表示位置也可以表示某种编号类别或状态不过有一个前提作为下标的值必须在合法范围内如果可能是就不能直接用它访问否则会越界用下标反向遍历数组数组不仅可以从前往后遍历也可以从后往前遍历比如倒序输出数组这里的第一个下标是也就是最后一个元素然后每次直到循环访问顺序是倒序遍历时要特别注意循环条件如果是上面写法是可以的但如果使用无符号类型比如写就会有问题因为无符号数永远不小于初学阶段先使用练习即可用下标交换数组元素下标也经常用于交换元素比如交换第一个和最后一个元素输出结果这里用到了两个重要下标一个表示第一个元素一个表示最后一个元素后面学习排序数组反转时会大量使用这种下标操作数组反转中的下标思维数组反转就是把前后元素交换例如反转后代码如下这里最关键的是当交换第一个和最后一个当交换第二个和倒数第二个如果长度是只需要交换前半部分中间元素不用动这段代码能很好地训练数组下标思维很多数组题难点不是语法而是下标关系越界不一定马上报错很多新手会有一个误解错误代码一定会报错在语言里数组越界不一定马上报错比如这个程序可能编译通过也可能运行时输出一个奇怪数字这并不说明代码没问题语言给程序员很高的自由度不会像某些语言那样每次都检查下标范围好处是效率高坏处是出错后更难排查越界访问会带来很多问题读到无意义数据修改了别的变量程序偶尔崩溃结果时对时错安全漏洞所以写数组代码时不能靠是否报错来判断对错要靠自己检查边界边界检查的通用写法只要数组长度是合法下标判断就写完整示例请输入下标下标无效如果用户输入的是第几个判断写访问写完整示例请输入第几个元素第个元素是编号无效这两个写法要分清下标范围到编号范围到写数组循环时的安全习惯写数组循环时建议养成几个习惯第一循环从开始第二条件尽量写小于长度第三最后一个元素使用第四用户输入下标时一定做范围判断第五显示给用户时可以用第个元素这样既符合用户习惯又不会影响数组访问第六复杂下标先写清楚再写代码比如可以先在纸上列几组值确认没问题后再写进程序下标错误往往不是不会语法而是没想清边界一个完整练习查询成绩写一个程序保存个学生成绩用户输入第几个学生程序输出对应成绩请输入学生编号第个学生的成绩是学生编号不存在这个例子很适合训练编号和下标之间的转换用户输入的是编号从开始数组访问使用下标从开始所以访问时要减这类转换在菜单月份学生编号商品编号中都会出现一个完整练习找出最大值下标有时我们不仅想知道最大值是多少还想知道它在数组中的位置最大值是最大值下标是它是第个元素这里没有单独保存最大值而是保存最大值的下标一开始假设最大值在下标后面发现更大的元素就更新下标最后就是最大值这种写法很常用因为下标比单纯的值包含更多信息知道下标就能找到元素位置也能继续修改这个元素本章小结数组下标从开始是因为下标本质上表示从数组起点出发的偏移量第一个元素偏移个位置所以是长度为的数组合法下标是到最后一个元素永远是不是用户说的第几个和数组下标不一样第几个转换成下标需要减遍历数组最常见的写法是数组越界非常危险不一定马上报错但可能破坏内存导致结果异常或程序崩溃如果下标来自用户输入必须检查学会下标思维是掌握数组字符串指针和后续算法的关键一步课后练习定义一个长度为的数组输出第一个元素和最后一个元素输入一个下标判断是否合法合法则输出对应元素输入第几个元素把它转换成数组下标后输出对应值定义一个数组倒序输出所有元素定义一个数组交换第一个元素和最后一个元素写程序找出数组最大值并输出最大值的下标和它是第几个元素故意访问观察结果并说明为什么这种写法是错误的',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-10-06 16:37:46',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><script>MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["\\[","\\]"]]}};</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><meta name="generator" content="Hexo 7.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="https://npm.elemecdn.com/anzhiyu-blog-static@1.0.4/img/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><div class="back-home-button"><i class="anzhiyufont anzhiyu-icon-grip-vertical"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" href="https://rebirth100.github.io/" title="博客"><img class="back-menu-item-icon" src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">Github</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/Rebirth100" title="个人主页"><img class="back-menu-item-icon" src="https://image.anheyu.com/favicon.ico" alt="个人主页"/><span class="back-menu-item-text">个人主页</span></a></div></div></div></div><a id="site-name" href="/" accesskey="h"><div class="title">Rebirth100</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索🔍" accesskey="s"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span> 搜索</span></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/C/" style="font-size: 1.05rem;">C<sup>13</sup></a><a href="/tags/C/" style="font-size: 1.05rem;">C++<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 1.05rem;">C语言<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">C语言教程<sup>69</sup></a><a href="/tags/Linux/" style="font-size: 1.05rem;">Linux<sup>14</sup></a><a href="/tags/MySQL/" style="font-size: 1.05rem;">MySQL<sup>11</sup></a><a href="/tags/Python/" style="font-size: 1.05rem;">Python<sup>3</sup></a><a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 1.05rem;">基础<sup>112</sup></a><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 1.05rem;">数据结构<sup>6</sup></a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" style="font-size: 1.05rem;">系统编程<sup>5</sup></a><a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 1.05rem;">编程<sup>109</sup></a><a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 1.05rem;">网络编程<sup>3</sup></a><a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" style="font-size: 1.05rem;">项目实战<sup>3</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/10/"><span class="card-archive-list-date">十月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">7</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/09/"><span class="card-archive-list-date">九月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">32</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/08/"><span class="card-archive-list-date">八月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">50</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/07/"><span class="card-archive-list-date">七月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">14</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/06/"><span class="card-archive-list-date">六月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">20</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" itemprop="url">C语言教程</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E5%9F%BA%E7%A1%80/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>基础</span></a><a class="article-meta__tags" href="/tags/%E7%BC%96%E7%A8%8B/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>编程</span></a><a class="article-meta__tags" href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>C语言教程</span></a></span></div></div><h1 class="post-title" itemprop="name headline">C语言教程-68.数组下标：从0开始的原因</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-08-24T23:12:00.000Z" title="发表于 2026-08-25 07:12:00">2026-08-25</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-10-06T08:37:46.906Z" title="更新于 2026-10-06 16:37:46">2026-10-06</time></span></div><div class="meta-secondline"><span class="post-meta-separator"></span><span class="post-meta-wordcount"><i class="anzhiyufont anzhiyu-icon-file-word post-meta-icon" title="文章字数"></i><span class="post-meta-label" title="文章字数">字数总计:</span><span class="word-count" title="文章字数">5.8k</span><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-clock post-meta-icon" title="阅读时长"></i><span class="post-meta-label" title="阅读时长">阅读时长:</span><span>22分钟</span></span><span class="post-meta-separator"></span><span class="post-meta-pv-cv" id="" data-flag-title="C语言教程-68.数组下标：从0开始的原因"><i class="anzhiyufont anzhiyu-icon-fw-eye post-meta-icon"></i><span class="post-meta-label" title="阅读量">阅读量:</span><span id="busuanzi_value_page_pv"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-spin"></i></span></span><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为西安"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>西安</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png"></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="https://rebirth100.github.io/posts/bf350c86.html"><header><a class="post-meta-categories" href="/categories/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" itemprop="url">C语言教程</a><a href="/tags/%E5%9F%BA%E7%A1%80/" tabindex="-1" itemprop="url">基础</a><a href="/tags/%E7%BC%96%E7%A8%8B/" tabindex="-1" itemprop="url">编程</a><a href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url">C语言教程</a><h1 id="CrawlerTitle" itemprop="name headline">C语言教程-68.数组下标：从0开始的原因</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">rebirth100</span><time itemprop="dateCreated datePublished" datetime="2026-08-24T23:12:00.000Z" title="发表于 2026-08-25 07:12:00">2026-08-25</time><time itemprop="dateCreated datePublished" datetime="2026-10-06T08:37:46.906Z" title="更新于 2026-10-06 16:37:46">2026-10-06</time></header><h1
+id="若北辰-c语言c语言教程068数组下标从0开始的原因">【若北辰-C语言】《C语言教程》068｜数组下标：从0开始的原因</h1>
+<blockquote>
+<p><strong>原文</strong>：微信公众号 · 若北辰-C语言 · 2026-08-25 07:12
+<strong>原文链接</strong>：http://mp.weixin.qq.com/s?__biz=MzUyMDE2ODQ1Mg==&amp;mid=2247484125&amp;idx=1&amp;sn=430fc7a5cc5b2a65b48ea150e1180ce8&amp;chksm=f9ef37b6ce98bea09d18cf45cb49dd0d65e059c02c2db1815ec83bcbcb9d3b26a5f08ea1e644#rd</p>
+</blockquote>
+<p><strong>下标到底是什么</strong></p>
+<p>学习数组时，最容易让人不习惯的一点就是：数组不是从 1 开始数，而是从 0
+开始数。</p>
+<p>比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> scores[<span class="number">5</span>] = &#123;<span class="number">90</span>, <span class="number">85</span>, <span class="number">76</span>, <span class="number">88</span>, <span class="number">95</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p>这个数组有 5 个元素，但它们的下标是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span>  <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span></span><br></pre></td></tr></table></figure>
+<p>对应关系是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">scores[<span class="number">0</span>] = <span class="number">90</span>  </span><br><span class="line">scores[<span class="number">1</span>] = <span class="number">85</span>  </span><br><span class="line">scores[<span class="number">2</span>] = <span class="number">76</span>  </span><br><span class="line">scores[<span class="number">3</span>] = <span class="number">88</span>  </span><br><span class="line">scores[<span class="number">4</span>] = <span class="number">95</span></span><br></pre></td></tr></table></figure>
+<p>很多初学者会下意识认为第一个元素应该是 <code>scores[1]</code>，第五个元素应该是 <code>scores[5]</code>。但在
+C 语言中不是这样。</p>
+<p>数组下标不是日常生活里的第几个，而是从数组起点开始偏移了几个位置。</p>
+<p>这个理解非常关键。</p>
+<p><code>scores[0]</code> 的意思是：从数组开头出发，偏移 0
+个元素，拿到第一个元素。<code>scores[1]</code> 的意思是：从数组开头出发，偏移
+1
+个元素，拿到第二个元素。<code>scores[2]</code> 的意思是：从数组开头出发，偏移
+2 个元素，拿到第三个元素。</p>
+<p>所以，下标更像偏移量，不是排名编号。</p>
+<p><strong>为什么从0开始</strong></p>
+<p>C 语言非常接近底层，数组和内存地址关系紧密。</p>
+<p>数组在内存中是一段连续空间。假设有这样一个数组：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> nums[<span class="number">4</span>] = &#123;<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p>如果一个 <code>int</code> 占 4
+个字节，并且 <code>nums[0]</code> 的地址是
+1000，那么它们在内存中的位置可能是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nums[<span class="number">0</span>]  地址 <span class="number">1000</span>  值 <span class="number">10</span>  </span><br><span class="line">nums[<span class="number">1</span>]  地址 <span class="number">1004</span>  值 <span class="number">20</span>  </span><br><span class="line">nums[<span class="number">2</span>]  地址 <span class="number">1008</span>  值 <span class="number">30</span>  </span><br><span class="line">nums[<span class="number">3</span>]  地址 <span class="number">1012</span>  值 <span class="number">40</span></span><br></pre></td></tr></table></figure>
+<p>计算某个元素地址时，大致可以这样理解：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">元素地址 = 数组起始地址 + 下标 * 每个元素占用的字节数</span><br></pre></td></tr></table></figure>
+<p>如果访问第一个元素：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nums[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<p>地址计算就是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1000</span> + <span class="number">0</span> * <span class="number">4</span> = <span class="number">1000</span></span><br></pre></td></tr></table></figure>
+<p>正好是数组起始地址。</p>
+<p>如果访问第二个元素：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nums[<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<p>地址计算就是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1000</span> + <span class="number">1</span> * <span class="number">4</span> = <span class="number">1004</span></span><br></pre></td></tr></table></figure>
+<p>如果访问第三个元素：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nums[<span class="number">2</span>]</span><br></pre></td></tr></table></figure>
+<p>地址计算就是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1000</span> + <span class="number">2</span> * <span class="number">4</span> = <span class="number">1008</span></span><br></pre></td></tr></table></figure>
+<p>这样看，下标从 0 开始就非常自然。第一个元素距离起点没有偏移，所以是
+0。</p>
+<p>如果数组从 1 开始，计算时反而要多减一次：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">元素地址 = 数组起始地址 + (编号 - <span class="number">1</span>) * 每个元素占用的字节数</span><br></pre></td></tr></table></figure>
+<p>C 语言追求简单直接，所以采用了从 0 开始的下标设计。</p>
+<p><strong>数组下标和生活编号不一样</strong></p>
+<p>生活中，我们通常从 1 开始数。</p>
+<p>第 1 个学生 第 2 个座位 第 3 本书 第 4 天</p>
+<p>但数组下标不是这种说法。</p>
+<p>数组下标更接近距离。</p>
+<p>比如你站在一排格子的开头：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">90</span>] [<span class="number">85</span>] [<span class="number">76</span>] [<span class="number">88</span>] [<span class="number">95</span>]</span><br></pre></td></tr></table></figure>
+<p>你不移动，看到的是第一个格子，所以偏移是 0。</p>
+<p>向右移动 1 格，看到第二个格子，所以偏移是 1。</p>
+<p>向右移动 2 格，看到第三个格子，所以偏移是 2。</p>
+<p>这就是数组下标从 0 开始的直观解释。</p>
+<p>以后看到：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr[i]</span><br></pre></td></tr></table></figure>
+<p>不要马上把 <code>i</code> 理解成第几个，而要理解成从数组开头偏移几个元素。</p>
+<p>这会让数组、指针、字符串的学习顺很多。</p>
+<p><strong>长度为n的数组，下标到n-1</strong></p>
+<p>数组长度和最后一个下标，是两个不同概念。</p>
+<p>定义：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> arr[<span class="number">5</span>];</span><br></pre></td></tr></table></figure>
+<p>这里的 5 表示数组长度，也就是有 5 个元素。</p>
+<p>合法下标是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span></span><br></pre></td></tr></table></figure>
+<p>最后一个下标是 4，也就是长度减 1。</p>
+<p>所以：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">arr[<span class="number">0</span>]  第 <span class="number">1</span> 个元素  </span><br><span class="line">arr[<span class="number">1</span>]  第 <span class="number">2</span> 个元素  </span><br><span class="line">arr[<span class="number">2</span>]  第 <span class="number">3</span> 个元素  </span><br><span class="line">arr[<span class="number">3</span>]  第 <span class="number">4</span> 个元素  </span><br><span class="line">arr[<span class="number">4</span>]  第 <span class="number">5</span> 个元素</span><br></pre></td></tr></table></figure>
+<p>错误的是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr[<span class="number">5</span>]</span><br></pre></td></tr></table></figure>
+<p><code>arr[5]</code> 不是第 5 个元素，而是第 6 个位置。</p>
+<p>这就是数组里最常见的坑。</p>
+<p>只要记住一句话：</p>
+<p>长度为 <code>n</code> 的数组，合法下标是 <code>0</code> 到 <code>n - 1</code>。</p>
+<p>比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> a[<span class="number">3</span>];   // 下标 <span class="number">0</span> 到 <span class="number">2</span>  </span><br><span class="line"><span class="built_in">int</span> b[<span class="number">10</span>];  // 下标 <span class="number">0</span> 到 <span class="number">9</span>  </span><br><span class="line"><span class="built_in">int</span> c[<span class="number">100</span>]; // 下标 <span class="number">0</span> 到 <span class="number">99</span></span><br></pre></td></tr></table></figure>
+<p>看到数组长度，就要立刻想到最后下标。</p>
+<p><strong>第几个和下标之间的转换</strong></p>
+<p>写程序时，经常要在人的编号和数组下标之间转换。</p>
+<p>人习惯说第 1 个、第 2 个、第 3 个。</p>
+<p>数组使用下标 0、1、2。</p>
+<p>它们的关系是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">第几个 = 下标 + <span class="number">1</span>  </span><br><span class="line">下标 = 第几个 - <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>例如数组：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> scores[<span class="number">5</span>] = &#123;<span class="number">90</span>, <span class="number">85</span>, <span class="number">76</span>, <span class="number">88</span>, <span class="number">95</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p>第 1 个成绩是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scores[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<p>第 2 个成绩是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scores[<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<p>第 5 个成绩是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scores[<span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+<p>如果用户输入想查看第几个成绩：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void)  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="built_in">int</span> scores[<span class="number">5</span>] = &#123;<span class="number">90</span>, <span class="number">85</span>, <span class="number">76</span>, <span class="number">88</span>, <span class="number">95</span>&#125;;  </span><br><span class="line">    <span class="built_in">int</span> number;  </span><br><span class="line">  </span><br><span class="line">    printf(<span class="string">&quot;请输入要查看第几个成绩: &quot;</span>);  </span><br><span class="line">    scanf(<span class="string">&quot;%d&quot;</span>, &amp;number);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> (number &gt;= <span class="number">1</span> &amp;&amp; number &lt;= <span class="number">5</span>)  </span><br><span class="line">    &#123;  </span><br><span class="line">        printf(<span class="string">&quot;成绩是: %d\n&quot;</span>, scores[number - <span class="number">1</span>]);  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">else</span>  </span><br><span class="line">    &#123;  </span><br><span class="line">        printf(<span class="string">&quot;编号错误\n&quot;</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    return0;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里用户输入的是第几个，所以范围是 1 到 5。</p>
+<p>访问数组时要用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scores[number - <span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<p>如果用户输入 1，就访问 <code>scores[0]</code>。 如果用户输入
+5，就访问 <code>scores[4]</code>。</p>
+<p>这是数组中非常常见的写法。</p>
+<p><strong>为什么循环通常从0开始</strong></p>
+<p>数组和 <code>for</code> 循环经常一起使用。</p>
+<p>比如遍历一个长度为 5 的数组：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> scores[<span class="number">5</span>] = &#123;<span class="number">90</span>, <span class="number">85</span>, <span class="number">76</span>, <span class="number">88</span>, <span class="number">95</span>&#125;;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)  </span><br><span class="line">&#123;  </span><br><span class="line">    printf(<span class="string">&quot;%d\n&quot;</span>, scores[i]);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的循环变量 <code>i</code> 从 0 开始，到 4
+结束，正好对应数组下标。</p>
+<p>循环过程是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">i = <span class="number">0</span>  访问 scores[<span class="number">0</span>]  </span><br><span class="line">i = <span class="number">1</span>  访问 scores[<span class="number">1</span>]  </span><br><span class="line">i = <span class="number">2</span>  访问 scores[<span class="number">2</span>]  </span><br><span class="line">i = <span class="number">3</span>  访问 scores[<span class="number">3</span>]  </span><br><span class="line">i = <span class="number">4</span>  访问 scores[<span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+<p>当 <code>i</code> 变成 5
+时，条件 <code>i &lt; 5</code> 不成立，循环结束。</p>
+<p>这就是为什么遍历数组时，最常见的循环写法是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">len</span>; i++)</span><br></pre></td></tr></table></figure>
+<p>而不是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt;= <span class="built_in">len</span>; i++)</span><br></pre></td></tr></table></figure>
+<p>后面这种写法不是绝对不能用，但如果直接写 <code>arr[i]</code>，就会漏掉第一个元素，并且访问越界位置。</p>
+<p>错误示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> arr[<span class="number">5</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++)  </span><br><span class="line">&#123;  </span><br><span class="line">    printf(<span class="string">&quot;%d\n&quot;</span>, arr[i]);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码访问的是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">arr[<span class="number">1</span>]  </span><br><span class="line">arr[<span class="number">2</span>]  </span><br><span class="line">arr[<span class="number">3</span>]  </span><br><span class="line">arr[<span class="number">4</span>]  </span><br><span class="line">arr[<span class="number">5</span>]</span><br></pre></td></tr></table></figure>
+<p>问题有两个：</p>
+<p>漏掉了 <code>arr[0]</code>。 访问了不存在的 <code>arr[5]</code>。</p>
+<p>正确写法是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)  </span><br><span class="line">&#123;  </span><br><span class="line">    printf(<span class="string">&quot;%d\n&quot;</span>, arr[i]);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>数组越界为什么危险</strong></p>
+<p>数组越界，就是访问了不属于数组的位置。</p>
+<p>比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> nums[<span class="number">3</span>] = &#123;<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>&#125;;  </span><br><span class="line">  </span><br><span class="line">printf(<span class="string">&quot;%d\n&quot;</span>, nums[<span class="number">3</span>]);</span><br></pre></td></tr></table></figure>
+<p><code>nums</code> 只有 3 个元素，合法下标是 0、1、2。</p>
+<p><code>nums[3]</code> 已经越界。</p>
+<p>C
+语言不会总是帮你检查这种错误。程序可能还能运行，甚至可能输出一个数字，但这个数字不可信。</p>
+<p>更危险的是，越界访问可能破坏其他变量。</p>
+<p>看一个例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void)  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="built_in">int</span> arr[<span class="number">3</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;  </span><br><span class="line">    <span class="built_in">int</span> x = <span class="number">100</span>;  </span><br><span class="line">  </span><br><span class="line">    arr[<span class="number">3</span>] = <span class="number">999</span>;  </span><br><span class="line">  </span><br><span class="line">    printf(<span class="string">&quot;x = %d\n&quot;</span>, x);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码中，<code>arr[3]</code> 不属于数组。写入这个位置可能影响旁边的内存。</p>
+<p>有些环境下，<code>x</code> 的值可能被改掉。也有些环境下，看起来没变化。还有可能程序直接崩溃。</p>
+<p>最麻烦的是，它不一定稳定复现。今天运行没问题，换个编译器、换个系统、换个优化选项，就可能出问题。</p>
+<p>所以数组越界不是小错误，而是 C 语言里最危险的错误之一。</p>
+<p><strong>访问最后一个元素的正确方式</strong></p>
+<p>很多人访问最后一个元素时，容易写错。</p>
+<p>假设数组长度是 10：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> nums[<span class="number">10</span>];</span><br></pre></td></tr></table></figure>
+<p>最后一个元素不是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nums[<span class="number">10</span>]</span><br></pre></td></tr></table></figure>
+<p>而是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nums[<span class="number">9</span>]</span><br></pre></td></tr></table></figure>
+<p>如果有一个变量保存长度：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> <span class="built_in">len</span> = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+<p>最后一个元素应该写：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nums[<span class="built_in">len</span> - <span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<p>比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void)  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="built_in">int</span> nums[<span class="number">5</span>] = &#123;<span class="number">11</span>, <span class="number">22</span>, <span class="number">33</span>, <span class="number">44</span>, <span class="number">55</span>&#125;;  </span><br><span class="line">    <span class="built_in">int</span> <span class="built_in">len</span> = <span class="number">5</span>;  </span><br><span class="line">  </span><br><span class="line">    printf(<span class="string">&quot;第一个元素: %d\n&quot;</span>, nums[<span class="number">0</span>]);  </span><br><span class="line">    printf(<span class="string">&quot;最后一个元素: %d\n&quot;</span>, nums[<span class="built_in">len</span> - <span class="number">1</span>]);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">第一个元素: <span class="number">11</span>  </span><br><span class="line">最后一个元素: <span class="number">55</span></span><br></pre></td></tr></table></figure>
+<p>只要是访问最后一个元素，就想起：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">长度 - <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>这个习惯能避免很多越界错误。</p>
+<p><strong>用sizeof配合下标</strong></p>
+<p>如果数组在当前作用域中，可以用 <code>sizeof</code> 计算数组长度。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void)  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="built_in">int</span> nums[] = &#123;<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>&#125;;  </span><br><span class="line">  </span><br><span class="line">    <span class="built_in">int</span> <span class="built_in">len</span> = sizeof(nums) / sizeof(nums[<span class="number">0</span>]);  </span><br><span class="line">  </span><br><span class="line">    printf(<span class="string">&quot;数组长度: %d\n&quot;</span>, <span class="built_in">len</span>);  </span><br><span class="line">    printf(<span class="string">&quot;最后一个元素: %d\n&quot;</span>, nums[<span class="built_in">len</span> - <span class="number">1</span>]);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里数组长度由初始值决定，不需要手动写 5。</p>
+<p>以后如果改成：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> nums[] = &#123;<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>, <span class="number">60</span>, <span class="number">70</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>len</code> 会自动变成 7，最后一个元素仍然可以用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nums[<span class="built_in">len</span> - <span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<p>这比手写最后下标更可靠。</p>
+<p>不过要注意，这种计算方式只适合数组本体。数组传给函数后，<code>sizeof</code> 不再表示整个数组大小。后面讲数组作为函数参数时会详细说明。</p>
+<p><strong>下标可以是表达式</strong></p>
+<p>数组下标不一定只能写具体数字，也可以是变量或表达式。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> nums[<span class="number">5</span>] = &#123;<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>&#125;;  </span><br><span class="line"><span class="built_in">int</span> i = <span class="number">2</span>;  </span><br><span class="line">  </span><br><span class="line">printf(<span class="string">&quot;%d\n&quot;</span>, nums[i]);</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">30</span></span><br></pre></td></tr></table></figure>
+<p>因为 <code>i</code> 的值是 2，所以访问的是 <code>nums[2]</code>。</p>
+<p>也可以写表达式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">printf(<span class="string">&quot;%d\n&quot;</span>, nums[i + <span class="number">1</span>]);</span><br></pre></td></tr></table></figure>
+<p>如果 <code>i</code> 是 2，那么 <code>i + 1</code> 是
+3，访问的是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nums[<span class="number">3</span>]</span><br></pre></td></tr></table></figure>
+<p>还可以这样：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> index = <span class="number">4</span>;  </span><br><span class="line">printf(<span class="string">&quot;%d\n&quot;</span>, nums[index]);</span><br></pre></td></tr></table></figure>
+<p>下标的本质是一个整数表达式。只要最终结果是合法范围内的整数，就可以访问对应元素。</p>
+<p>但如果表达式结果越界，就会出问题。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> index = <span class="number">5</span>;  </span><br><span class="line">printf(<span class="string">&quot;%d\n&quot;</span>, nums[index]);</span><br></pre></td></tr></table></figure>
+<p>这里 <code>nums[5]</code> 越界。</p>
+<p>所以使用变量做下标时，一定要检查范围。</p>
+<p><strong>输入下标时必须检查范围</strong></p>
+<p>如果下标来自用户输入，必须判断是否合法。</p>
+<p>错误写法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void)  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="built_in">int</span> nums[<span class="number">5</span>] = &#123;<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>&#125;;  </span><br><span class="line">    <span class="built_in">int</span> index;  </span><br><span class="line">  </span><br><span class="line">    scanf(<span class="string">&quot;%d&quot;</span>, &amp;index);  </span><br><span class="line">  </span><br><span class="line">    printf(<span class="string">&quot;%d\n&quot;</span>, nums[index]);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果用户输入 0 到 4，程序正常。 如果用户输入
+5、100、-1，就会越界。</p>
+<p>正确写法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void)  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="built_in">int</span> nums[<span class="number">5</span>] = &#123;<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>&#125;;  </span><br><span class="line">    <span class="built_in">int</span> index;  </span><br><span class="line">  </span><br><span class="line">    printf(<span class="string">&quot;请输入下标: &quot;</span>);  </span><br><span class="line">    scanf(<span class="string">&quot;%d&quot;</span>, &amp;index);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> (index &gt;= <span class="number">0</span> &amp;&amp; index &lt; <span class="number">5</span>)  </span><br><span class="line">    &#123;  </span><br><span class="line">        printf(<span class="string">&quot;元素值: %d\n&quot;</span>, nums[index]);  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">else</span>  </span><br><span class="line">    &#123;  </span><br><span class="line">        printf(<span class="string">&quot;下标超出范围\n&quot;</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    return0;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>合法下标条件是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">index &gt;= <span class="number">0</span> &amp;&amp; index &lt; 数组长度</span><br></pre></td></tr></table></figure>
+<p>这条判断非常重要。</p>
+<p>如果用户输入的是第几个，而不是下标，判断方式要换成：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">number &gt;= <span class="number">1</span> &amp;&amp; number &lt;= 数组长度</span><br></pre></td></tr></table></figure>
+<p>访问时再写：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr[number - <span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<p>一定要分清用户输入的是编号，还是数组下标。</p>
+<p><strong>负数下标也不行</strong></p>
+<p>数组下标不能是负数。</p>
+<p>比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> nums[<span class="number">5</span>] = &#123;<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>&#125;;  </span><br><span class="line">  </span><br><span class="line">printf(<span class="string">&quot;%d\n&quot;</span>, nums[-<span class="number">1</span>]);</span><br></pre></td></tr></table></figure>
+<p>这是错误的。</p>
+<p><code>nums[-1]</code> 表示从数组起点往前偏移一个元素，这个位置不属于数组。</p>
+<p>和访问 <code>nums[5]</code> 一样，<code>nums[-1]</code> 也是越界。</p>
+<p>不要觉得负数下标只是输出奇怪一点，它同样可能破坏程序。</p>
+<p>使用用户输入做下标时，必须检查：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">index &gt;= <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>只检查 <code>index &lt; len</code> 不够。</p>
+<p>比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (index &lt; <span class="built_in">len</span>)</span><br></pre></td></tr></table></figure>
+<p>当用户输入 -1 时，条件也成立，因为 -1 小于 len。这样仍然会越界。</p>
+<p>正确判断应该是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (index &gt;= <span class="number">0</span> &amp;&amp; index &lt; <span class="built_in">len</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>下标和数组长度的经典错误</strong></p>
+<p>错误一：把长度当成最后下标。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> a[<span class="number">5</span>];  </span><br><span class="line">  </span><br><span class="line">a[<span class="number">5</span>] = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+<p>正确写法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a[<span class="number">4</span>] = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+<p>错误二：循环多访问一次。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">5</span>; i++)  </span><br><span class="line">&#123;  </span><br><span class="line">    printf(<span class="string">&quot;%d\n&quot;</span>, a[i]);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果数组长度是 5，正确写法是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)  </span><br><span class="line">&#123;  </span><br><span class="line">    printf(<span class="string">&quot;%d\n&quot;</span>, a[i]);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>错误三：从 1 开始循环，却直接用下标访问。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++)  </span><br><span class="line">&#123;  </span><br><span class="line">    printf(<span class="string">&quot;%d\n&quot;</span>, a[i]);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这会漏掉 <code>a[0]</code>，并访问 <code>a[5]</code>。</p>
+<p>如果只是为了显示第几个，可以这样写：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)  </span><br><span class="line">&#123;  </span><br><span class="line">    printf(<span class="string">&quot;第 %d 个元素: %d\n&quot;</span>, i + <span class="number">1</span>, a[i]);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>错误四：用户输入第几个，却直接当下标。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> number;  </span><br><span class="line">scanf(<span class="string">&quot;%d&quot;</span>, &amp;number);  </span><br><span class="line">  </span><br><span class="line">printf(<span class="string">&quot;%d\n&quot;</span>, a[number]);</span><br></pre></td></tr></table></figure>
+<p>如果用户输入 1，本来想看第 1
+个元素，结果访问了 <code>a[1]</code>，也就是第 2 个元素。</p>
+<p>正确写法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">printf(<span class="string">&quot;%d\n&quot;</span>, a[number - <span class="number">1</span>]);</span><br></pre></td></tr></table></figure>
+<p>当然，前提是先检查 <code>number</code> 是否在 1 到数组长度之间。</p>
+<p><strong>下标从0开始带来的好处</strong></p>
+<p>下标从 0 开始不只是历史习惯，它在编程中有不少好处。</p>
+<p>第一，和偏移量一致。</p>
+<p>第一个元素偏移 0，第二个元素偏移 1，计算地址简单直接。</p>
+<p>第二，循环边界更自然。</p>
+<p>长度为 <code>len</code> 的数组，遍历写成：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">len</span>; i++)</span><br></pre></td></tr></table></figure>
+<p>这个范围正好包含 <code>0</code> 到 <code>len - 1</code>。</p>
+<p>第三，适合做计数和分组。</p>
+<p>比如统计数字 0 到 9 出现次数，可以直接用数字当下标：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> count[<span class="number">10</span>] = &#123;<span class="number">0</span>&#125;;  </span><br><span class="line">  </span><br><span class="line">count[<span class="number">0</span>] 表示数字 <span class="number">0</span> 出现次数  </span><br><span class="line">count[<span class="number">1</span>] 表示数字 <span class="number">1</span> 出现次数  </span><br><span class="line">count[<span class="number">9</span>] 表示数字 <span class="number">9</span> 出现次数</span><br></pre></td></tr></table></figure>
+<p>如果下标从 1 开始，反而不方便表示数字 0。</p>
+<p>第四，和指针运算关系紧密。</p>
+<p>后面学习指针时会看到：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr[i]</span><br></pre></td></tr></table></figure>
+<p>本质上和下面的形式关系很近：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*(arr + i)</span><br></pre></td></tr></table></figure>
+<p>这里的 <code>i</code> 就是从数组开头向后偏移几个元素。</p>
+<p>所以，现在把下标从 0 开始理解透，后面学指针会轻松很多。</p>
+<p><strong>用下标统计数字出现次数</strong></p>
+<p>数组下标可以用来做统计。</p>
+<p>比如统计一组数字中，0 到 9 每个数字出现了多少次。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void)  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="built_in">int</span> nums[] = &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">2</span>&#125;;  </span><br><span class="line">    <span class="built_in">int</span> <span class="built_in">len</span> = sizeof(nums) / sizeof(nums[<span class="number">0</span>]);  </span><br><span class="line">    <span class="built_in">int</span> count[<span class="number">10</span>] = &#123;<span class="number">0</span>&#125;;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">len</span>; i++)  </span><br><span class="line">    &#123;  </span><br><span class="line">        count[nums[i]]++;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)  </span><br><span class="line">    &#123;  </span><br><span class="line">        printf(<span class="string">&quot;%d 出现了 %d 次\n&quot;</span>, i, count[i]);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    return0;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码里，<code>count</code> 数组的下标很有意思：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">count[<span class="number">0</span>] 统计数字 <span class="number">0</span>  </span><br><span class="line">count[<span class="number">1</span>] 统计数字 <span class="number">1</span>  </span><br><span class="line">count[<span class="number">2</span>] 统计数字 <span class="number">2</span>  </span><br><span class="line"><span class="meta">... </span> </span><br><span class="line">count[<span class="number">9</span>] 统计数字 <span class="number">9</span></span><br></pre></td></tr></table></figure>
+<p>当程序遇到数字 3：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">count[<span class="number">3</span>]++;</span><br></pre></td></tr></table></figure>
+<p>数字 3 的出现次数加 1。</p>
+<p>这种写法非常常见。下标不仅能表示位置，也可以表示某种编号、类别或状态。</p>
+<p>不过有一个前提：作为下标的值必须在合法范围内。</p>
+<p>如果 <code>nums[i]</code> 可能是
+10、20、-1，就不能直接用它访问 <code>count[nums[i]]</code>，否则会越界。</p>
+<p><strong>用下标反向遍历数组</strong></p>
+<p>数组不仅可以从前往后遍历，也可以从后往前遍历。</p>
+<p>比如倒序输出数组：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void)  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="built_in">int</span> nums[] = &#123;<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>&#125;;  </span><br><span class="line">    <span class="built_in">int</span> <span class="built_in">len</span> = sizeof(nums) / sizeof(nums[<span class="number">0</span>]);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="built_in">len</span> - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)  </span><br><span class="line">    &#123;  </span><br><span class="line">        printf(<span class="string">&quot;%d\n&quot;</span>, nums[i]);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的第一个下标是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">len</span> - <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>也就是最后一个元素。</p>
+<p>然后每次 <code>i--</code>，直到 0。</p>
+<p>循环访问顺序是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nums[<span class="number">4</span>]  </span><br><span class="line">nums[<span class="number">3</span>]  </span><br><span class="line">nums[<span class="number">2</span>]  </span><br><span class="line">nums[<span class="number">1</span>]  </span><br><span class="line">nums[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<p>倒序遍历时要特别注意循环条件。</p>
+<p>如果 <code>i</code> 是 <code>int</code>，上面写法是可以的。</p>
+<p>但如果使用无符号类型，比如 <code>size_t</code>，写 <code>i &gt;= 0</code> 就会有问题，因为无符号数永远不小于
+0。初学阶段先使用 <code>int</code> 练习即可。</p>
+<p><strong>用下标交换数组元素</strong></p>
+<p>下标也经常用于交换元素。</p>
+<p>比如交换第一个和最后一个元素：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void)  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="built_in">int</span> nums[] = &#123;<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>&#125;;  </span><br><span class="line">    <span class="built_in">int</span> <span class="built_in">len</span> = sizeof(nums) / sizeof(nums[<span class="number">0</span>]);  </span><br><span class="line">  </span><br><span class="line">    <span class="built_in">int</span> temp = nums[<span class="number">0</span>];  </span><br><span class="line">    nums[<span class="number">0</span>] = nums[<span class="built_in">len</span> - <span class="number">1</span>];  </span><br><span class="line">    nums[<span class="built_in">len</span> - <span class="number">1</span>] = temp;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">len</span>; i++)  </span><br><span class="line">    &#123;  </span><br><span class="line">        printf(<span class="string">&quot;%d &quot;</span>, nums[i]);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    return0;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">50</span> <span class="number">20</span> <span class="number">30</span> <span class="number">40</span> <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<p>这里用到了两个重要下标：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span>  </span><br><span class="line"><span class="built_in">len</span> - <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>一个表示第一个元素，一个表示最后一个元素。</p>
+<p>后面学习排序、数组反转时，会大量使用这种下标操作。</p>
+<p><strong>数组反转中的下标思维</strong></p>
+<p>数组反转，就是把前后元素交换。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">10</span> <span class="number">20</span> <span class="number">30</span> <span class="number">40</span> <span class="number">50</span></span><br></pre></td></tr></table></figure>
+<p>反转后：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">50</span> <span class="number">40</span> <span class="number">30</span> <span class="number">20</span> <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void)  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="built_in">int</span> nums[] = &#123;<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>&#125;;  </span><br><span class="line">    <span class="built_in">int</span> <span class="built_in">len</span> = sizeof(nums) / sizeof(nums[<span class="number">0</span>]);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">len</span> / <span class="number">2</span>; i++)  </span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="built_in">int</span> temp = nums[i];  </span><br><span class="line">        nums[i] = nums[<span class="built_in">len</span> - <span class="number">1</span> - i];  </span><br><span class="line">        nums[<span class="built_in">len</span> - <span class="number">1</span> - i] = temp;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">len</span>; i++)  </span><br><span class="line">    &#123;  </span><br><span class="line">        printf(<span class="string">&quot;%d &quot;</span>, nums[i]);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    return0;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里最关键的是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nums[i]  </span><br><span class="line">nums[<span class="built_in">len</span> - <span class="number">1</span> - i]</span><br></pre></td></tr></table></figure>
+<p>当 <code>i = 0</code>，交换第一个和最后一个。
+当 <code>i = 1</code>，交换第二个和倒数第二个。</p>
+<p>如果长度是 5，只需要交换前半部分。中间元素不用动。</p>
+<p>这段代码能很好地训练数组下标思维。</p>
+<p>很多数组题，难点不是语法，而是下标关系。</p>
+<p><strong>越界不一定马上报错</strong></p>
+<p>很多新手会有一个误解：错误代码一定会报错。</p>
+<p>在 C 语言里，数组越界不一定马上报错。</p>
+<p>比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void)  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="built_in">int</span> nums[<span class="number">3</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;  </span><br><span class="line">  </span><br><span class="line">    printf(<span class="string">&quot;%d\n&quot;</span>, nums[<span class="number">10</span>]);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个程序可能编译通过，也可能运行时输出一个奇怪数字。</p>
+<p>这并不说明代码没问题。</p>
+<p>C
+语言给程序员很高的自由度，不会像某些语言那样每次都检查下标范围。好处是效率高，坏处是出错后更难排查。</p>
+<p>越界访问会带来很多问题：</p>
+<p>读到无意义数据 修改了别的变量 程序偶尔崩溃 结果时对时错 安全漏洞</p>
+<p>所以写数组代码时，不能靠是否报错来判断对错。要靠自己检查边界。</p>
+<p><strong>边界检查的通用写法</strong></p>
+<p>只要数组长度是 <code>len</code>，合法下标判断就写：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">index &gt;= <span class="number">0</span> &amp;&amp; index &lt; <span class="built_in">len</span></span><br></pre></td></tr></table></figure>
+<p>完整示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void)  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="built_in">int</span> nums[] = &#123;<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>&#125;;  </span><br><span class="line">    <span class="built_in">int</span> <span class="built_in">len</span> = sizeof(nums) / sizeof(nums[<span class="number">0</span>]);  </span><br><span class="line">    <span class="built_in">int</span> index;  </span><br><span class="line">  </span><br><span class="line">    printf(<span class="string">&quot;请输入下标: &quot;</span>);  </span><br><span class="line">    scanf(<span class="string">&quot;%d&quot;</span>, &amp;index);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> (index &gt;= <span class="number">0</span> &amp;&amp; index &lt; <span class="built_in">len</span>)  </span><br><span class="line">    &#123;  </span><br><span class="line">        printf(<span class="string">&quot;nums[%d] = %d\n&quot;</span>, index, nums[index]);  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">else</span>  </span><br><span class="line">    &#123;  </span><br><span class="line">        printf(<span class="string">&quot;下标无效\n&quot;</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    return0;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果用户输入的是第几个，判断写：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">number &gt;= <span class="number">1</span> &amp;&amp; number &lt;= <span class="built_in">len</span></span><br></pre></td></tr></table></figure>
+<p>访问写：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nums[number - <span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<p>完整示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void)  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="built_in">int</span> nums[] = &#123;<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>&#125;;  </span><br><span class="line">    <span class="built_in">int</span> <span class="built_in">len</span> = sizeof(nums) / sizeof(nums[<span class="number">0</span>]);  </span><br><span class="line">    <span class="built_in">int</span> number;  </span><br><span class="line">  </span><br><span class="line">    printf(<span class="string">&quot;请输入第几个元素: &quot;</span>);  </span><br><span class="line">    scanf(<span class="string">&quot;%d&quot;</span>, &amp;number);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> (number &gt;= <span class="number">1</span> &amp;&amp; number &lt;= <span class="built_in">len</span>)  </span><br><span class="line">    &#123;  </span><br><span class="line">        printf(<span class="string">&quot;第 %d 个元素是 %d\n&quot;</span>, number, nums[number - <span class="number">1</span>]);  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">else</span>  </span><br><span class="line">    &#123;  </span><br><span class="line">        printf(<span class="string">&quot;编号无效\n&quot;</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    return0;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这两个写法要分清：</p>
+<p>下标范围：0 到 len - 1 编号范围：1 到 len</p>
+<p><strong>写数组循环时的安全习惯</strong></p>
+<p>写数组循环时，建议养成几个习惯。</p>
+<p>第一，循环从 0 开始。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">len</span>; i++)</span><br></pre></td></tr></table></figure>
+<p>第二，条件尽量写小于长度。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i &lt; <span class="built_in">len</span></span><br></pre></td></tr></table></figure>
+<p>第三，最后一个元素使用 <code>len - 1</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr[<span class="built_in">len</span> - <span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<p>第四，用户输入下标时一定做范围判断。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">index &gt;= <span class="number">0</span> &amp;&amp; index &lt; <span class="built_in">len</span></span><br></pre></td></tr></table></figure>
+<p>第五，显示给用户时可以用 <code>i + 1</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">printf(<span class="string">&quot;第 %d 个元素: %d\n&quot;</span>, i + <span class="number">1</span>, arr[i]);</span><br></pre></td></tr></table></figure>
+<p>这样既符合用户习惯，又不会影响数组访问。</p>
+<p>第六，复杂下标先写清楚，再写代码。</p>
+<p>比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr[<span class="built_in">len</span> - <span class="number">1</span> - i]</span><br></pre></td></tr></table></figure>
+<p>可以先在纸上列几组值：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">i = <span class="number">0</span>  <span class="built_in">len</span> - <span class="number">1</span> - i = <span class="number">4</span>  </span><br><span class="line">i = <span class="number">1</span>  <span class="built_in">len</span> - <span class="number">1</span> - i = <span class="number">3</span>  </span><br><span class="line">i = <span class="number">2</span>  <span class="built_in">len</span> - <span class="number">1</span> - i = <span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p>确认没问题后再写进程序。</p>
+<p>下标错误往往不是不会语法，而是没想清边界。</p>
+<p><strong>一个完整练习：查询成绩</strong></p>
+<p>写一个程序，保存 5
+个学生成绩。用户输入第几个学生，程序输出对应成绩。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="comment">#define SIZE 5  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void)  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="built_in">int</span> scores[SIZE] = &#123;<span class="number">90</span>, <span class="number">85</span>, <span class="number">76</span>, <span class="number">88</span>, <span class="number">95</span>&#125;;  </span><br><span class="line">    <span class="built_in">int</span> number;  </span><br><span class="line">  </span><br><span class="line">    printf(<span class="string">&quot;请输入学生编号 1-%d: &quot;</span>, SIZE);  </span><br><span class="line">    scanf(<span class="string">&quot;%d&quot;</span>, &amp;number);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> (number &gt;= <span class="number">1</span> &amp;&amp; number &lt;= SIZE)  </span><br><span class="line">    &#123;  </span><br><span class="line">        printf(<span class="string">&quot;第 %d 个学生的成绩是 %d\n&quot;</span>, number, scores[number - <span class="number">1</span>]);  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">else</span>  </span><br><span class="line">    &#123;  </span><br><span class="line">        printf(<span class="string">&quot;学生编号不存在\n&quot;</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    return0;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个例子很适合训练编号和下标之间的转换。</p>
+<p>用户输入的是编号，从 1 开始。 数组访问使用下标，从 0 开始。
+所以访问时要减 1。</p>
+<p>这类转换在菜单、月份、学生编号、商品编号中都会出现。</p>
+<p><strong>一个完整练习：找出最大值下标</strong></p>
+<p>有时我们不仅想知道最大值是多少，还想知道它在数组中的位置。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void)  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="built_in">int</span> nums[] = &#123;<span class="number">18</span>, <span class="number">45</span>, <span class="number">22</span>, <span class="number">90</span>, <span class="number">67</span>, <span class="number">31</span>&#125;;  </span><br><span class="line">    <span class="built_in">int</span> <span class="built_in">len</span> = sizeof(nums) / sizeof(nums[<span class="number">0</span>]);  </span><br><span class="line">  </span><br><span class="line">    <span class="built_in">int</span> max_index = <span class="number">0</span>;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt; <span class="built_in">len</span>; i++)  </span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="keyword">if</span> (nums[i] &gt; nums[max_index])  </span><br><span class="line">        &#123;  </span><br><span class="line">            max_index = i;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    printf(<span class="string">&quot;最大值是 %d\n&quot;</span>, nums[max_index]);  </span><br><span class="line">    printf(<span class="string">&quot;最大值下标是 %d\n&quot;</span>, max_index);  </span><br><span class="line">    printf(<span class="string">&quot;它是第 %d 个元素\n&quot;</span>, max_index + <span class="number">1</span>);  </span><br><span class="line">  </span><br><span class="line">    return0;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里没有单独保存最大值，而是保存最大值的下标。</p>
+<p>一开始假设最大值在下标 0：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> max_index = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<p>后面发现更大的元素，就更新下标：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">max_index = i;</span><br></pre></td></tr></table></figure>
+<p>最后：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nums[max_index]</span><br></pre></td></tr></table></figure>
+<p>就是最大值。</p>
+<p>这种写法很常用，因为下标比单纯的值包含更多信息。知道下标，就能找到元素位置，也能继续修改这个元素。</p>
+<p><strong>本章小结</strong></p>
+<p>数组下标从 0 开始，是因为下标本质上表示从数组起点出发的偏移量。</p>
+<p>第一个元素偏移 0 个位置，所以是 <code>arr[0]</code>。</p>
+<p>长度为 <code>n</code> 的数组，合法下标是 0
+到 <code>n - 1</code>。</p>
+<p>最后一个元素永远是 <code>arr[len - 1]</code>，不是 <code>arr[len]</code>。</p>
+<p>用户说的第几个和数组下标不一样。第几个转换成下标，需要减 1。</p>
+<p>遍历数组最常见的写法是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">len</span>; i++)</span><br></pre></td></tr></table></figure>
+<p>数组越界非常危险，不一定马上报错，但可能破坏内存、导致结果异常或程序崩溃。</p>
+<p>如果下标来自用户输入，必须检查：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">index &gt;= <span class="number">0</span> &amp;&amp; index &lt; <span class="built_in">len</span></span><br></pre></td></tr></table></figure>
+<p>学会下标思维，是掌握数组、字符串、指针和后续算法的关键一步。</p>
+<p><strong>课后练习</strong></p>
+<ol type="1">
+<li>定义一个长度为 6 的数组，输出第一个元素和最后一个元素。</li>
+<li>输入一个下标，判断是否合法，合法则输出对应元素。</li>
+<li>输入第几个元素，把它转换成数组下标后输出对应值。</li>
+<li>定义一个数组，倒序输出所有元素。</li>
+<li>定义一个数组，交换第一个元素和最后一个元素。</li>
+<li>写程序找出数组最大值，并输出最大值的下标和它是第几个元素。</li>
+<li>故意访问 <code>arr[len]</code>，观察结果，并说明为什么这种写法是错误的。</li>
+</ol>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">rebirth100</div><div class="post-copyright__author_desc">爱我的人和我爱的人，都希望你有更好的明天❤️</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="https://rebirth100.github.io/posts/bf350c86.html">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('https://rebirth100.github.io/posts/bf350c86.html')">C语言教程-68.数组下标：从0开始的原因</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"><div class="reward-link mode"><a class="reward-link-button" href="/wechat"><i class="anzhiyufont anzhiyu-icon-plant-fill"></i>运营模式与责任</a></div></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="https://rebirth100.github.io/posts/bf350c86.html"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=C语言教程-68.数组下标：从0开始的原因&amp;url=https://rebirth100.github.io/posts/bf350c86.html&amp;pic=/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://rebirth100.github.io" target="_blank">Rebirth100</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__category-list"><a class="post-meta__box__categoryes" href="/categories/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/"><span class="categoryes-punctuation"> <i class="anzhiyufont anzhiyu-icon-inbox"></i></span>C语言教程<span class="categoryesPageCount">69</span></a></div><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/%E5%9F%BA%E7%A1%80/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>基础<span class="tagsPageCount">112</span></a><a class="post-meta__box__tags" href="/tags/%E7%BC%96%E7%A8%8B/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>编程<span class="tagsPageCount">109</span></a><a class="post-meta__box__tags" href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>C语言教程<span class="tagsPageCount">69</span></a></div></div><div class="post_share"><div class="social-share" data-image="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/bdc1eca6.html"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">C语言教程-67.一维数组的定义与初始化</div></div></a></div><div class="next-post pull-right"><a href="/posts/ef5f1ac0.html"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">C语言教程-69.遍历数组：for循环的经典应用</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/posts/d3738343.html" title="C语言教程-105.结构体作为函数参数"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-01</div><div class="title">C语言教程-105.结构体作为函数参数</div></div></a></div><div><a href="/posts/6377da75.html" title="C语言教程-108.typedef用法：给类型起别名"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-04</div><div class="title">C语言教程-108.typedef用法：给类型起别名</div></div></a></div><div><a href="/posts/ff0c18e4.html" title="C语言教程-106.结构体指针：高效传递复杂数据"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-02</div><div class="title">C语言教程-106.结构体指针：高效传递复杂数据</div></div></a></div><div><a href="/posts/e9573a32.html" title="C语言教程-107.嵌套结构体：描述复杂实体"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-03</div><div class="title">C语言教程-107.嵌套结构体：描述复杂实体</div></div></a></div><div><a href="/posts/dc0fea1b.html" title="C语言教程-109.联合体union：共享内存的数据类型"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-05</div><div class="title">C语言教程-109.联合体union：共享内存的数据类型</div></div></a></div><div><a href="/posts/395745d4.html" title="C语言教程-110.枚举enum：让常量更可读"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-05</div><div class="title">C语言教程-110.枚举enum：让常量更可读</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/08/24/64e6ce9c507bb.png" alt="status"/></div></div><div class="author-info__description">学习笔记，成长记录</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">rebirth100</h1><div class="author-info__desc">爱我的人和我爱的人，都希望你有更好的明天❤️</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/Rebirth100" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="https://rebirth100.github.io/" target="_blank" title="BiliBili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a></div></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake"></i><span>公告</span></div><div class="announcement_content">我写不出细腻的文字了 换句话 我找不到我自己了</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%8B%A5%E5%8C%97%E8%BE%B0-c%E8%AF%AD%E8%A8%80c%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B068%E6%95%B0%E7%BB%84%E4%B8%8B%E6%A0%87%E4%BB%8E0%E5%BC%80%E5%A7%8B%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-text">【若北辰-C语言】《C语言教程》068｜数组下标：从0开始的原因</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/4340bc10.html" title="C语言教程-111.位域：按位存储与实现相关陷阱"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-111.位域：按位存储与实现相关陷阱"/></a><div class="content"><a class="title" href="/posts/4340bc10.html" title="C语言教程-111.位域：按位存储与实现相关陷阱">C语言教程-111.位域：按位存储与实现相关陷阱</a><time datetime="2026-10-05T23:18:00.000Z" title="发表于 2026-10-06 07:18:00">2026-10-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/395745d4.html" title="C语言教程-110.枚举enum：让常量更可读"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-110.枚举enum：让常量更可读"/></a><div class="content"><a class="title" href="/posts/395745d4.html" title="C语言教程-110.枚举enum：让常量更可读">C语言教程-110.枚举enum：让常量更可读</a><time datetime="2026-10-05T01:16:00.000Z" title="发表于 2026-10-05 09:16:00">2026-10-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/dc0fea1b.html" title="C语言教程-109.联合体union：共享内存的数据类型"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-109.联合体union：共享内存的数据类型"/></a><div class="content"><a class="title" href="/posts/dc0fea1b.html" title="C语言教程-109.联合体union：共享内存的数据类型">C语言教程-109.联合体union：共享内存的数据类型</a><time datetime="2026-10-04T23:15:00.000Z" title="发表于 2026-10-05 07:15:00">2026-10-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/6377da75.html" title="C语言教程-108.typedef用法：给类型起别名"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-108.typedef用法：给类型起别名"/></a><div class="content"><a class="title" href="/posts/6377da75.html" title="C语言教程-108.typedef用法：给类型起别名">C语言教程-108.typedef用法：给类型起别名</a><time datetime="2026-10-03T23:14:00.000Z" title="发表于 2026-10-04 07:14:00">2026-10-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/e9573a32.html" title="C语言教程-107.嵌套结构体：描述复杂实体"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-107.嵌套结构体：描述复杂实体"/></a><div class="content"><a class="title" href="/posts/e9573a32.html" title="C语言教程-107.嵌套结构体：描述复杂实体">C语言教程-107.嵌套结构体：描述复杂实体</a><time datetime="2026-10-02T23:14:00.000Z" title="发表于 2026-10-03 07:14:00">2026-10-03</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="workboard"><img class="workSituationImg boardsign" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-上班摸鱼中.svg" alt="距离月入25k也就还差一个大佬带我~" title="距离月入25k也就还差一个大佬带我~"/><div id="runtimeTextTip"></div></div></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2026 By <a class="footer-bar-link" href="/" title="rebirth100" target="_blank">rebirth100</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" href="/null"></a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">123</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">11</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" href="https://rebirth100.github.io/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">Github</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/Rebirth100" title="个人主页"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://image.anheyu.com/favicon.ico" alt="个人主页"/><span class="back-menu-item-text">个人主页</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/C/" style="font-size: 0.88rem;">C<sup>13</sup></a><a href="/tags/C/" style="font-size: 0.88rem;">C++<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 0.88rem;">C语言<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">C语言教程<sup>69</sup></a><a href="/tags/Linux/" style="font-size: 0.88rem;">Linux<sup>14</sup></a><a href="/tags/MySQL/" style="font-size: 0.88rem;">MySQL<sup>11</sup></a><a href="/tags/Python/" style="font-size: 0.88rem;">Python<sup>3</sup></a><a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 0.88rem;">基础<sup>112</sup></a><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 0.88rem;">数据结构<sup>6</sup></a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" style="font-size: 0.88rem;">系统编程<sup>5</sup></a><a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 0.88rem;">编程<sup>109</sup></a><a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 0.88rem;">网络编程<sup>3</sup></a><a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" style="font-size: 0.88rem;">项目实战<sup>3</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.7"></meting-js></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="anzhiyufont anzhiyu-icon-xmark"></i></button></nav><div class="is-center" id="loading-database"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.cbd.int/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("06/10/2026 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2026 By 安知鱼 V1.7.1",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 rebirth100 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><script async="async">(function () {
+  var grt = new Date("06/10/2026 00:00:00"); //设置网站上线时间
+  var now = new Date();
+  var dnum;
+  var hnum;
+  var mnum;
+  var snum;
+  var nowHour;
+
+  // 计算并更新天数、小时数、分钟数和秒数
+  function updateTime() {
+    now = new Date(); // 更新 now 的值
+    nowHour = now.getHours(); // 更新 nowHour 的值
+    var days = (now - grt) / 1000 / 60 / 60 / 24;
+    dnum = Math.floor(days);
+    var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+      hnum = "0" + hnum;
+    }
+    var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+      mnum = "0" + mnum;
+    }
+    var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+      snum = "0" + snum;
+    }
+  }
+
+  // 更新网页中显示的网站运行时间
+  function updateHtml() {
+    const footer = document.getElementById("footer");
+    if (!footer) return
+    let currentTimeHtml = "";
+    if (nowHour < 18 && nowHour >= 9) {
+      // 如果是上班时间，默认就是"安知鱼-上班摸鱼中.svg"图片，不需要更改
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    } else {
+      // 如果是下班时间，插入"安知鱼-下班啦.svg"图片
+      let img = document.querySelector("#workboard .workSituationImg");
+      if (img != null) {
+        img.src = "https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-下班啦.svg";
+        img.title = "下班了就该开开心心的玩耍，嘿嘿~";
+        img.alt = "下班了就该开开心心的玩耍，嘿嘿~";
+      }
+
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    }
+
+    if (document.getElementById("runtimeTextTip")) {
+      document.getElementById("runtimeTextTip").innerHTML = currentTimeHtml;
+    }
+  }
+
+  setInterval(() => {
+    updateTime();
+    updateHtml();
+  }, 1000);
+})();</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><input type="hidden" name="page-type" id="page-type" value="post"></div><script async data-pjax src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.1/bubble/bubble.js"></script><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://cdn.cbd.int/qrcodejs@1.0.0/qrcode.min.js"></script><script src="/js/anzhiyu/right_click_menu.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>

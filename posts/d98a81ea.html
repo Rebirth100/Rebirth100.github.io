@@ -1,0 +1,747 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>C语言教程-56.函数调用栈初识 | Rebirth100</title><meta name="keywords" content="基础,编程,C语言教程"><meta name="author" content="rebirth100"><meta name="copyright" content="rebirth100"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="C语言教程-56.函数调用栈初识"><meta name="application-name" content="C语言教程-56.函数调用栈初识"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="C语言教程-56.函数调用栈初识"><meta property="og:url" content="https://rebirth100.github.io/posts/d98a81ea.html"><meta property="og:site_name" content="Rebirth100"><meta property="og:description" content="【若北辰-C语言】《C语言教程》056｜函数调用栈初识  原文：微信公众号 · 若北辰-C语言 · 2026-08-13 07:08 原文链接：http:&amp;#x2F;&amp;#x2F;mp.weixin.qq.com&amp;#x2F;s?__biz&amp;#x3D;MzUyMDE2ODQ1Mg&amp;#x3D;&amp;#x3D;&amp;amp;mid&amp;#x3D;2247484108&amp;amp;idx"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://rebirth100.github.io/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png"><meta property="article:author" content="rebirth100"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://rebirth100.github.io/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png"><meta name="description" content="【若北辰-C语言】《C语言教程》056｜函数调用栈初识  原文：微信公众号 · 若北辰-C语言 · 2026-08-13 07:08 原文链接：http:&amp;#x2F;&amp;#x2F;mp.weixin.qq.com&amp;#x2F;s?__biz&amp;#x3D;MzUyMDE2ODQ1Mg&amp;#x3D;&amp;#x3D;&amp;amp;mid&amp;#x3D;2247484108&amp;amp;idx"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://rebirth100.github.io/posts/d98a81ea.html"><link rel="preconnect" href="//cdn.cbd.int"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/swiper/swiper.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: undefined,
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: {"enable":true,"default":"晚上好👋","list":[{"greeting":"晚安😴","startTime":0,"endTime":5},{"greeting":"早上好鸭👋, 祝你一天好心情！","startTime":6,"endTime":9},{"greeting":"上午好👋, 状态很好，鼓励一下～","startTime":10,"endTime":10},{"greeting":"11点多啦, 在坚持一下就吃饭啦～","startTime":11,"endTime":11},{"greeting":"午安👋, 宝贝","startTime":12,"endTime":14},{"greeting":"🌈充实的一天辛苦啦！","startTime":14,"endTime":18},{"greeting":"19点喽, 奖励一顿丰盛的大餐吧🍔。","startTime":19,"endTime":19},{"greeting":"晚上好👋, 在属于自己的时间好好放松😌~","startTime":20,"endTime":24}]},
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: {"mode":"both","api":"https://img2color-go.vercel.app/api?img=","cover_change":true},
+  authorStatus: {"skills":["🤖️ 数码科技爱好者","🔍 分享与热心帮助","🏠 智能家居小能手","🔨 设计开发一条龙","🤝 专修交互与设计","🏃 脚踏实地行动派","🧱 团队小组发动机","💢 壮汉人狠话不多"]},
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: {"limitDay":60,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章的内容可能已经过时了。"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: rebirth100","link":"链接: ","source":"来源: Rebirth100","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'Rebirth100',
+  title: 'C语言教程-56.函数调用栈初识',
+  postAI: '',
+  pageFillDescription: '【若北辰-C语言】《C语言教程》056｜函数调用栈初识若北辰语言语言教程函数调用栈初识原文微信公众号若北辰语言原文链接为什么要理解函数调用栈前面几章我们已经学了函数的定义声明调用参数和返回值到目前为止你应该已经能写出这样的代码但很多人学到这里会有几个疑问调用时程序到底跳到哪里去了执行完以后怎么知道回到函数里的局部变量为什么只在函数里有效为什么函数调用太多会栈溢出递归为什么容易出问题这些问题背后都和函数调用栈有关函数调用栈不是新的语法而是理解函数运行过程的一把钥匙你不需要一开始就掌握操作系统底层细节但要先知道函数不是乱跳的程序会用一套有秩序的方式管理每一次函数调用这套机制就是调用栈先用生活例子理解栈栈可以理解成一摞盘子你放盘子时只能放在最上面你拿盘子时也只能从最上面拿最后放进去的最先拿出来这就是栈的核心规则后进先出英文常写作也就是比如依次放入三个盘子盘子盘子盘子拿的时候顺序一定是盘子盘子盘子函数调用也很像这个过程一个函数调用另一个函数时新的函数会压到栈顶新函数执行完后从栈顶弹出程序回到之前那个函数什么是函数调用栈函数调用栈就是程序运行时用来管理函数调用关系的一块内存区域每调用一个函数程序就会在栈上创建一份记录这份记录通常可以理解成一个函数的工作空间里面会保存函数的参数函数的局部变量函数执行完后要回到哪里一些运行时需要的信息这份工作空间通常叫栈帧也可以简单理解为每个正在执行的函数都有自己的小房间函数被调用时小房间创建函数结束时小房间销毁所以局部变量才会随着函数调用出现又随着函数结束消失从函数开始看调用栈程序从函数开始执行当程序进入时调用栈里会先有的栈帧例如程序进入后栈里大致可以理解为栈顶栈帧栈底这里的是的局部变量它属于栈帧当执行结束栈帧被销毁程序也就结束了调用一个函数时发生了什么看一个简单例子程序执行过程大致是进入创建栈帧执行到创建栈帧执行里的结束销毁栈帧回到继续执行结束销毁栈帧调用栈变化可以这样看进入栈顶栈底调用后栈顶栈底执行完后栈顶栈底这就是函数调用和返回的基本过程为什么函数执行完能回到原来的地方看这段代码函数调用前调用后运行结果调用前函数调用后程序调用后并不是执行完就随便找个地方继续跑它会回到调用语句的下一行调用后这是因为函数调用时程序会记录返回地址可以简单理解为调用函数前先记住等会儿要回来哪里函数执行完后根据这个位置返回所以函数调用不是迷路式跳转而是带着回程地址的临时跳转局部变量为什么互不影响看这个例子中的中的运行结果中的中的里有一个里也有一个它们名字一样但不是同一个变量原因是它们属于不同的栈帧被调用时有自己的栈帧被调用时有自己的栈帧每个函数的局部变量都放在自己的工作空间里所以不会互相干扰这就是局部变量作用域和生命周期背后的运行原因参数也会进入函数自己的栈帧上一章我们讲过普通变量传参是值传递现在用调用栈再看一遍运行结果为什么没有变调用时的值会复制给函数的形参此时可以理解为栈帧栈帧在里执行修改的是栈帧里的不是栈帧里的结束后栈帧销毁也消失里的仍然是这就是值传递最直观的解释函数返回值是怎么带回去的看加法函数调用时函数有自己的栈帧栈帧执行到程序会把的值带回调用处然后栈帧销毁里执行注意返回的是的值不是这个变量本身变量随着结束而消失但它的值已经被复制回了返回局部变量的值为什么可以很多初学者会担心局部变量不是函数结束就销毁了吗那局部变量安全吗比如这是安全的因为返回的是里面保存的值假设是会把交回调用处函数结束后变量没了但这个结果已经被带回去了所以返回局部变量的值可以但返回局部变量的地址不可以这会涉及指针和悬空指针后面会专门讲先记住一句局部变量的值可以返回局部变量的地址不能随便返回多层函数调用时栈会一层层增加看这个例子执行进入离开进入离开运行结果进入进入执行离开离开调用过程是调用调用调用结束回到结束回到结束回到调用栈最深的时候是栈顶栈底执行完先弹出然后回到执行完弹出然后回到这就是后进先出谁最后被调用谁最先返回为什么先调用的函数后结束在上面的例子里最早开始执行但最后才结束比先调用却比后结束这很正常因为调用以后会暂停在调用位置等待执行完调用以后也会暂停等待执行完可以理解为等等等等完成后才能继续等完成后才能继续等完成后才能继续所以调用关系越深越内层的函数越先结束这正是栈结构的特点调用栈帮你理解程序输出顺序很多函数调用题难点不是语法而是输出顺序看这段代码输出结果是分析方法很简单先输出调用先输出调用输出后结束回到继续输出结束回到输出只要抓住调用和返回的位置输出顺序就不难判断栈帧销毁后局部变量就不能再用了看这个函数只在函数的栈帧中存在调用时被创建结束时被销毁所以在里不能访问的这是错误的因为函数没有这个变量局部变量不是整个程序都能用它只活在自己的函数调用期间函数调用栈可以帮助你理解这个规则栈帧没了里面的局部变量也没了每次调用函数都会有新的栈帧同一个函数被调用多次每次都会创建新的栈帧看例子运行结果每调用一次都会创建一次新的函数工作空间第一次调用时是函数结束后这个销毁第二次调用时又创建新的值是第三次调用时再创建新的值是这三个不是同一个变量连续变来变去而是三次不同调用中的局部变量调用栈和递归有什么关系递归函数就是函数直接或间接调用自己例如输出结果调用过程是调用调用调用直接然后一层层返回最深时调用栈类似栈顶栈底每一层递归都有自己的这就是递归能够工作的原因递归为什么必须有结束条件如果递归没有结束条件函数会一直调用自己例如这段代码会不断创建新的栈帧调用栈会越来越深栈空间不是无限的当栈被占满就可能出现栈溢出英文常见说法是所以递归必须有结束条件也叫递归出口比如没有出口的递归本质上就是没有刹车的循环而且还会不断占用栈空间什么是栈溢出栈溢出就是调用栈占用的空间超过了系统允许的范围常见原因有两个函数调用层级太深局部变量占用空间太大递归没有结束条件是最常见的栈溢出原因之一例如还有一种情况是在函数里创建很大的局部数组这个数组很大如果栈空间不够也可能出问题所以大数组动态数据长期存在的数据后面通常会考虑放到堆内存中也就是相关内容在当前阶段先记住栈适合保存函数调用过程中的临时数据但不是无限仓库调用栈和调试有什么关系以后使用调试器时经常会看到一个东西叫调用栈它会显示程序当前停在哪个函数以及这个函数是被谁调用的比如程序现在停在函数里调用栈可能显示这说明调用了调用了调用了现在程序停在里面当程序出错时调用栈非常有用比如段错误发生在某个函数里你不只要看出错那一行还要看它是怎么被一步步调用过来的很多不是发生点本身的问题而是调用它之前传入了错误数据调用栈能帮你顺着路线往回查为什么局部变量适合放在栈上局部变量有一个特点函数调用时创建函数结束时销毁这和栈非常匹配比如开始时和出现结束时和消失栈的压入和弹出正好适合管理这种临时数据这也是为什么局部变量通常和栈联系在一起当然真实编译器会做各种优化具体存放位置可能更复杂但从学习角度看把局部变量理解为函数栈帧中的数据是非常有帮助的全局变量和调用栈不同局部变量通常跟随函数栈帧创建和销毁全局变量不一样例如运行结果是全局变量它不属于某一次函数调用的栈帧它在程序运行期间一直存在函数结束后不会销毁所以局部变量和全局变量的生命周期不同调用栈主要帮助我们理解函数调用和局部变量而不是管理所有变量用调用栈重新理解可以看成当前函数的出口执行时会发生几件事把返回值交给调用处结束当前函数销毁当前函数的栈帧回到调用者继续执行例如调用过程是调用创建栈帧得到返回栈帧销毁中的得到不是单纯跳出也不是跳出循环结束的是整个函数初学阶段需要掌握到什么程度调用栈这个概念听起来有点底层但初学阶段不需要钻太深你暂时不需要知道寄存器汇编真实内存地址怎么变化先掌握下面几件事就够了函数调用时会创建新的栈帧函数结束时对应栈帧会销毁局部变量属于当前函数的栈帧形参也是函数自己的局部数据函数调用是后进先出递归会不断增加栈帧调用太深可能导致栈溢出把这些理解了后面学递归指针数组作为参数内存管理时会轻松很多一个练习判断输出顺序先不要运行试着判断下面代码输出什么正确输出是分析时不要只看函数定义顺序要看函数调用顺序程序从开始调用调用调用结束后回到结束后回到结束后回到这就是调用栈的思维方式本章小结函数调用栈是程序管理函数调用过程的重要机制每调用一个函数就会创建一个新的栈帧栈帧中保存了这个函数的参数局部变量返回位置等信息函数执行结束后当前栈帧被销毁程序回到调用它的地方继续执行理解调用栈后很多前面学过的知识会变得更清楚局部变量为什么只能在函数内使用形参为什么不会直接改变实参为什么能回到调用处多层函数调用为什么按后进先出返回递归为什么必须有结束条件栈溢出为什么会发生调用栈不是为了增加学习负担而是为了让你真正看懂函数是怎么运行的从这一章开始你看函数时不只要看代码写了什么还要能想象它在调用栈中的进出过程',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-10-06 16:37:46',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><script>MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["\\[","\\]"]]}};</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><meta name="generator" content="Hexo 7.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="https://npm.elemecdn.com/anzhiyu-blog-static@1.0.4/img/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><div class="back-home-button"><i class="anzhiyufont anzhiyu-icon-grip-vertical"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" href="https://rebirth100.github.io/" title="博客"><img class="back-menu-item-icon" src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">Github</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/Rebirth100" title="个人主页"><img class="back-menu-item-icon" src="https://image.anheyu.com/favicon.ico" alt="个人主页"/><span class="back-menu-item-text">个人主页</span></a></div></div></div></div><a id="site-name" href="/" accesskey="h"><div class="title">Rebirth100</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索🔍" accesskey="s"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span> 搜索</span></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/C/" style="font-size: 1.05rem;">C<sup>13</sup></a><a href="/tags/C/" style="font-size: 1.05rem;">C++<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 1.05rem;">C语言<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">C语言教程<sup>69</sup></a><a href="/tags/Linux/" style="font-size: 1.05rem;">Linux<sup>14</sup></a><a href="/tags/MySQL/" style="font-size: 1.05rem;">MySQL<sup>11</sup></a><a href="/tags/Python/" style="font-size: 1.05rem;">Python<sup>3</sup></a><a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 1.05rem;">基础<sup>112</sup></a><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 1.05rem;">数据结构<sup>6</sup></a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" style="font-size: 1.05rem;">系统编程<sup>5</sup></a><a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 1.05rem;">编程<sup>109</sup></a><a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 1.05rem;">网络编程<sup>3</sup></a><a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" style="font-size: 1.05rem;">项目实战<sup>3</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/10/"><span class="card-archive-list-date">十月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">7</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/09/"><span class="card-archive-list-date">九月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">32</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/08/"><span class="card-archive-list-date">八月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">50</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/07/"><span class="card-archive-list-date">七月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">14</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/06/"><span class="card-archive-list-date">六月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">20</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" itemprop="url">C语言教程</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E5%9F%BA%E7%A1%80/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>基础</span></a><a class="article-meta__tags" href="/tags/%E7%BC%96%E7%A8%8B/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>编程</span></a><a class="article-meta__tags" href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>C语言教程</span></a></span></div></div><h1 class="post-title" itemprop="name headline">C语言教程-56.函数调用栈初识</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-08-12T23:08:00.000Z" title="发表于 2026-08-13 07:08:00">2026-08-13</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-10-06T08:37:46.645Z" title="更新于 2026-10-06 16:37:46">2026-10-06</time></span></div><div class="meta-secondline"><span class="post-meta-separator"></span><span class="post-meta-wordcount"><i class="anzhiyufont anzhiyu-icon-file-word post-meta-icon" title="文章字数"></i><span class="post-meta-label" title="文章字数">字数总计:</span><span class="word-count" title="文章字数">4.5k</span><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-clock post-meta-icon" title="阅读时长"></i><span class="post-meta-label" title="阅读时长">阅读时长:</span><span>15分钟</span></span><span class="post-meta-separator"></span><span class="post-meta-pv-cv" id="" data-flag-title="C语言教程-56.函数调用栈初识"><i class="anzhiyufont anzhiyu-icon-fw-eye post-meta-icon"></i><span class="post-meta-label" title="阅读量">阅读量:</span><span id="busuanzi_value_page_pv"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-spin"></i></span></span><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为西安"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>西安</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png"></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="https://rebirth100.github.io/posts/d98a81ea.html"><header><a class="post-meta-categories" href="/categories/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" itemprop="url">C语言教程</a><a href="/tags/%E5%9F%BA%E7%A1%80/" tabindex="-1" itemprop="url">基础</a><a href="/tags/%E7%BC%96%E7%A8%8B/" tabindex="-1" itemprop="url">编程</a><a href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url">C语言教程</a><h1 id="CrawlerTitle" itemprop="name headline">C语言教程-56.函数调用栈初识</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">rebirth100</span><time itemprop="dateCreated datePublished" datetime="2026-08-12T23:08:00.000Z" title="发表于 2026-08-13 07:08:00">2026-08-13</time><time itemprop="dateCreated datePublished" datetime="2026-10-06T08:37:46.645Z" title="更新于 2026-10-06 16:37:46">2026-10-06</time></header><h1
+id="若北辰-c语言c语言教程056函数调用栈初识">【若北辰-C语言】《C语言教程》056｜函数调用栈初识</h1>
+<blockquote>
+<p><strong>原文</strong>：微信公众号 · 若北辰-C语言 · 2026-08-13 07:08
+<strong>原文链接</strong>：http://mp.weixin.qq.com/s?__biz=MzUyMDE2ODQ1Mg==&amp;mid=2247484108&amp;idx=1&amp;sn=8256709bc540deab2ff03434971edcd9&amp;chksm=f9ef37a7ce98beb190cf88f663e3b223eb6ef2f1180859113c293eb1cecd7cf8e0cec390e7a8#rd</p>
+</blockquote>
+<p><strong>1. 为什么要理解函数调用栈</strong></p>
+<p>前面几章我们已经学了函数的定义、声明、调用、参数和返回值。</p>
+<p>到目前为止，你应该已经能写出这样的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> add(<span class="built_in">int</span> a, <span class="built_in">int</span> b) &#123;  </span><br><span class="line">    <span class="keyword">return</span> a + b;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    <span class="built_in">int</span> result = add(<span class="number">3</span>, <span class="number">5</span>);  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但很多人学到这里，会有几个疑问：</p>
+<p>main调用add时，程序到底跳到哪里去了 add执行完以后，怎么知道回到main
+函数里的局部变量为什么只在函数里有效 为什么函数调用太多会栈溢出
+递归为什么容易出问题</p>
+<p>这些问题背后，都和函数调用栈有关。</p>
+<p>函数调用栈不是新的语法，而是理解函数运行过程的一把钥匙。</p>
+<p>你不需要一开始就掌握操作系统底层细节，但要先知道：函数不是乱跳的，程序会用一套有秩序的方式管理每一次函数调用。</p>
+<p>这套机制，就是调用栈。</p>
+<p><strong>2. 先用生活例子理解栈</strong></p>
+<p>栈可以理解成一摞盘子。</p>
+<p>你放盘子时，只能放在最上面。</p>
+<p>你拿盘子时，也只能从最上面拿。</p>
+<p>最后放进去的，最先拿出来。</p>
+<p>这就是栈的核心规则：</p>
+<p>后进先出。</p>
+<p>英文常写作LIFO，也就是Last In First Out。</p>
+<p>比如依次放入三个盘子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">盘子<span class="number">1</span>  </span><br><span class="line">盘子<span class="number">2</span>  </span><br><span class="line">盘子<span class="number">3</span></span><br></pre></td></tr></table></figure>
+<p>拿的时候顺序一定是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">盘子<span class="number">3</span>  </span><br><span class="line">盘子<span class="number">2</span>  </span><br><span class="line">盘子<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>函数调用也很像这个过程。</p>
+<p>一个函数调用另一个函数时，新的函数会压到栈顶。</p>
+<p>新函数执行完后，从栈顶弹出，程序回到之前那个函数。</p>
+<p><strong>3. 什么是函数调用栈</strong></p>
+<p>函数调用栈，就是程序运行时用来管理函数调用关系的一块内存区域。</p>
+<p>每调用一个函数，程序就会在栈上创建一份记录。</p>
+<p>这份记录通常可以理解成一个函数的工作空间。</p>
+<p>里面会保存：</p>
+<p>函数的参数 函数的局部变量 函数执行完后要回到哪里
+一些运行时需要的信息</p>
+<p>这份工作空间通常叫栈帧。</p>
+<p>也可以简单理解为：每个正在执行的函数，都有自己的小房间。</p>
+<p>函数被调用时，小房间创建。</p>
+<p>函数结束时，小房间销毁。</p>
+<p>所以局部变量才会随着函数调用出现，又随着函数结束消失。</p>
+<p><strong>4. 从main函数开始看调用栈</strong></p>
+<p>C程序从main函数开始执行。</p>
+<p>当程序进入main时，调用栈里会先有main的栈帧。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    <span class="built_in">int</span> x = <span class="number">10</span>;  </span><br><span class="line">    printf(<span class="string">&quot;%d\n&quot;</span>, x);  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>程序进入main后，栈里大致可以理解为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">栈顶  </span><br><span class="line">main栈帧：x = <span class="number">10</span>  </span><br><span class="line">栈底</span><br></pre></td></tr></table></figure>
+<p>这里的x是main的局部变量，它属于main栈帧。</p>
+<p>当main执行结束，main栈帧被销毁，程序也就结束了。</p>
+<p><strong>5. 调用一个函数时发生了什么</strong></p>
+<p>看一个简单例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line">void sayHello(void) &#123;  </span><br><span class="line">    printf(<span class="string">&quot;Hello\n&quot;</span>);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    sayHello();  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>程序执行过程大致是：</p>
+<p>进入main 创建main栈帧 执行到sayHello 创建sayHello栈帧
+执行sayHello里的printf sayHello结束 销毁sayHello栈帧 回到main继续执行
+main结束 销毁main栈帧</p>
+<p>调用栈变化可以这样看：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">进入main：  </span><br><span class="line">  </span><br><span class="line">栈顶  </span><br><span class="line">main  </span><br><span class="line">栈底</span><br></pre></td></tr></table></figure>
+<p>调用sayHello后：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">栈顶  </span><br><span class="line">sayHello  </span><br><span class="line">main  </span><br><span class="line">栈底</span><br></pre></td></tr></table></figure>
+<p>sayHello执行完后：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">栈顶  </span><br><span class="line">main  </span><br><span class="line">栈底</span><br></pre></td></tr></table></figure>
+<p>这就是函数调用和返回的基本过程。</p>
+<p><strong>6. 为什么函数执行完能回到原来的地方</strong></p>
+<p>看这段代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line">void test(void) &#123;  </span><br><span class="line">    printf(<span class="string">&quot;test函数\n&quot;</span>);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    printf(<span class="string">&quot;调用前\n&quot;</span>);  </span><br><span class="line">    test();  </span><br><span class="line">    printf(<span class="string">&quot;调用后\n&quot;</span>);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">调用前  </span><br><span class="line">test函数  </span><br><span class="line">调用后</span><br></pre></td></tr></table></figure>
+<p>程序调用test后，并不是执行完test就随便找个地方继续跑。</p>
+<p>它会回到test调用语句的下一行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">printf(<span class="string">&quot;调用后\n&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>这是因为函数调用时，程序会记录返回地址。</p>
+<p>可以简单理解为：</p>
+<p>调用函数前，先记住等会儿要回来哪里。</p>
+<p>函数执行完后，根据这个位置返回。</p>
+<p>所以函数调用不是迷路式跳转，而是带着回程地址的临时跳转。</p>
+<p><strong>7. 局部变量为什么互不影响</strong></p>
+<p>看这个例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line">void funcA(void) &#123;  </span><br><span class="line">    <span class="built_in">int</span> x = <span class="number">10</span>;  </span><br><span class="line">    printf(<span class="string">&quot;funcA中的x：%d\n&quot;</span>, x);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">void funcB(void) &#123;  </span><br><span class="line">    <span class="built_in">int</span> x = <span class="number">20</span>;  </span><br><span class="line">    printf(<span class="string">&quot;funcB中的x：%d\n&quot;</span>, x);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    funcA();  </span><br><span class="line">    funcB();  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">funcA中的x：<span class="number">10</span>  </span><br><span class="line">funcB中的x：<span class="number">20</span></span><br></pre></td></tr></table></figure>
+<p>funcA里有一个x，funcB里也有一个x。</p>
+<p>它们名字一样，但不是同一个变量。</p>
+<p>原因是它们属于不同的栈帧。</p>
+<p>funcA被调用时，有funcA自己的栈帧。</p>
+<p>funcB被调用时，有funcB自己的栈帧。</p>
+<p>每个函数的局部变量都放在自己的工作空间里，所以不会互相干扰。</p>
+<p>这就是局部变量作用域和生命周期背后的运行原因。</p>
+<p><strong>8. 参数也会进入函数自己的栈帧</strong></p>
+<p>上一章我们讲过，普通变量传参是值传递。</p>
+<p>现在用调用栈再看一遍。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line">void change(<span class="built_in">int</span> n) &#123;  </span><br><span class="line">    n = <span class="number">100</span>;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    <span class="built_in">int</span> x = <span class="number">10</span>;  </span><br><span class="line">  </span><br><span class="line">    change(x);  </span><br><span class="line">  </span><br><span class="line">    printf(<span class="string">&quot;x = %d\n&quot;</span>, x);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<p>为什么x没有变？</p>
+<p>调用change(x)时，x的值10会复制给change函数的形参n。</p>
+<p>此时可以理解为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">main栈帧：x = <span class="number">10</span>  </span><br><span class="line">change栈帧：n = <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<p>在change里执行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">n = <span class="number">100</span>;</span><br></pre></td></tr></table></figure>
+<p>修改的是change栈帧里的n，不是main栈帧里的x。</p>
+<p>change结束后，change栈帧销毁，n也消失。</p>
+<p>main里的x仍然是10。</p>
+<p>这就是值传递最直观的解释。</p>
+<p><strong>9. 函数返回值是怎么带回去的</strong></p>
+<p>看加法函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> add(<span class="built_in">int</span> a, <span class="built_in">int</span> b) &#123;  </span><br><span class="line">    <span class="built_in">int</span> <span class="built_in">sum</span> = a + b;  </span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    <span class="built_in">int</span> result;  </span><br><span class="line">  </span><br><span class="line">    result = add(<span class="number">3</span>, <span class="number">5</span>);  </span><br><span class="line">  </span><br><span class="line">    printf(<span class="string">&quot;%d\n&quot;</span>, result);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用add时，add函数有自己的栈帧：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">add栈帧：a = <span class="number">3</span>, b = <span class="number">5</span>, <span class="built_in">sum</span> = <span class="number">8</span></span><br></pre></td></tr></table></figure>
+<p>执行到：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="built_in">sum</span>;</span><br></pre></td></tr></table></figure>
+<p>程序会把sum的值8带回调用处。</p>
+<p>然后add栈帧销毁。</p>
+<p>main里执行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = <span class="number">8</span>;</span><br></pre></td></tr></table></figure>
+<p>注意，返回的是sum的值，不是sum这个变量本身。</p>
+<p>sum变量随着add结束而消失，但它的值已经被复制回main了。</p>
+<p><strong>10. 返回局部变量的值为什么可以</strong></p>
+<p>很多初学者会担心：</p>
+<p>局部变量不是函数结束就销毁了吗，那return局部变量安全吗？</p>
+<p>比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> add(<span class="built_in">int</span> a, <span class="built_in">int</span> b) &#123;  </span><br><span class="line">    <span class="built_in">int</span> <span class="built_in">sum</span> = a + b;  </span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是安全的。</p>
+<p>因为return返回的是sum里面保存的值。</p>
+<p>假设sum是8，return会把8交回调用处。</p>
+<p>函数结束后，sum变量没了，但8这个结果已经被带回去了。</p>
+<p>所以返回局部变量的值可以。</p>
+<p>但返回局部变量的地址不可以，这会涉及指针和悬空指针，后面会专门讲。</p>
+<p>先记住一句：</p>
+<p>局部变量的值可以返回，局部变量的地址不能随便返回。</p>
+<p><strong>11. 多层函数调用时，栈会一层层增加</strong></p>
+<p>看这个例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line">void c(void) &#123;  </span><br><span class="line">    printf(<span class="string">&quot;执行c\n&quot;</span>);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">void b(void) &#123;  </span><br><span class="line">    printf(<span class="string">&quot;进入b\n&quot;</span>);  </span><br><span class="line">    c();  </span><br><span class="line">    printf(<span class="string">&quot;离开b\n&quot;</span>);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">void a(void) &#123;  </span><br><span class="line">    printf(<span class="string">&quot;进入a\n&quot;</span>);  </span><br><span class="line">    b();  </span><br><span class="line">    printf(<span class="string">&quot;离开a\n&quot;</span>);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    a();  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">进入a  </span><br><span class="line">进入b  </span><br><span class="line">执行c  </span><br><span class="line">离开b  </span><br><span class="line">离开a</span><br></pre></td></tr></table></figure>
+<p>调用过程是：</p>
+<p>main调用a a调用b b调用c c结束回到b b结束回到a a结束回到main</p>
+<p>调用栈最深的时候是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">栈顶  </span><br><span class="line">c  </span><br><span class="line">b  </span><br><span class="line">a  </span><br><span class="line">main  </span><br><span class="line">栈底</span><br></pre></td></tr></table></figure>
+<p>c执行完，先弹出c。</p>
+<p>然后回到b。</p>
+<p>b执行完，弹出b。</p>
+<p>然后回到a。</p>
+<p>这就是后进先出。</p>
+<p>谁最后被调用，谁最先返回。</p>
+<p><strong>12. 为什么先调用的函数后结束</strong></p>
+<p>在上面的例子里，main最早开始执行，但最后才结束。</p>
+<p>a比b先调用，却比b后结束。</p>
+<p>这很正常。</p>
+<p>因为a调用b以后，a会暂停在调用位置，等待b执行完。</p>
+<p>b调用c以后，b也会暂停，等待c执行完。</p>
+<p>可以理解为：</p>
+<p>main等a a等b b等c</p>
+<p>等c完成后，b才能继续。</p>
+<p>等b完成后，a才能继续。</p>
+<p>等a完成后，main才能继续。</p>
+<p>所以调用关系越深，越内层的函数越先结束。</p>
+<p>这正是栈结构的特点。</p>
+<p><strong>13. 调用栈帮你理解程序输出顺序</strong></p>
+<p>很多函数调用题，难点不是语法，而是输出顺序。</p>
+<p>看这段代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line">void f2(void) &#123;  </span><br><span class="line">    printf(<span class="string">&quot;B\n&quot;</span>);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">void f1(void) &#123;  </span><br><span class="line">    printf(<span class="string">&quot;A\n&quot;</span>);  </span><br><span class="line">    f2();  </span><br><span class="line">    printf(<span class="string">&quot;C\n&quot;</span>);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    printf(<span class="string">&quot;Start\n&quot;</span>);  </span><br><span class="line">    f1();  </span><br><span class="line">    printf(<span class="string">&quot;End\n&quot;</span>);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Start  </span><br><span class="line">A  </span><br><span class="line">B  </span><br><span class="line">C  </span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<p>分析方法很简单：</p>
+<p>main先输出Start main调用f1 f1先输出A f1调用f2 f2输出B后结束
+回到f1继续输出C f1结束回到main main输出End</p>
+<p>只要抓住调用和返回的位置，输出顺序就不难判断。</p>
+<p><strong>14. 栈帧销毁后，局部变量就不能再用了</strong></p>
+<p>看这个函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">void test(void) &#123;  </span><br><span class="line">    <span class="built_in">int</span> x = <span class="number">10</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>x只在test函数的栈帧中存在。</p>
+<p>调用test时，x被创建。</p>
+<p>test结束时，x被销毁。</p>
+<p>所以在main里不能访问test的x：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    test();  </span><br><span class="line">    printf(<span class="string">&quot;%d\n&quot;</span>, x);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是错误的。</p>
+<p>因为main函数没有x这个变量。</p>
+<p>局部变量不是整个程序都能用，它只活在自己的函数调用期间。</p>
+<p>函数调用栈可以帮助你理解这个规则：</p>
+<p>栈帧没了，里面的局部变量也没了。</p>
+<p><strong>15. 每次调用函数，都会有新的栈帧</strong></p>
+<p>同一个函数被调用多次，每次都会创建新的栈帧。</p>
+<p>看例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line">void printNumber(<span class="built_in">int</span> n) &#123;  </span><br><span class="line">    <span class="built_in">int</span> x = n;  </span><br><span class="line">    printf(<span class="string">&quot;x = %d\n&quot;</span>, x);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    printNumber(<span class="number">1</span>);  </span><br><span class="line">    printNumber(<span class="number">2</span>);  </span><br><span class="line">    printNumber(<span class="number">3</span>);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">1</span>  </span><br><span class="line">x = <span class="number">2</span>  </span><br><span class="line">x = <span class="number">3</span></span><br></pre></td></tr></table></figure>
+<p>每调用一次printNumber，都会创建一次新的函数工作空间。</p>
+<p>第一次调用时，x是1。</p>
+<p>函数结束后，这个x销毁。</p>
+<p>第二次调用时，又创建新的x，值是2。</p>
+<p>第三次调用时，再创建新的x，值是3。</p>
+<p>这三个x不是同一个变量连续变来变去，而是三次不同调用中的局部变量。</p>
+<p><strong>16. 调用栈和递归有什么关系</strong></p>
+<p>递归函数，就是函数直接或间接调用自己。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line">void countDown(<span class="built_in">int</span> n) &#123;  </span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">0</span>) &#123;  </span><br><span class="line">        <span class="keyword">return</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    printf(<span class="string">&quot;%d\n&quot;</span>, n);  </span><br><span class="line">    countDown(n - <span class="number">1</span>);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    countDown(<span class="number">3</span>);  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span>  </span><br><span class="line"><span class="number">2</span>  </span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>调用过程是：</p>
+<p>countDown(3)调用countDown(2) countDown(2)调用countDown(1)
+countDown(1)调用countDown(0) countDown(0)直接return 然后一层层返回</p>
+<p>最深时，调用栈类似：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">栈顶  </span><br><span class="line">countDown(<span class="number">0</span>)  </span><br><span class="line">countDown(<span class="number">1</span>)  </span><br><span class="line">countDown(<span class="number">2</span>)  </span><br><span class="line">countDown(<span class="number">3</span>)  </span><br><span class="line">main  </span><br><span class="line">栈底</span><br></pre></td></tr></table></figure>
+<p>每一层递归都有自己的n。</p>
+<p>这就是递归能够工作的原因。</p>
+<p><strong>17. 递归为什么必须有结束条件</strong></p>
+<p>如果递归没有结束条件，函数会一直调用自己。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">void test(void) &#123;  </span><br><span class="line">    test();  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码会不断创建新的test栈帧。</p>
+<p>调用栈会越来越深：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test  </span><br><span class="line">test  </span><br><span class="line">test  </span><br><span class="line">test  </span><br><span class="line">main</span><br></pre></td></tr></table></figure>
+<p>栈空间不是无限的。</p>
+<p>当栈被占满，就可能出现栈溢出。</p>
+<p>英文常见说法是stack overflow。</p>
+<p>所以递归必须有结束条件，也叫递归出口。</p>
+<p>比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (n == <span class="number">0</span>) &#123;  </span><br><span class="line">    <span class="keyword">return</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>没有出口的递归，本质上就是没有刹车的循环，而且还会不断占用栈空间。</p>
+<p><strong>18. 什么是栈溢出</strong></p>
+<p>栈溢出就是调用栈占用的空间超过了系统允许的范围。</p>
+<p>常见原因有两个：</p>
+<p>函数调用层级太深 局部变量占用空间太大</p>
+<p>递归没有结束条件，是最常见的栈溢出原因之一。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">void endless(void) &#123;  </span><br><span class="line">    endless();  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还有一种情况是，在函数里创建很大的局部数组：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">void test(void) &#123;  </span><br><span class="line">    <span class="built_in">int</span> arr[<span class="number">10000000</span>];  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个数组很大，如果栈空间不够，也可能出问题。</p>
+<p>所以大数组、动态数据、长期存在的数据，后面通常会考虑放到堆内存中，也就是malloc相关内容。</p>
+<p>在当前阶段先记住：</p>
+<p>栈适合保存函数调用过程中的临时数据，但不是无限仓库。</p>
+<p><strong>19. 调用栈和调试有什么关系</strong></p>
+<p>以后使用调试器时，经常会看到一个东西叫调用栈。</p>
+<p>它会显示程序当前停在哪个函数，以及这个函数是被谁调用的。</p>
+<p>比如程序现在停在c函数里，调用栈可能显示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">c  </span><br><span class="line">b  </span><br><span class="line">a  </span><br><span class="line">main</span><br></pre></td></tr></table></figure>
+<p>这说明：</p>
+<p>main调用了a a调用了b b调用了c 现在程序停在c里面</p>
+<p>当程序出错时，调用栈非常有用。</p>
+<p>比如段错误发生在某个函数里，你不只要看出错那一行，还要看它是怎么被一步步调用过来的。</p>
+<p>很多bug不是发生点本身的问题，而是调用它之前传入了错误数据。</p>
+<p>调用栈能帮你顺着路线往回查。</p>
+<p><strong>20. 为什么局部变量适合放在栈上</strong></p>
+<p>局部变量有一个特点：</p>
+<p>函数调用时创建 函数结束时销毁</p>
+<p>这和栈非常匹配。</p>
+<p>比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void test(void) &#123;  </span><br><span class="line">    <span class="built_in">int</span> x = <span class="number">10</span>;  </span><br><span class="line">    <span class="built_in">int</span> y = <span class="number">20</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>test开始时，x和y出现。</p>
+<p>test结束时，x和y消失。</p>
+<p>栈的压入和弹出正好适合管理这种临时数据。</p>
+<p>这也是为什么局部变量通常和栈联系在一起。</p>
+<p>当然，真实编译器会做各种优化，具体存放位置可能更复杂。</p>
+<p>但从学习角度看，把局部变量理解为函数栈帧中的数据，是非常有帮助的。</p>
+<p><strong>21. 全局变量和调用栈不同</strong></p>
+<p>局部变量通常跟随函数栈帧创建和销毁。</p>
+<p>全局变量不一样。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> count = <span class="number">0</span>;  </span><br><span class="line">  </span><br><span class="line">void addOne(void) &#123;  </span><br><span class="line">    count++;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    addOne();  </span><br><span class="line">    addOne();  </span><br><span class="line">  </span><br><span class="line">    printf(<span class="string">&quot;%d\n&quot;</span>, count);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p>count是全局变量，它不属于某一次函数调用的栈帧。</p>
+<p>它在程序运行期间一直存在。</p>
+<p>addOne函数结束后，count不会销毁。</p>
+<p>所以局部变量和全局变量的生命周期不同。</p>
+<p>调用栈主要帮助我们理解函数调用和局部变量，而不是管理所有变量。</p>
+<p><strong>22. 用调用栈重新理解return</strong></p>
+<p>return可以看成当前函数的出口。</p>
+<p>执行return时，会发生几件事：</p>
+<p>把返回值交给调用处 结束当前函数 销毁当前函数的栈帧
+回到调用者继续执行</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> square(<span class="built_in">int</span> n) &#123;  </span><br><span class="line">    <span class="keyword">return</span> n * n;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> x = square(<span class="number">4</span>);</span><br></pre></td></tr></table></figure>
+<p>过程是：</p>
+<p>main调用square square创建栈帧 n得到4 return n * n 返回16
+square栈帧销毁 main中的x得到16</p>
+<p>return不是单纯跳出if，也不是跳出循环。</p>
+<p>return结束的是整个函数。</p>
+<p><strong>23. 初学阶段需要掌握到什么程度</strong></p>
+<p>调用栈这个概念听起来有点底层，但初学阶段不需要钻太深。</p>
+<p>你暂时不需要知道寄存器、汇编、真实内存地址怎么变化。</p>
+<p>先掌握下面几件事就够了：</p>
+<p>函数调用时，会创建新的栈帧 函数结束时，对应栈帧会销毁
+局部变量属于当前函数的栈帧 形参也是函数自己的局部数据 函数调用是后进先出
+递归会不断增加栈帧 调用太深可能导致栈溢出</p>
+<p>把这些理解了，后面学递归、指针、数组作为参数、内存管理时，会轻松很多。</p>
+<p><strong>24. 一个练习：判断输出顺序</strong></p>
+<p>先不要运行，试着判断下面代码输出什么：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;  </span></span><br><span class="line">  </span><br><span class="line">void three(void) &#123;  </span><br><span class="line">    printf(<span class="string">&quot;3\n&quot;</span>);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">void two(void) &#123;  </span><br><span class="line">    printf(<span class="string">&quot;2 start\n&quot;</span>);  </span><br><span class="line">    three();  </span><br><span class="line">    printf(<span class="string">&quot;2 end\n&quot;</span>);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">void one(void) &#123;  </span><br><span class="line">    printf(<span class="string">&quot;1 start\n&quot;</span>);  </span><br><span class="line">    two();  </span><br><span class="line">    printf(<span class="string">&quot;1 end\n&quot;</span>);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="built_in">int</span> main(void) &#123;  </span><br><span class="line">    printf(<span class="string">&quot;main start\n&quot;</span>);  </span><br><span class="line">    one();  </span><br><span class="line">    printf(<span class="string">&quot;main end\n&quot;</span>);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>正确输出是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">main start  </span><br><span class="line"><span class="number">1</span> start  </span><br><span class="line"><span class="number">2</span> start  </span><br><span class="line"><span class="number">3</span>  </span><br><span class="line"><span class="number">2</span> end  </span><br><span class="line"><span class="number">1</span> end  </span><br><span class="line">main end</span><br></pre></td></tr></table></figure>
+<p>分析时，不要只看函数定义顺序。</p>
+<p>要看函数调用顺序。</p>
+<p>程序从main开始，调用one。</p>
+<p>one调用two。</p>
+<p>two调用three。</p>
+<p>three结束后回到two，two结束后回到one，one结束后回到main。</p>
+<p>这就是调用栈的思维方式。</p>
+<p><strong>25. 本章小结</strong></p>
+<p>函数调用栈是程序管理函数调用过程的重要机制。</p>
+<p>每调用一个函数，就会创建一个新的栈帧。</p>
+<p>栈帧中保存了这个函数的参数、局部变量、返回位置等信息。</p>
+<p>函数执行结束后，当前栈帧被销毁，程序回到调用它的地方继续执行。</p>
+<p>理解调用栈后，很多前面学过的知识会变得更清楚：</p>
+<p>局部变量为什么只能在函数内使用 形参为什么不会直接改变实参
+return为什么能回到调用处 多层函数调用为什么按后进先出返回
+递归为什么必须有结束条件 栈溢出为什么会发生</p>
+<p>调用栈不是为了增加学习负担，而是为了让你真正看懂函数是怎么运行的。</p>
+<p>从这一章开始，你看函数时，不只要看代码写了什么，还要能想象它在调用栈中的进出过程。</p>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">rebirth100</div><div class="post-copyright__author_desc">爱我的人和我爱的人，都希望你有更好的明天❤️</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="https://rebirth100.github.io/posts/d98a81ea.html">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('https://rebirth100.github.io/posts/d98a81ea.html')">C语言教程-56.函数调用栈初识</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"><div class="reward-link mode"><a class="reward-link-button" href="/wechat"><i class="anzhiyufont anzhiyu-icon-plant-fill"></i>运营模式与责任</a></div></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="https://rebirth100.github.io/posts/d98a81ea.html"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=C语言教程-56.函数调用栈初识&amp;url=https://rebirth100.github.io/posts/d98a81ea.html&amp;pic=/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://rebirth100.github.io" target="_blank">Rebirth100</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__category-list"><a class="post-meta__box__categoryes" href="/categories/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/"><span class="categoryes-punctuation"> <i class="anzhiyufont anzhiyu-icon-inbox"></i></span>C语言教程<span class="categoryesPageCount">69</span></a></div><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/%E5%9F%BA%E7%A1%80/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>基础<span class="tagsPageCount">112</span></a><a class="post-meta__box__tags" href="/tags/%E7%BC%96%E7%A8%8B/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>编程<span class="tagsPageCount">109</span></a><a class="post-meta__box__tags" href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>C语言教程<span class="tagsPageCount">69</span></a></div></div><div class="post_share"><div class="social-share" data-image="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/88ced556.html"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">系统编程-5.Linux C 多线程进阶学习笔记（三）</div></div></a></div><div class="next-post pull-right"><a href="/posts/9ac904e8.html"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">网络编程-1.Linux C TCP 网络编程学习笔记（四）</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/posts/d3738343.html" title="C语言教程-105.结构体作为函数参数"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-01</div><div class="title">C语言教程-105.结构体作为函数参数</div></div></a></div><div><a href="/posts/6377da75.html" title="C语言教程-108.typedef用法：给类型起别名"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-04</div><div class="title">C语言教程-108.typedef用法：给类型起别名</div></div></a></div><div><a href="/posts/ff0c18e4.html" title="C语言教程-106.结构体指针：高效传递复杂数据"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-02</div><div class="title">C语言教程-106.结构体指针：高效传递复杂数据</div></div></a></div><div><a href="/posts/e9573a32.html" title="C语言教程-107.嵌套结构体：描述复杂实体"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-03</div><div class="title">C语言教程-107.嵌套结构体：描述复杂实体</div></div></a></div><div><a href="/posts/dc0fea1b.html" title="C语言教程-109.联合体union：共享内存的数据类型"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-05</div><div class="title">C语言教程-109.联合体union：共享内存的数据类型</div></div></a></div><div><a href="/posts/395745d4.html" title="C语言教程-110.枚举enum：让常量更可读"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-05</div><div class="title">C语言教程-110.枚举enum：让常量更可读</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/08/24/64e6ce9c507bb.png" alt="status"/></div></div><div class="author-info__description">学习笔记，成长记录</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">rebirth100</h1><div class="author-info__desc">爱我的人和我爱的人，都希望你有更好的明天❤️</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/Rebirth100" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="https://rebirth100.github.io/" target="_blank" title="BiliBili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a></div></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake"></i><span>公告</span></div><div class="announcement_content">我写不出细腻的文字了 换句话 我找不到我自己了</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%8B%A5%E5%8C%97%E8%BE%B0-c%E8%AF%AD%E8%A8%80c%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B056%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A0%88%E5%88%9D%E8%AF%86"><span class="toc-text">【若北辰-C语言】《C语言教程》056｜函数调用栈初识</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/4340bc10.html" title="C语言教程-111.位域：按位存储与实现相关陷阱"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-111.位域：按位存储与实现相关陷阱"/></a><div class="content"><a class="title" href="/posts/4340bc10.html" title="C语言教程-111.位域：按位存储与实现相关陷阱">C语言教程-111.位域：按位存储与实现相关陷阱</a><time datetime="2026-10-05T23:18:00.000Z" title="发表于 2026-10-06 07:18:00">2026-10-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/395745d4.html" title="C语言教程-110.枚举enum：让常量更可读"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-110.枚举enum：让常量更可读"/></a><div class="content"><a class="title" href="/posts/395745d4.html" title="C语言教程-110.枚举enum：让常量更可读">C语言教程-110.枚举enum：让常量更可读</a><time datetime="2026-10-05T01:16:00.000Z" title="发表于 2026-10-05 09:16:00">2026-10-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/dc0fea1b.html" title="C语言教程-109.联合体union：共享内存的数据类型"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-109.联合体union：共享内存的数据类型"/></a><div class="content"><a class="title" href="/posts/dc0fea1b.html" title="C语言教程-109.联合体union：共享内存的数据类型">C语言教程-109.联合体union：共享内存的数据类型</a><time datetime="2026-10-04T23:15:00.000Z" title="发表于 2026-10-05 07:15:00">2026-10-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/6377da75.html" title="C语言教程-108.typedef用法：给类型起别名"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-108.typedef用法：给类型起别名"/></a><div class="content"><a class="title" href="/posts/6377da75.html" title="C语言教程-108.typedef用法：给类型起别名">C语言教程-108.typedef用法：给类型起别名</a><time datetime="2026-10-03T23:14:00.000Z" title="发表于 2026-10-04 07:14:00">2026-10-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/e9573a32.html" title="C语言教程-107.嵌套结构体：描述复杂实体"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-107.嵌套结构体：描述复杂实体"/></a><div class="content"><a class="title" href="/posts/e9573a32.html" title="C语言教程-107.嵌套结构体：描述复杂实体">C语言教程-107.嵌套结构体：描述复杂实体</a><time datetime="2026-10-02T23:14:00.000Z" title="发表于 2026-10-03 07:14:00">2026-10-03</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="workboard"><img class="workSituationImg boardsign" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-上班摸鱼中.svg" alt="距离月入25k也就还差一个大佬带我~" title="距离月入25k也就还差一个大佬带我~"/><div id="runtimeTextTip"></div></div></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2026 By <a class="footer-bar-link" href="/" title="rebirth100" target="_blank">rebirth100</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" href="/null"></a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">123</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">11</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" href="https://rebirth100.github.io/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">Github</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/Rebirth100" title="个人主页"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://image.anheyu.com/favicon.ico" alt="个人主页"/><span class="back-menu-item-text">个人主页</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/C/" style="font-size: 0.88rem;">C<sup>13</sup></a><a href="/tags/C/" style="font-size: 0.88rem;">C++<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 0.88rem;">C语言<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">C语言教程<sup>69</sup></a><a href="/tags/Linux/" style="font-size: 0.88rem;">Linux<sup>14</sup></a><a href="/tags/MySQL/" style="font-size: 0.88rem;">MySQL<sup>11</sup></a><a href="/tags/Python/" style="font-size: 0.88rem;">Python<sup>3</sup></a><a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 0.88rem;">基础<sup>112</sup></a><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 0.88rem;">数据结构<sup>6</sup></a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" style="font-size: 0.88rem;">系统编程<sup>5</sup></a><a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 0.88rem;">编程<sup>109</sup></a><a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 0.88rem;">网络编程<sup>3</sup></a><a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" style="font-size: 0.88rem;">项目实战<sup>3</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.7"></meting-js></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="anzhiyufont anzhiyu-icon-xmark"></i></button></nav><div class="is-center" id="loading-database"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.cbd.int/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("06/10/2026 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2026 By 安知鱼 V1.7.1",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 rebirth100 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><script async="async">(function () {
+  var grt = new Date("06/10/2026 00:00:00"); //设置网站上线时间
+  var now = new Date();
+  var dnum;
+  var hnum;
+  var mnum;
+  var snum;
+  var nowHour;
+
+  // 计算并更新天数、小时数、分钟数和秒数
+  function updateTime() {
+    now = new Date(); // 更新 now 的值
+    nowHour = now.getHours(); // 更新 nowHour 的值
+    var days = (now - grt) / 1000 / 60 / 60 / 24;
+    dnum = Math.floor(days);
+    var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+      hnum = "0" + hnum;
+    }
+    var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+      mnum = "0" + mnum;
+    }
+    var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+      snum = "0" + snum;
+    }
+  }
+
+  // 更新网页中显示的网站运行时间
+  function updateHtml() {
+    const footer = document.getElementById("footer");
+    if (!footer) return
+    let currentTimeHtml = "";
+    if (nowHour < 18 && nowHour >= 9) {
+      // 如果是上班时间，默认就是"安知鱼-上班摸鱼中.svg"图片，不需要更改
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    } else {
+      // 如果是下班时间，插入"安知鱼-下班啦.svg"图片
+      let img = document.querySelector("#workboard .workSituationImg");
+      if (img != null) {
+        img.src = "https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-下班啦.svg";
+        img.title = "下班了就该开开心心的玩耍，嘿嘿~";
+        img.alt = "下班了就该开开心心的玩耍，嘿嘿~";
+      }
+
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    }
+
+    if (document.getElementById("runtimeTextTip")) {
+      document.getElementById("runtimeTextTip").innerHTML = currentTimeHtml;
+    }
+  }
+
+  setInterval(() => {
+    updateTime();
+    updateHtml();
+  }, 1000);
+})();</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><input type="hidden" name="page-type" id="page-type" value="post"></div><script async data-pjax src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.1/bubble/bubble.js"></script><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://cdn.cbd.int/qrcodejs@1.0.0/qrcode.min.js"></script><script src="/js/anzhiyu/right_click_menu.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>

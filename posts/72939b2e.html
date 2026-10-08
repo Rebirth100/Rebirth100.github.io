@@ -1,0 +1,859 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>项目实战-2.物联网项目架构与车机管理系统学习笔记 | Rebirth100</title><meta name="keywords" content="基础,编程,项目实战"><meta name="author" content="rebirth100"><meta name="copyright" content="rebirth100"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="项目实战-2.物联网项目架构与车机管理系统学习笔记"><meta name="application-name" content="项目实战-2.物联网项目架构与车机管理系统学习笔记"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="项目实战-2.物联网项目架构与车机管理系统学习笔记"><meta property="og:url" content="https://rebirth100.github.io/posts/72939b2e.html"><meta property="og:site_name" content="Rebirth100"><meta property="og:description" content="物联网项目架构、SQLite数据库、车机管理系统开发、CJSON库操作"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://rebirth100.github.io/img/posts/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98.png"><meta property="article:author" content="rebirth100"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://rebirth100.github.io/img/posts/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98.png"><meta name="description" content="物联网项目架构、SQLite数据库、车机管理系统开发、CJSON库操作"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://rebirth100.github.io/posts/72939b2e.html"><link rel="preconnect" href="//cdn.cbd.int"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/swiper/swiper.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: undefined,
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: {"enable":true,"default":"晚上好👋","list":[{"greeting":"晚安😴","startTime":0,"endTime":5},{"greeting":"早上好鸭👋, 祝你一天好心情！","startTime":6,"endTime":9},{"greeting":"上午好👋, 状态很好，鼓励一下～","startTime":10,"endTime":10},{"greeting":"11点多啦, 在坚持一下就吃饭啦～","startTime":11,"endTime":11},{"greeting":"午安👋, 宝贝","startTime":12,"endTime":14},{"greeting":"🌈充实的一天辛苦啦！","startTime":14,"endTime":18},{"greeting":"19点喽, 奖励一顿丰盛的大餐吧🍔。","startTime":19,"endTime":19},{"greeting":"晚上好👋, 在属于自己的时间好好放松😌~","startTime":20,"endTime":24}]},
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: {"mode":"both","api":"https://img2color-go.vercel.app/api?img=","cover_change":true},
+  authorStatus: {"skills":["🤖️ 数码科技爱好者","🔍 分享与热心帮助","🏠 智能家居小能手","🔨 设计开发一条龙","🤝 专修交互与设计","🏃 脚踏实地行动派","🧱 团队小组发动机","💢 壮汉人狠话不多"]},
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: {"limitDay":60,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章的内容可能已经过时了。"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: rebirth100","link":"链接: ","source":"来源: Rebirth100","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'Rebirth100',
+  title: '项目实战-2.物联网项目架构与车机管理系统学习笔记',
+  postAI: '',
+  pageFillDescription: '物联网项目架构与车机管理系统学习笔记, 一、常见物联网项目架构, 1.1 典型电动车物联网系统结构, 1.2 各模块职责, 1.3 核心设计原则, 1.4 通信协议选择, 二、SQLite数据库安装及基本操作, 2.1 SQLite简介, 2.2 安装, 2.3 基本命令, 2.4 SQL基础语句, 创建表, 插入数据, 查询数据, 更新数据, 删除数据, 删除表, 2.5 表设计要点, 三、车机系统管理模块构建, 3.1 项目结构, 3.2 头文件设计（car_manager.h）, 3.3 主函数流程（main.c）, 3.4 C语言SQLite核心接口, 打开数据库, 执行SQL（sqlite3_exec）, 3.5 Makefile编写, 四、车机模块管理系统实现, 4.1 数据库初始化实现, 4.2 查询功能与回调机制, 回调函数, 查询所有车辆, 4.3 static关键字作用, 4.4 表格格式化输出, 五、JSON操作（CJSON库）, 5.1 JSON基础, 5.2 JSON结构规则, 5.3 CJSON库选型与集成, 5.4 CJSON核心操作, 构建JSON对象, 解析JSON字符串, 5.5 CJSON常用函数速查, 5.6 JSON在项目中的作用, 六、综合开发要点, 6.1 开发效率原则, 6.2 面试准备要点, 6.3 编译命令汇总物联网项目架构与车机管理系统学习笔记一常见物联网项目架构典型电动车物联网系统结构用户页面小程序车机服务器语句数据库上报物联网终端电动车车机各模块职责模块职责用户注册登录查看车辆状态远程控制接收推送通知车机服务器提供网络服务与数据库交互数据中转数据库存储用户信息车辆信息上报数据业务轨迹物联网终端采集车辆状态地址时间上报数据接收下发指令车机管理系统维护车辆信息初始化数据库后台管理核心设计原则数据是项目核心数据库不直接对外开放通过服务器间接访问前后端分离前端负责展示后端通过统一数据格式与前端交互统一数据操作语言所有模块通过语句操作数据库安全防护防火墙身份验证人机检测等通信协议选择场景协议原因车辆位置定时上报频繁短消息允许少量丢失固件升级长连接数据完整性要求高页面访问支持网页标准化与服务器交互可靠传输请求响应模式二数据库安装及基本操作简介嵌入式数据库本质就是一个文件典型应用打卡机手机微信底层嵌入式设备无需独立服务器进程直接操作文件即可使用数据库技术安装安装运行时安装开发库语言开发必需只使用命令行装前两个即可用语言开发必须装基本命令进入交互界面打开创建数据库在交互界面内查看所有数据库查看所有表查看帮助退出既是创建也是打开文件不存在则创建存在则打开基础语句创建表字段类型说明类型说明对应语言定长字符串不定长字符串整数浮点数日期时间字符串存储文本约束说明主键数据唯一且非空非空必须填写唯一约束值不能重复允许为空表不存在才创建避免重复创建报错插入数据西安市高新四路字符串类型值需加引号数值类型直接写查询数据查询所有数据条件查询更新数据西安市创业广场必须加条件否则会更新所有行删除数据必须加条件不加会清空整张表删除表表设计要点车辆状态表设计字段类型说明车架号位主键定位坐标具体地址通过地图查询上报时间两种存储模式当前位置模式每辆车只存一条最新记录作为主键轨迹模式持续上报所有位置需增加自增作为主键不唯一三车机系统管理模块构建项目结构模块声明头文件模块实现主函数入口编译脚本头文件设计数据库路径宏定义车辆信息结构体车架号位函数声明主函数流程打开数据库数据库初始化失败系统初始化确认是否初始化系统执行建表插入样例数据等主菜单循环新增车辆删除车辆修改车辆查询车辆退出系统无效选项语言核心接口函数作用打开创建数据库关闭数据库执行语句增删改获取错误信息打开数据库无法打开数据库数据库打开成功数据库打开失败的极特殊场景无路径权限硬盘无空间执行错误编写编译时必须加链接参数否则会报未定义函数错误四车机模块管理系统实现数据库初始化实现删除已存在的表重新初始化错误处理创建表批量插入样例数据单条可插入多条西安高新四路西安创业广场查询功能与回调机制回调函数表头是否已打印传入的自定义参数列数字段总数每列的值数组每列的字段名数组第一次回调时打印表头打印一行数据回调函数每获取一条数据就执行一次用于处理单条数据的展示查询所有车辆重置表头标记查询失败关键字作用修饰局部变量延长生命周期到程序结束但作用域不变修饰函数函数仅在当前文件内可见外部文件无法调用修饰全局变量变量仅在当前文件内可见查询回调函数定义为可避免与其他文件的同名函数冲突表格格式化输出对齐输出使用左对齐为列宽车架号地址上报时间数据行五操作库基础是一种轻量级数据交换格式本质是纯字符串合法文档只有三种对象大括号包裹数组中括号包裹空内容不能用双引号开头那是非法结构结构规则张三规则要点对象用键值对用键值键必须用双引号数组用元素用逗号分隔最后一个键值对元素不能加逗号值类型字符串双引号数值无引号布尔小写数组对象库选型与集成版本特点需自行编译无需额外编译直接复制文件使用集成步骤从开源平台获取源码复制和到项目目录编译时一起编译即可面试提及时需明确版本号说明版本差异核心操作构建对象创建空对象添加字符串键值张三添加数值键值添加布尔键值添加数组添加嵌套对象数组转为字符串释放内存解析字符串解析字符串解析失败获取字符串值姓名获取数值年龄获取布尔值是否学生是否遍历数组电话释放常用函数速查函数作用创建空对象创建空数组创建字符串节点创建数值节点创建布尔节点向对象添加字符串键值向对象添加数值键值向对象添加布尔键值向对象添加任意节点向数组添加节点解析字符串转为格式化字符串转为紧凑字符串无换行空格获取对象中指定键的节点获取数组中指定索引的节点获取数组长度释放对象内存释放分配的字符串在项目中的作用物联网终端车机服务器数据库构建发送字符串解析转语句的核心价值统一数据格式终端小程序都用交互跨平台兼容纯字符串任何系统语言都能解析前后端解耦前端只关心格式不关心后端实现六综合开发要点开发效率原则优先使用成熟第三方库数据库网络不重复造轮子结构化数据用数据库车辆信息用户信息等中间传输数据用网络通信前后端交互复用已有代码链表模块菜单结构等可直接复用面试准备要点项目中使用的库需明确版本号如熟悉项目遵循的国标行业标准如车架号位国五国六排放标准能说清各模块职责和数据流向数据库表设计思路和字段含义编译命令汇总单文件编译编译运行或',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-10-06 16:37:47',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><script>MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["\\[","\\]"]]}};</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><meta name="generator" content="Hexo 7.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="https://npm.elemecdn.com/anzhiyu-blog-static@1.0.4/img/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><div class="back-home-button"><i class="anzhiyufont anzhiyu-icon-grip-vertical"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" href="https://rebirth100.github.io/" title="博客"><img class="back-menu-item-icon" src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">Github</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/Rebirth100" title="个人主页"><img class="back-menu-item-icon" src="https://image.anheyu.com/favicon.ico" alt="个人主页"/><span class="back-menu-item-text">个人主页</span></a></div></div></div></div><a id="site-name" href="/" accesskey="h"><div class="title">Rebirth100</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索🔍" accesskey="s"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span> 搜索</span></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/C/" style="font-size: 1.05rem;">C<sup>13</sup></a><a href="/tags/C/" style="font-size: 1.05rem;">C++<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 1.05rem;">C语言<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">C语言教程<sup>69</sup></a><a href="/tags/Linux/" style="font-size: 1.05rem;">Linux<sup>14</sup></a><a href="/tags/MySQL/" style="font-size: 1.05rem;">MySQL<sup>11</sup></a><a href="/tags/Python/" style="font-size: 1.05rem;">Python<sup>3</sup></a><a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 1.05rem;">基础<sup>112</sup></a><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 1.05rem;">数据结构<sup>6</sup></a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" style="font-size: 1.05rem;">系统编程<sup>5</sup></a><a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 1.05rem;">编程<sup>109</sup></a><a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 1.05rem;">网络编程<sup>3</sup></a><a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" style="font-size: 1.05rem;">项目实战<sup>3</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/10/"><span class="card-archive-list-date">十月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">7</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/09/"><span class="card-archive-list-date">九月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">32</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/08/"><span class="card-archive-list-date">八月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">50</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/07/"><span class="card-archive-list-date">七月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">14</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/06/"><span class="card-archive-list-date">六月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">20</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" itemprop="url">项目实战</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E5%9F%BA%E7%A1%80/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>基础</span></a><a class="article-meta__tags" href="/tags/%E7%BC%96%E7%A8%8B/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>编程</span></a><a class="article-meta__tags" href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>项目实战</span></a></span></div></div><h1 class="post-title" itemprop="name headline">项目实战-2.物联网项目架构与车机管理系统学习笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-08-18T16:00:00.000Z" title="发表于 2026-08-19 00:00:00">2026-08-19</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-10-06T08:37:47.220Z" title="更新于 2026-10-06 16:37:47">2026-10-06</time></span></div><div class="meta-secondline"><span class="post-meta-separator"></span><span class="post-meta-wordcount"><i class="anzhiyufont anzhiyu-icon-file-word post-meta-icon" title="文章字数"></i><span class="post-meta-label" title="文章字数">字数总计:</span><span class="word-count" title="文章字数">3.4k</span><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-clock post-meta-icon" title="阅读时长"></i><span class="post-meta-label" title="阅读时长">阅读时长:</span><span>13分钟</span></span><span class="post-meta-separator"></span><span class="post-meta-pv-cv" id="" data-flag-title="项目实战-2.物联网项目架构与车机管理系统学习笔记"><i class="anzhiyufont anzhiyu-icon-fw-eye post-meta-icon"></i><span class="post-meta-label" title="阅读量">阅读量:</span><span id="busuanzi_value_page_pv"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-spin"></i></span></span><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为西安"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>西安</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src="/img/posts/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98.png"></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="https://rebirth100.github.io/posts/72939b2e.html"><header><a class="post-meta-categories" href="/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" itemprop="url">项目实战</a><a href="/tags/%E5%9F%BA%E7%A1%80/" tabindex="-1" itemprop="url">基础</a><a href="/tags/%E7%BC%96%E7%A8%8B/" tabindex="-1" itemprop="url">编程</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" tabindex="-1" itemprop="url">项目实战</a><h1 id="CrawlerTitle" itemprop="name headline">项目实战-2.物联网项目架构与车机管理系统学习笔记</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">rebirth100</span><time itemprop="dateCreated datePublished" datetime="2026-08-18T16:00:00.000Z" title="发表于 2026-08-19 00:00:00">2026-08-19</time><time itemprop="dateCreated datePublished" datetime="2026-10-06T08:37:47.220Z" title="更新于 2026-10-06 16:37:47">2026-10-06</time></header><h1
+id="物联网项目架构与车机管理系统学习笔记">物联网项目架构与车机管理系统学习笔记</h1>
+<h2 id="一常见物联网项目架构">一、常见物联网项目架构</h2>
+<h3 id="典型电动车物联网系统结构">1.1 典型电动车物联网系统结构</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────┐     ┌─────────────┐     ┌─────────────┐</span><br><span class="line">│  用户APP    │     │  Web页面    │     │  小程序     │</span><br><span class="line">└──────┬──────┘     └──────┬──────┘     └──────┬──────┘</span><br><span class="line">       │                    │                    │</span><br><span class="line">       └────────────────────┼────────────────────┘</span><br><span class="line">                            │ TCP/UDP/HTTP</span><br><span class="line">                     ┌──────▼──────┐</span><br><span class="line">                     │ 车机服务器   │</span><br><span class="line">                     └──────┬──────┘</span><br><span class="line">                            │ SQL语句</span><br><span class="line">                     ┌──────▼──────┐</span><br><span class="line">                     │   数据库     │</span><br><span class="line">                     └─────────────┘</span><br><span class="line">                            ▲</span><br><span class="line">                            │ UDP上报</span><br><span class="line">                     ┌──────┴──────┐</span><br><span class="line">                     │ 物联网终端   │</span><br><span class="line">                     │ (电动车车机) │</span><br><span class="line">                     └─────────────┘</span><br></pre></td></tr></table></figure>
+<h3 id="各模块职责">1.2 各模块职责</h3>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用户APP</td>
+<td>注册登录、查看车辆状态、远程控制、接收推送通知</td>
+</tr>
+<tr>
+<td>车机服务器</td>
+<td>提供网络服务（TCP/UDP/HTTP）、与数据库交互、数据中转</td>
+</tr>
+<tr>
+<td>数据库</td>
+<td>存储用户信息、车辆信息、上报数据、业务轨迹</td>
+</tr>
+<tr>
+<td>物联网终端</td>
+<td>采集车辆状态（GPS、地址、时间）、上报数据、接收下发指令</td>
+</tr>
+<tr>
+<td>车机管理系统</td>
+<td>维护车辆信息、初始化数据库、后台管理</td>
+</tr>
+</tbody>
+</table>
+<h3 id="核心设计原则">1.3 核心设计原则</h3>
+<ul>
+<li><strong>数据是项目核心</strong>：数据库不直接对外开放，通过服务器间接访问</li>
+<li><strong>前后端分离</strong>：前端负责展示，后端通过统一数据格式（JSON）与前端交互</li>
+<li><strong>统一数据操作语言</strong>：所有模块通过SQL语句操作数据库</li>
+<li><strong>安全防护</strong>：防火墙、身份验证、人机检测等</li>
+</ul>
+<h3 id="通信协议选择">1.4 通信协议选择</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>协议</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>车辆位置定时上报</td>
+<td>UDP</td>
+<td>频繁、短消息、允许少量丢失</td>
+</tr>
+<tr>
+<td>OTA固件升级</td>
+<td>TCP</td>
+<td>长连接、数据完整性要求高</td>
+</tr>
+<tr>
+<td>Web页面访问</td>
+<td>HTTP</td>
+<td>支持网页、标准化</td>
+</tr>
+<tr>
+<td>APP与服务器交互</td>
+<td>TCP/HTTP</td>
+<td>可靠传输、请求响应模式</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2
+id="二sqlite数据库安装及基本操作">二、SQLite数据库安装及基本操作</h2>
+<h3 id="sqlite简介">2.1 SQLite简介</h3>
+<ul>
+<li>嵌入式数据库，本质就是<strong>一个文件</strong></li>
+<li>典型应用：打卡机、手机微信底层、嵌入式设备</li>
+<li>无需独立服务器进程，直接操作文件即可使用数据库技术</li>
+</ul>
+<h3 id="安装">2.2 安装</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装SQLite3（运行时）</span></span><br><span class="line"><span class="built_in">sudo</span> apt install sqlite3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装开发库（C语言开发必需）</span></span><br><span class="line"><span class="built_in">sudo</span> apt install libsqlite3-dev</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>只使用SQLite命令行装前两个即可；用C语言开发必须装
+<code>libsqlite3-dev</code>。</p>
+</blockquote>
+<h3 id="基本命令">2.3 基本命令</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入SQLite交互界面</span></span><br><span class="line">sqlite3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打开/创建数据库（在交互界面内）</span></span><br><span class="line">.open carDB</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看所有数据库</span></span><br><span class="line">.databases</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看所有表</span></span><br><span class="line">.tables</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看帮助</span></span><br><span class="line">.<span class="built_in">help</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 退出</span></span><br><span class="line">.quit</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>.open</code>
+既是创建也是打开：文件不存在则创建，存在则打开。</p>
+</blockquote>
+<h3 id="sql基础语句">2.4 SQL基础语句</h3>
+<h4 id="创建表">创建表</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE TABLE</span> IF <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> carstate (</span><br><span class="line">    carid <span class="type">CHAR</span>(<span class="number">22</span>) <span class="keyword">PRIMARY KEY</span> <span class="keyword">NOT NULL</span>,</span><br><span class="line">    gps <span class="type">CHAR</span>(<span class="number">50</span>),</span><br><span class="line">    address <span class="type">VARCHAR</span>(<span class="number">100</span>),</span><br><span class="line">    uptime DATETIME</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p><strong>字段类型说明</strong></p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>说明</th>
+<th>对应C语言</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CHAR(n)</td>
+<td>定长字符串</td>
+<td>char[n]</td>
+</tr>
+<tr>
+<td>VARCHAR(n)</td>
+<td>不定长字符串</td>
+<td>char*</td>
+</tr>
+<tr>
+<td>INT/INTEGER</td>
+<td>整数</td>
+<td>int</td>
+</tr>
+<tr>
+<td>REAL/FLOAT</td>
+<td>浮点数</td>
+<td>float/double</td>
+</tr>
+<tr>
+<td>DATETIME</td>
+<td>日期时间</td>
+<td>字符串存储</td>
+</tr>
+<tr>
+<td>TEXT</td>
+<td>文本</td>
+<td>char*</td>
+</tr>
+</tbody>
+</table>
+<p><strong>约束说明</strong> -
+<code>PRIMARY KEY</code>：主键，数据唯一且非空 -
+<code>NOT NULL</code>：非空，必须填写 -
+<code>UNIQUE</code>：唯一约束，值不能重复（允许为空） -
+<code>IF NOT EXISTS</code>：表不存在才创建，避免重复创建报错</p>
+<h4 id="插入数据">插入数据</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT INTO</span> carstate (carid, gps, address, uptime)</span><br><span class="line"><span class="keyword">VALUES</span> (<span class="string">&#x27;ABC12345678901234567890&#x27;</span>, <span class="string">&#x27;34.26,108.95&#x27;</span>, <span class="string">&#x27;西安市高新四路&#x27;</span>, <span class="string">&#x27;2026-08-19 10:30:00&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>字符串类型值需加引号，数值类型直接写。</p>
+</blockquote>
+<h4 id="查询数据">查询数据</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查询所有数据</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> carstate;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 条件查询</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> carstate <span class="keyword">WHERE</span> carid <span class="operator">=</span> <span class="string">&#x27;ABC12345678901234567890&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="更新数据">更新数据</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> carstate <span class="keyword">SET</span> gps <span class="operator">=</span> <span class="string">&#x27;34.27,108.96&#x27;</span>, address <span class="operator">=</span> <span class="string">&#x27;西安市创业广场&#x27;</span></span><br><span class="line"><span class="keyword">WHERE</span> carid <span class="operator">=</span> <span class="string">&#x27;ABC12345678901234567890&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>必须加WHERE条件，否则会更新所有行。</p>
+</blockquote>
+<h4 id="删除数据">删除数据</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> carstate <span class="keyword">WHERE</span> carid <span class="operator">=</span> <span class="string">&#x27;ABC12345678901234567890&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>必须加WHERE条件，不加会清空整张表。</p>
+</blockquote>
+<h4 id="删除表">删除表</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> IF <span class="keyword">EXISTS</span> carstate;</span><br></pre></td></tr></table></figure>
+<h3 id="表设计要点">2.5 表设计要点</h3>
+<p><strong>车辆状态表（carstate）设计</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>carid</td>
+<td>CHAR(22)</td>
+<td>车架号，22位，主键</td>
+</tr>
+<tr>
+<td>gps</td>
+<td>CHAR(50)</td>
+<td>GPS定位坐标</td>
+</tr>
+<tr>
+<td>address</td>
+<td>VARCHAR(100)</td>
+<td>具体地址（通过地图API查询）</td>
+</tr>
+<tr>
+<td>uptime</td>
+<td>DATETIME</td>
+<td>上报时间</td>
+</tr>
+</tbody>
+</table>
+<p><strong>两种存储模式</strong> -
+<strong>当前位置模式</strong>：每辆车只存一条最新记录，carid作为主键 -
+<strong>轨迹模式</strong>：持续上报所有位置，需增加自增ID作为主键，carid不唯一</p>
+<hr />
+<h2 id="三车机系统管理模块构建">三、车机系统管理模块构建</h2>
+<h3 id="项目结构">3.1 项目结构</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">carDB/</span><br><span class="line">├── car_manager.h      # 模块声明（头文件）</span><br><span class="line">├── car_manager.c      # 模块实现</span><br><span class="line">├── main.c             # 主函数入口</span><br><span class="line">└── Makefile           # 编译脚本</span><br></pre></td></tr></table></figure>
+<h3 id="头文件设计car_manager.h">3.2 头文件设计（car_manager.h）</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> CAR_MANAGER_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> CAR_MANAGER_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sqlite3.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 数据库路径宏定义</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DB_PATH <span class="string">&quot;./carDB&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 车辆信息结构体</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="type">char</span> carid[<span class="number">23</span>];    <span class="comment">// 车架号22位 + &#x27;\0&#x27;</span></span><br><span class="line">    <span class="type">char</span> gps[<span class="number">50</span>];</span><br><span class="line">    <span class="type">char</span> address[<span class="number">100</span>];</span><br><span class="line">    <span class="type">char</span> uptime[<span class="number">20</span>];</span><br><span class="line">&#125; CarInfo;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数声明</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">init_database</span><span class="params">(sqlite3 **db)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">add_car</span><span class="params">(sqlite3 *db, CarInfo *car)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">delete_car</span><span class="params">(sqlite3 *db, <span class="type">const</span> <span class="type">char</span> *carid)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">update_car</span><span class="params">(sqlite3 *db, CarInfo *car)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">query_all_cars</span><span class="params">(sqlite3 *db)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">show_menu</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="主函数流程main.c">3.3 主函数流程（main.c）</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;car_manager.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    sqlite3 *db;</span><br><span class="line">    <span class="type">int</span> choice;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1. 打开数据库</span></span><br><span class="line">    <span class="keyword">if</span> (init_database(&amp;db) != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;数据库初始化失败\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. 系统初始化确认</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;是否初始化系统？(Y/N): &quot;</span>);</span><br><span class="line">    <span class="type">char</span> init;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot; %c&quot;</span>, &amp;init);</span><br><span class="line">    <span class="keyword">if</span> (init == <span class="string">&#x27;Y&#x27;</span> || init == <span class="string">&#x27;y&#x27;</span>) &#123;</span><br><span class="line">        <span class="comment">// 执行建表、插入样例数据等</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3. 主菜单循环</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        show_menu();</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;choice);</span><br><span class="line">        <span class="keyword">switch</span> (choice) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>: <span class="comment">/* 新增车辆 */</span> <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">2</span>: <span class="comment">/* 删除车辆 */</span> <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">3</span>: <span class="comment">/* 修改车辆 */</span> <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">4</span>: <span class="comment">/* 查询车辆 */</span> <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">                sqlite3_close(db);</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;退出系统\n&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;无效选项\n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="c语言sqlite核心接口">3.4 C语言SQLite核心接口</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>函数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sqlite3_open(path, &amp;db)</code></td>
+<td>打开/创建数据库</td>
+</tr>
+<tr>
+<td><code>sqlite3_close(db)</code></td>
+<td>关闭数据库</td>
+</tr>
+<tr>
+<td><code>sqlite3_exec(db, sql, callback, arg, &amp;errmsg)</code></td>
+<td>执行SQL语句（增删改）</td>
+</tr>
+<tr>
+<td><code>sqlite3_errmsg(db)</code></td>
+<td>获取错误信息</td>
+</tr>
+</tbody>
+</table>
+<h4 id="打开数据库">打开数据库</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">init_database</span><span class="params">(sqlite3 **db)</span> &#123;</span><br><span class="line">    <span class="type">int</span> rc = sqlite3_open(DB_PATH, db);</span><br><span class="line">    <span class="keyword">if</span> (rc != SQLITE_OK) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;无法打开数据库: %s\n&quot;</span>, sqlite3_errmsg(*db));</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;数据库打开成功\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>数据库打开失败的极特殊场景：无路径权限、硬盘无空间。</p>
+</blockquote>
+<h4 id="执行sqlsqlite3_exec">执行SQL（sqlite3_exec）</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *errmsg = <span class="literal">NULL</span>;</span><br><span class="line"><span class="type">char</span> sql[<span class="number">256</span>];</span><br><span class="line"><span class="built_in">sprintf</span>(sql, <span class="string">&quot;INSERT INTO carstate VALUES(&#x27;%s&#x27;, &#x27;%s&#x27;, &#x27;%s&#x27;, &#x27;%s&#x27;)&quot;</span>,</span><br><span class="line">        car-&gt;carid, car-&gt;gps, car-&gt;address, car-&gt;uptime);</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> rc = sqlite3_exec(db, sql, <span class="literal">NULL</span>, <span class="literal">NULL</span>, &amp;errmsg);</span><br><span class="line"><span class="keyword">if</span> (rc != SQLITE_OK) &#123;</span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;SQL错误: %s\n&quot;</span>, errmsg);</span><br><span class="line">    sqlite3_free(errmsg);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="makefile编写">3.5 Makefile编写</h3>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">CC = gcc</span><br><span class="line">TARGET = car_manager</span><br><span class="line">OBJS = car_manager.o main.o</span><br><span class="line">CFLAGS = -Wall</span><br><span class="line">LDFLAGS = -lsqlite3</span><br><span class="line"></span><br><span class="line"><span class="variable">$(TARGET)</span>: <span class="variable">$(OBJS)</span></span><br><span class="line">	<span class="variable">$(CC)</span> -o <span class="variable">$@</span> <span class="variable">$^</span> <span class="variable">$(LDFLAGS)</span></span><br><span class="line"></span><br><span class="line"><span class="section">%.o: %.c</span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br><span class="line"></span><br><span class="line"><span class="section">run: <span class="variable">$(TARGET)</span></span></span><br><span class="line">	./<span class="variable">$(TARGET)</span></span><br><span class="line"></span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">	rm -f <span class="variable">$(OBJS)</span> <span class="variable">$(TARGET)</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>编译时必须加 <code>-lsqlite3</code>
+链接参数，否则会报未定义函数错误。</p>
+</blockquote>
+<hr />
+<h2 id="四车机模块管理系统实现">四、车机模块管理系统实现</h2>
+<h3 id="数据库初始化实现">4.1 数据库初始化实现</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">init_system</span><span class="params">(sqlite3 *db)</span> &#123;</span><br><span class="line">    <span class="type">char</span> *errmsg = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="type">int</span> rc;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1. 删除已存在的表（重新初始化）</span></span><br><span class="line">    rc = sqlite3_exec(db, <span class="string">&quot;DROP TABLE IF EXISTS carstate&quot;</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, &amp;errmsg);</span><br><span class="line">    <span class="keyword">if</span> (rc != SQLITE_OK) &#123; <span class="comment">/* 错误处理 */</span> &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. 创建表</span></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *create_sql =</span><br><span class="line">        <span class="string">&quot;CREATE TABLE carstate (&quot;</span></span><br><span class="line">        <span class="string">&quot;carid CHAR(22) PRIMARY KEY NOT NULL,&quot;</span></span><br><span class="line">        <span class="string">&quot;gps CHAR(50),&quot;</span></span><br><span class="line">        <span class="string">&quot;address VARCHAR(100),&quot;</span></span><br><span class="line">        <span class="string">&quot;uptime DATETIME)&quot;</span>;</span><br><span class="line">    rc = sqlite3_exec(db, create_sql, <span class="literal">NULL</span>, <span class="literal">NULL</span>, &amp;errmsg);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3. 批量插入样例数据（单条SQL可插入多条）</span></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *insert_sql =</span><br><span class="line">        <span class="string">&quot;INSERT INTO carstate VALUES &quot;</span></span><br><span class="line">        <span class="string">&quot;(&#x27;CAR001&#x27;, &#x27;34.26,108.95&#x27;, &#x27;西安高新四路&#x27;, &#x27;2026-08-19 10:00:00&#x27;),&quot;</span></span><br><span class="line">        <span class="string">&quot;(&#x27;CAR002&#x27;, &#x27;34.27,108.96&#x27;, &#x27;西安创业广场&#x27;, &#x27;2026-08-19 10:05:00&#x27;)&quot;</span>;</span><br><span class="line">    rc = sqlite3_exec(db, insert_sql, <span class="literal">NULL</span>, <span class="literal">NULL</span>, &amp;errmsg);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="查询功能与回调机制">4.2 查询功能与回调机制</h3>
+<h4 id="回调函数">回调函数</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span> header_printed = <span class="number">0</span>;  <span class="comment">// 表头是否已打印</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">query_callback</span><span class="params">(<span class="type">void</span> *data, <span class="type">int</span> argc, <span class="type">char</span> **argv, <span class="type">char</span> **azColName)</span> &#123;</span><br><span class="line">    <span class="comment">// data: 传入的自定义参数</span></span><br><span class="line">    <span class="comment">// argc: 列数（字段总数）</span></span><br><span class="line">    <span class="comment">// argv: 每列的值数组</span></span><br><span class="line">    <span class="comment">// azColName: 每列的字段名数组</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第一次回调时打印表头</span></span><br><span class="line">    <span class="keyword">if</span> (!header_printed) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; argc; i++) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%-15s&quot;</span>, azColName[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;----------------------------------------\n&quot;</span>);</span><br><span class="line">        header_printed = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 打印一行数据</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; argc; i++) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%-15s&quot;</span>, argv[i] ? argv[i] : <span class="string">&quot;NULL&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>回调函数每获取一条数据就执行一次，用于处理单条数据的展示。</p>
+</blockquote>
+<h4 id="查询所有车辆">查询所有车辆</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">query_all_cars</span><span class="params">(sqlite3 *db)</span> &#123;</span><br><span class="line">    <span class="type">char</span> *errmsg = <span class="literal">NULL</span>;</span><br><span class="line">    header_printed = <span class="number">0</span>;  <span class="comment">// 重置表头标记</span></span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> rc = sqlite3_exec(db, <span class="string">&quot;SELECT * FROM carstate&quot;</span>,</span><br><span class="line">                           query_callback, <span class="literal">NULL</span>, &amp;errmsg);</span><br><span class="line">    <span class="keyword">if</span> (rc != SQLITE_OK) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;查询失败: %s\n&quot;</span>, errmsg);</span><br><span class="line">        sqlite3_free(errmsg);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="static关键字作用">4.3 static关键字作用</h3>
+<ul>
+<li><strong>修饰局部变量</strong>：延长生命周期到程序结束，但作用域不变</li>
+<li><strong>修饰函数</strong>：函数仅在当前文件内可见，外部文件无法调用</li>
+<li><strong>修饰全局变量</strong>：变量仅在当前文件内可见</li>
+</ul>
+<blockquote>
+<p>查询回调函数定义为static，可避免与其他文件的同名函数冲突。</p>
+</blockquote>
+<h3 id="表格格式化输出">4.4 表格格式化输出</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对齐输出：使用 %-Ns 左对齐，N为列宽</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%-22s %-20s %-30s %-20s\n&quot;</span>,</span><br><span class="line">       <span class="string">&quot;车架号&quot;</span>, <span class="string">&quot;GPS&quot;</span>, <span class="string">&quot;地址&quot;</span>, <span class="string">&quot;上报时间&quot;</span>);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;====================================================================\n&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 数据行</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%-22s %-20s %-30s %-20s\n&quot;</span>,</span><br><span class="line">       carid, gps, address, uptime);</span><br></pre></td></tr></table></figure>
+<hr />
+<h2 id="五json操作cjson库">五、JSON操作（CJSON库）</h2>
+<h3 id="json基础">5.1 JSON基础</h3>
+<p>JSON（JavaScript Object
+Notation）是一种轻量级数据交换格式，本质是<strong>纯字符串</strong>。</p>
+<p><strong>合法JSON文档只有三种：</strong> 1. 对象：<code>&#123; &#125;</code>
+大括号包裹 2. 数组：<code>[ ]</code> 中括号包裹 3. 空内容</p>
+<blockquote>
+<p>不能用双引号开头，那是非法结构。</p>
+</blockquote>
+<h3 id="json结构规则">5.2 JSON结构规则</h3>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;张三&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="number">18</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;isStudent&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;phones&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;13312345678&quot;</span><span class="punctuation">,</span> <span class="string">&quot;13898765432&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;cars&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;number&quot;</span><span class="punctuation">:</span> <span class="string">&quot;CAR001&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;online&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;gps&quot;</span><span class="punctuation">:</span> <span class="string">&quot;34.26,108.95&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;number&quot;</span><span class="punctuation">:</span> <span class="string">&quot;CAR002&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;online&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;gps&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p><strong>规则要点</strong> - 对象用 <code>&#123;&#125;</code>，键值对用
+<code>键:值</code>，键必须用双引号 - 数组用
+<code>[]</code>，元素用逗号分隔 -
+最后一个键值对/元素<strong>不能加逗号</strong> -
+值类型：字符串（双引号）、数值（无引号）、布尔（<code>true</code>/<code>false</code>，小写）、数组、对象、null</p>
+<h3 id="cjson库选型与集成">5.3 CJSON库选型与集成</h3>
+<table>
+<thead>
+<tr>
+<th>版本</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CJSON 1.6</td>
+<td>需自行编译</td>
+</tr>
+<tr>
+<td>CJSON 1.7</td>
+<td>无需额外编译，直接复制文件使用</td>
+</tr>
+</tbody>
+</table>
+<p><strong>集成步骤</strong> 1. 从开源平台获取 cJSON 1.7 源码 2. 复制
+<code>cJSON.c</code> 和 <code>cJSON.h</code> 到项目目录 3.
+编译时一起编译即可</p>
+<blockquote>
+<p>面试提及CJSON时需明确版本号，说明版本差异。</p>
+</blockquote>
+<h3 id="cjson核心操作">5.4 CJSON核心操作</h3>
+<h4 id="构建json对象">构建JSON对象</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;cJSON.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 创建空对象</span></span><br><span class="line">cJSON *root = cJSON_CreateObject();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 添加字符串键值</span></span><br><span class="line">cJSON_AddStringToObject(root, <span class="string">&quot;name&quot;</span>, <span class="string">&quot;张三&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 添加数值键值</span></span><br><span class="line">cJSON_AddNumberToObject(root, <span class="string">&quot;age&quot;</span>, <span class="number">18</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. 添加布尔键值</span></span><br><span class="line">cJSON_AddBoolToObject(root, <span class="string">&quot;isStudent&quot;</span>, <span class="number">1</span>);  <span class="comment">// 1=true, 0=false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 5. 添加数组</span></span><br><span class="line">cJSON *phones = cJSON_CreateArray();</span><br><span class="line">cJSON_AddItemToArray(phones, cJSON_CreateString(<span class="string">&quot;13312345678&quot;</span>));</span><br><span class="line">cJSON_AddItemToArray(phones, cJSON_CreateString(<span class="string">&quot;13898765432&quot;</span>));</span><br><span class="line">cJSON_AddItemToObject(root, <span class="string">&quot;phones&quot;</span>, phones);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 6. 添加嵌套对象数组</span></span><br><span class="line">cJSON *cars = cJSON_CreateArray();</span><br><span class="line">cJSON *car1 = cJSON_CreateObject();</span><br><span class="line">cJSON_AddStringToObject(car1, <span class="string">&quot;number&quot;</span>, <span class="string">&quot;CAR001&quot;</span>);</span><br><span class="line">cJSON_AddBoolToObject(car1, <span class="string">&quot;online&quot;</span>, <span class="number">1</span>);</span><br><span class="line">cJSON_AddItemToArray(cars, car1);</span><br><span class="line">cJSON_AddItemToObject(root, <span class="string">&quot;cars&quot;</span>, cars);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 7. 转为字符串</span></span><br><span class="line"><span class="type">char</span> *json_str = cJSON_Print(root);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, json_str);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 8. 释放内存</span></span><br><span class="line">cJSON_free(json_str);</span><br><span class="line">cJSON_Delete(root);</span><br></pre></td></tr></table></figure>
+<h4 id="解析json字符串">解析JSON字符串</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 解析JSON字符串</span></span><br><span class="line">cJSON *root = cJSON_Parse(json_str);</span><br><span class="line"><span class="keyword">if</span> (!root) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;JSON解析失败\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 获取字符串值</span></span><br><span class="line">cJSON *name = cJSON_GetObjectItem(root, <span class="string">&quot;name&quot;</span>);</span><br><span class="line"><span class="keyword">if</span> (name) <span class="built_in">printf</span>(<span class="string">&quot;姓名: %s\n&quot;</span>, name-&gt;valuestring);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 获取数值</span></span><br><span class="line">cJSON *age = cJSON_GetObjectItem(root, <span class="string">&quot;age&quot;</span>);</span><br><span class="line"><span class="keyword">if</span> (age) <span class="built_in">printf</span>(<span class="string">&quot;年龄: %d\n&quot;</span>, age-&gt;valueint);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. 获取布尔值</span></span><br><span class="line">cJSON *isStudent = cJSON_GetObjectItem(root, <span class="string">&quot;isStudent&quot;</span>);</span><br><span class="line"><span class="keyword">if</span> (isStudent) <span class="built_in">printf</span>(<span class="string">&quot;是否学生: %s\n&quot;</span>, isStudent-&gt;valueint ? <span class="string">&quot;是&quot;</span> : <span class="string">&quot;否&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 5. 遍历数组</span></span><br><span class="line">cJSON *phones = cJSON_GetObjectItem(root, <span class="string">&quot;phones&quot;</span>);</span><br><span class="line"><span class="type">int</span> size = cJSON_GetArraySize(phones);</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">    cJSON *phone = cJSON_GetArrayItem(phones, i);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;电话%d: %s\n&quot;</span>, i+<span class="number">1</span>, phone-&gt;valuestring);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 6. 释放</span></span><br><span class="line">cJSON_Delete(root);</span><br></pre></td></tr></table></figure>
+<h3 id="cjson常用函数速查">5.5 CJSON常用函数速查</h3>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cJSON_CreateObject()</code></td>
+<td>创建空对象</td>
+</tr>
+<tr>
+<td><code>cJSON_CreateArray()</code></td>
+<td>创建空数组</td>
+</tr>
+<tr>
+<td><code>cJSON_CreateString(str)</code></td>
+<td>创建字符串节点</td>
+</tr>
+<tr>
+<td><code>cJSON_CreateNumber(num)</code></td>
+<td>创建数值节点</td>
+</tr>
+<tr>
+<td><code>cJSON_CreateBool(b)</code></td>
+<td>创建布尔节点</td>
+</tr>
+<tr>
+<td><code>cJSON_AddStringToObject(obj, key, val)</code></td>
+<td>向对象添加字符串键值</td>
+</tr>
+<tr>
+<td><code>cJSON_AddNumberToObject(obj, key, val)</code></td>
+<td>向对象添加数值键值</td>
+</tr>
+<tr>
+<td><code>cJSON_AddBoolToObject(obj, key, val)</code></td>
+<td>向对象添加布尔键值</td>
+</tr>
+<tr>
+<td><code>cJSON_AddItemToObject(obj, key, item)</code></td>
+<td>向对象添加任意节点</td>
+</tr>
+<tr>
+<td><code>cJSON_AddItemToArray(arr, item)</code></td>
+<td>向数组添加节点</td>
+</tr>
+<tr>
+<td><code>cJSON_Parse(str)</code></td>
+<td>解析JSON字符串</td>
+</tr>
+<tr>
+<td><code>cJSON_Print(root)</code></td>
+<td>转为格式化字符串</td>
+</tr>
+<tr>
+<td><code>cJSON_PrintUnformatted(root)</code></td>
+<td>转为紧凑字符串（无换行空格）</td>
+</tr>
+<tr>
+<td><code>cJSON_GetObjectItem(obj, key)</code></td>
+<td>获取对象中指定键的节点</td>
+</tr>
+<tr>
+<td><code>cJSON_GetArrayItem(arr, index)</code></td>
+<td>获取数组中指定索引的节点</td>
+</tr>
+<tr>
+<td><code>cJSON_GetArraySize(arr)</code></td>
+<td>获取数组长度</td>
+</tr>
+<tr>
+<td><code>cJSON_Delete(root)</code></td>
+<td>释放JSON对象内存</td>
+</tr>
+<tr>
+<td><code>cJSON_free(ptr)</code></td>
+<td>释放cJSON分配的字符串</td>
+</tr>
+</tbody>
+</table>
+<h3 id="json在项目中的作用">5.6 JSON在项目中的作用</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">物联网终端                    车机服务器                    数据库</span><br><span class="line">    │                            │                            │</span><br><span class="line">    │  1. 构建JSON               │                            │</span><br><span class="line">    │  &#123;carid, gps, address&#125;    │                            │</span><br><span class="line">    │ ──────────────────────────►│                            │</span><br><span class="line">    │      UDP发送字符串          │  2. 解析JSON              │</span><br><span class="line">    │                            │  3. 转SQL语句             │</span><br><span class="line">    │                            │ ──────────────────────────►│</span><br><span class="line">    │                            │      INSERT INTO ...       │</span><br><span class="line">    │                            │                            │</span><br></pre></td></tr></table></figure>
+<p><strong>JSON的核心价值</strong> -
+统一数据格式：APP、终端、Web、小程序都用JSON交互 -
+跨平台兼容：纯字符串，任何系统/语言都能解析 -
+前后端解耦：前端只关心JSON格式，不关心后端实现</p>
+<hr />
+<h2 id="六综合开发要点">六、综合开发要点</h2>
+<h3 id="开发效率原则">6.1 开发效率原则</h3>
+<ul>
+<li><strong>优先使用成熟第三方库</strong>：SQLite（数据库）、CJSON（JSON）、CURL（网络），不重复造轮子</li>
+<li><strong>结构化数据用数据库</strong>：车辆信息、用户信息等</li>
+<li><strong>中间传输数据用JSON</strong>：网络通信、前后端交互</li>
+<li><strong>复用已有代码</strong>：链表模块、菜单结构等可直接复用</li>
+</ul>
+<h3 id="面试准备要点">6.2 面试准备要点</h3>
+<ul>
+<li>项目中使用的库需明确版本号（如CJSON 1.7、SQLite3）</li>
+<li>熟悉项目遵循的国标/行业标准（如车架号22位、国五/国六排放标准）</li>
+<li>能说清各模块职责和数据流向</li>
+<li>数据库表设计思路和字段含义</li>
+</ul>
+<h3 id="编译命令汇总">6.3 编译命令汇总</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 单文件编译</span></span><br><span class="line">gcc main.c car_manager.c cJSON.c -o car_manager -lsqlite3</span><br><span class="line"></span><br><span class="line"><span class="comment"># Makefile编译</span></span><br><span class="line">make</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行</span></span><br><span class="line">make run</span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line">./car_manager</span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">rebirth100</div><div class="post-copyright__author_desc">爱我的人和我爱的人，都希望你有更好的明天❤️</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="https://rebirth100.github.io/posts/72939b2e.html">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('https://rebirth100.github.io/posts/72939b2e.html')">项目实战-2.物联网项目架构与车机管理系统学习笔记</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"><div class="reward-link mode"><a class="reward-link-button" href="/wechat"><i class="anzhiyufont anzhiyu-icon-plant-fill"></i>运营模式与责任</a></div></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="https://rebirth100.github.io/posts/72939b2e.html"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=项目实战-2.物联网项目架构与车机管理系统学习笔记&amp;url=https://rebirth100.github.io/posts/72939b2e.html&amp;pic=/img/posts/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98.png" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://rebirth100.github.io" target="_blank">Rebirth100</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__category-list"><a class="post-meta__box__categoryes" href="/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/"><span class="categoryes-punctuation"> <i class="anzhiyufont anzhiyu-icon-inbox"></i></span>项目实战<span class="categoryesPageCount">3</span></a></div><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/%E5%9F%BA%E7%A1%80/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>基础<span class="tagsPageCount">112</span></a><a class="post-meta__box__tags" href="/tags/%E7%BC%96%E7%A8%8B/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>编程<span class="tagsPageCount">109</span></a><a class="post-meta__box__tags" href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>项目实战<span class="tagsPageCount">3</span></a></div></div><div class="post_share"><div class="social-share" data-image="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/9df940d0.html"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">C语言教程-61.递归经典案例：阶乘与斐波那契</div></div></a></div><div class="next-post pull-right"><a href="/posts/a82231e1.html"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">C语言教程-62.递归与循环的对比</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/posts/d2b08730.html" title="项目实战-3.JSON解析与UDP车辆状态同步学习笔记"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-08-20</div><div class="title">项目实战-3.JSON解析与UDP车辆状态同步学习笔记</div></div></a></div><div><a href="/posts/f71b5c78.html" title="项目实战-1.自定义 ls 命令项目开发学习笔记"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-08-07</div><div class="title">项目实战-1.自定义 ls 命令项目开发学习笔记</div></div></a></div><div><a href="/posts/d3738343.html" title="C语言教程-105.结构体作为函数参数"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-01</div><div class="title">C语言教程-105.结构体作为函数参数</div></div></a></div><div><a href="/posts/6377da75.html" title="C语言教程-108.typedef用法：给类型起别名"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-04</div><div class="title">C语言教程-108.typedef用法：给类型起别名</div></div></a></div><div><a href="/posts/ff0c18e4.html" title="C语言教程-106.结构体指针：高效传递复杂数据"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-02</div><div class="title">C语言教程-106.结构体指针：高效传递复杂数据</div></div></a></div><div><a href="/posts/e9573a32.html" title="C语言教程-107.嵌套结构体：描述复杂实体"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-03</div><div class="title">C语言教程-107.嵌套结构体：描述复杂实体</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/08/24/64e6ce9c507bb.png" alt="status"/></div></div><div class="author-info__description">学习笔记，成长记录</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">rebirth100</h1><div class="author-info__desc">爱我的人和我爱的人，都希望你有更好的明天❤️</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/Rebirth100" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="https://rebirth100.github.io/" target="_blank" title="BiliBili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a></div></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake"></i><span>公告</span></div><div class="announcement_content">我写不出细腻的文字了 换句话 我找不到我自己了</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%89%A9%E8%81%94%E7%BD%91%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84%E4%B8%8E%E8%BD%A6%E6%9C%BA%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="toc-text">物联网项目架构与车机管理系统学习笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%B8%B8%E8%A7%81%E7%89%A9%E8%81%94%E7%BD%91%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84"><span class="toc-text">一、常见物联网项目架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B8%E5%9E%8B%E7%94%B5%E5%8A%A8%E8%BD%A6%E7%89%A9%E8%81%94%E7%BD%91%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84"><span class="toc-text">1.1 典型电动车物联网系统结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%84%E6%A8%A1%E5%9D%97%E8%81%8C%E8%B4%A3"><span class="toc-text">1.2 各模块职责</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="toc-text">1.3 核心设计原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%E9%80%89%E6%8B%A9"><span class="toc-text">1.4 通信协议选择</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8Csqlite%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E5%8F%8A%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="toc-text">二、SQLite数据库安装及基本操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sqlite%E7%AE%80%E4%BB%8B"><span class="toc-text">2.1 SQLite简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-text">2.2 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="toc-text">2.3 基本命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sql%E5%9F%BA%E7%A1%80%E8%AF%AD%E5%8F%A5"><span class="toc-text">2.4 SQL基础语句</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%A1%A8"><span class="toc-text">创建表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="toc-text">插入数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE"><span class="toc-text">查询数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE"><span class="toc-text">更新数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE"><span class="toc-text">删除数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E8%A1%A8"><span class="toc-text">删除表</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E8%AE%BE%E8%AE%A1%E8%A6%81%E7%82%B9"><span class="toc-text">2.5 表设计要点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E8%BD%A6%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%A8%A1%E5%9D%97%E6%9E%84%E5%BB%BA"><span class="toc-text">三、车机系统管理模块构建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="toc-text">3.1 项目结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%B4%E6%96%87%E4%BB%B6%E8%AE%BE%E8%AE%A1car_manager.h"><span class="toc-text">3.2 头文件设计（car_manager.h）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E5%87%BD%E6%95%B0%E6%B5%81%E7%A8%8Bmain.c"><span class="toc-text">3.3 主函数流程（main.c）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#c%E8%AF%AD%E8%A8%80sqlite%E6%A0%B8%E5%BF%83%E6%8E%A5%E5%8F%A3"><span class="toc-text">3.4 C语言SQLite核心接口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%93%E5%BC%80%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">打开数据库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A7%E8%A1%8Csqlsqlite3_exec"><span class="toc-text">执行SQL（sqlite3_exec）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#makefile%E7%BC%96%E5%86%99"><span class="toc-text">3.5 Makefile编写</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E8%BD%A6%E6%9C%BA%E6%A8%A1%E5%9D%97%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E5%AE%9E%E7%8E%B0"><span class="toc-text">四、车机模块管理系统实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%9D%E5%A7%8B%E5%8C%96%E5%AE%9E%E7%8E%B0"><span class="toc-text">4.1 数据库初始化实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E5%8A%9F%E8%83%BD%E4%B8%8E%E5%9B%9E%E8%B0%83%E6%9C%BA%E5%88%B6"><span class="toc-text">4.2 查询功能与回调机制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="toc-text">回调函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E8%BD%A6%E8%BE%86"><span class="toc-text">查询所有车辆</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#static%E5%85%B3%E9%94%AE%E5%AD%97%E4%BD%9C%E7%94%A8"><span class="toc-text">4.3 static关键字作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%BC%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA"><span class="toc-text">4.4 表格格式化输出</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94json%E6%93%8D%E4%BD%9Ccjson%E5%BA%93"><span class="toc-text">五、JSON操作（CJSON库）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#json%E5%9F%BA%E7%A1%80"><span class="toc-text">5.1 JSON基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#json%E7%BB%93%E6%9E%84%E8%A7%84%E5%88%99"><span class="toc-text">5.2 JSON结构规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cjson%E5%BA%93%E9%80%89%E5%9E%8B%E4%B8%8E%E9%9B%86%E6%88%90"><span class="toc-text">5.3 CJSON库选型与集成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cjson%E6%A0%B8%E5%BF%83%E6%93%8D%E4%BD%9C"><span class="toc-text">5.4 CJSON核心操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E5%BB%BAjson%E5%AF%B9%E8%B1%A1"><span class="toc-text">构建JSON对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90json%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-text">解析JSON字符串</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cjson%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E9%80%9F%E6%9F%A5"><span class="toc-text">5.5 CJSON常用函数速查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#json%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">5.6 JSON在项目中的作用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E7%BB%BC%E5%90%88%E5%BC%80%E5%8F%91%E8%A6%81%E7%82%B9"><span class="toc-text">六、综合开发要点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E6%95%88%E7%8E%87%E5%8E%9F%E5%88%99"><span class="toc-text">6.1 开发效率原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%E8%A6%81%E7%82%B9"><span class="toc-text">6.2 面试准备要点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%91%BD%E4%BB%A4%E6%B1%87%E6%80%BB"><span class="toc-text">6.3 编译命令汇总</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/4340bc10.html" title="C语言教程-111.位域：按位存储与实现相关陷阱"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-111.位域：按位存储与实现相关陷阱"/></a><div class="content"><a class="title" href="/posts/4340bc10.html" title="C语言教程-111.位域：按位存储与实现相关陷阱">C语言教程-111.位域：按位存储与实现相关陷阱</a><time datetime="2026-10-05T23:18:00.000Z" title="发表于 2026-10-06 07:18:00">2026-10-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/395745d4.html" title="C语言教程-110.枚举enum：让常量更可读"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-110.枚举enum：让常量更可读"/></a><div class="content"><a class="title" href="/posts/395745d4.html" title="C语言教程-110.枚举enum：让常量更可读">C语言教程-110.枚举enum：让常量更可读</a><time datetime="2026-10-05T01:16:00.000Z" title="发表于 2026-10-05 09:16:00">2026-10-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/dc0fea1b.html" title="C语言教程-109.联合体union：共享内存的数据类型"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-109.联合体union：共享内存的数据类型"/></a><div class="content"><a class="title" href="/posts/dc0fea1b.html" title="C语言教程-109.联合体union：共享内存的数据类型">C语言教程-109.联合体union：共享内存的数据类型</a><time datetime="2026-10-04T23:15:00.000Z" title="发表于 2026-10-05 07:15:00">2026-10-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/6377da75.html" title="C语言教程-108.typedef用法：给类型起别名"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-108.typedef用法：给类型起别名"/></a><div class="content"><a class="title" href="/posts/6377da75.html" title="C语言教程-108.typedef用法：给类型起别名">C语言教程-108.typedef用法：给类型起别名</a><time datetime="2026-10-03T23:14:00.000Z" title="发表于 2026-10-04 07:14:00">2026-10-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/e9573a32.html" title="C语言教程-107.嵌套结构体：描述复杂实体"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-107.嵌套结构体：描述复杂实体"/></a><div class="content"><a class="title" href="/posts/e9573a32.html" title="C语言教程-107.嵌套结构体：描述复杂实体">C语言教程-107.嵌套结构体：描述复杂实体</a><time datetime="2026-10-02T23:14:00.000Z" title="发表于 2026-10-03 07:14:00">2026-10-03</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="workboard"><img class="workSituationImg boardsign" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-上班摸鱼中.svg" alt="距离月入25k也就还差一个大佬带我~" title="距离月入25k也就还差一个大佬带我~"/><div id="runtimeTextTip"></div></div></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2026 By <a class="footer-bar-link" href="/" title="rebirth100" target="_blank">rebirth100</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" href="/null"></a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">123</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">11</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" href="https://rebirth100.github.io/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">Github</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/Rebirth100" title="个人主页"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://image.anheyu.com/favicon.ico" alt="个人主页"/><span class="back-menu-item-text">个人主页</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/C/" style="font-size: 0.88rem;">C<sup>13</sup></a><a href="/tags/C/" style="font-size: 0.88rem;">C++<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 0.88rem;">C语言<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">C语言教程<sup>69</sup></a><a href="/tags/Linux/" style="font-size: 0.88rem;">Linux<sup>14</sup></a><a href="/tags/MySQL/" style="font-size: 0.88rem;">MySQL<sup>11</sup></a><a href="/tags/Python/" style="font-size: 0.88rem;">Python<sup>3</sup></a><a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 0.88rem;">基础<sup>112</sup></a><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 0.88rem;">数据结构<sup>6</sup></a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" style="font-size: 0.88rem;">系统编程<sup>5</sup></a><a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 0.88rem;">编程<sup>109</sup></a><a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 0.88rem;">网络编程<sup>3</sup></a><a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" style="font-size: 0.88rem;">项目实战<sup>3</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.7"></meting-js></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="anzhiyufont anzhiyu-icon-xmark"></i></button></nav><div class="is-center" id="loading-database"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.cbd.int/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("06/10/2026 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2026 By 安知鱼 V1.7.1",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 rebirth100 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><script async="async">(function () {
+  var grt = new Date("06/10/2026 00:00:00"); //设置网站上线时间
+  var now = new Date();
+  var dnum;
+  var hnum;
+  var mnum;
+  var snum;
+  var nowHour;
+
+  // 计算并更新天数、小时数、分钟数和秒数
+  function updateTime() {
+    now = new Date(); // 更新 now 的值
+    nowHour = now.getHours(); // 更新 nowHour 的值
+    var days = (now - grt) / 1000 / 60 / 60 / 24;
+    dnum = Math.floor(days);
+    var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+      hnum = "0" + hnum;
+    }
+    var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+      mnum = "0" + mnum;
+    }
+    var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+      snum = "0" + snum;
+    }
+  }
+
+  // 更新网页中显示的网站运行时间
+  function updateHtml() {
+    const footer = document.getElementById("footer");
+    if (!footer) return
+    let currentTimeHtml = "";
+    if (nowHour < 18 && nowHour >= 9) {
+      // 如果是上班时间，默认就是"安知鱼-上班摸鱼中.svg"图片，不需要更改
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    } else {
+      // 如果是下班时间，插入"安知鱼-下班啦.svg"图片
+      let img = document.querySelector("#workboard .workSituationImg");
+      if (img != null) {
+        img.src = "https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-下班啦.svg";
+        img.title = "下班了就该开开心心的玩耍，嘿嘿~";
+        img.alt = "下班了就该开开心心的玩耍，嘿嘿~";
+      }
+
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    }
+
+    if (document.getElementById("runtimeTextTip")) {
+      document.getElementById("runtimeTextTip").innerHTML = currentTimeHtml;
+    }
+  }
+
+  setInterval(() => {
+    updateTime();
+    updateHtml();
+  }, 1000);
+})();</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><input type="hidden" name="page-type" id="page-type" value="post"></div><script async data-pjax src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.1/bubble/bubble.js"></script><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://cdn.cbd.int/qrcodejs@1.0.0/qrcode.min.js"></script><script src="/js/anzhiyu/right_click_menu.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>

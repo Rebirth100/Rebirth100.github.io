@@ -1,0 +1,911 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>C语言教程-44.for循环：计数循环的标准写法 | Rebirth100</title><meta name="keywords" content="基础,编程,C语言教程"><meta name="author" content="rebirth100"><meta name="copyright" content="rebirth100"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="C语言教程-44.for循环：计数循环的标准写法"><meta name="application-name" content="C语言教程-44.for循环：计数循环的标准写法"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="C语言教程-44.for循环：计数循环的标准写法"><meta property="og:url" content="https://rebirth100.github.io/posts/6ea727c9.html"><meta property="og:site_name" content="Rebirth100"><meta property="og:description" content="【若北辰-C语言】《C语言教程》044｜for循环：计数循环的标准写法  原文：微信公众号 · 若北辰-C语言 · 2026-08-01 07:18 原文链接：http:&amp;#x2F;&amp;#x2F;mp.weixin.qq.com&amp;#x2F;s?__biz&amp;#x3D;MzUyMDE2ODQ1Mg&amp;#x3D;&amp;#x3D;&amp;amp;mid&amp;#x3D;2247484094"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://rebirth100.github.io/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png"><meta property="article:author" content="rebirth100"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://rebirth100.github.io/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png"><meta name="description" content="【若北辰-C语言】《C语言教程》044｜for循环：计数循环的标准写法  原文：微信公众号 · 若北辰-C语言 · 2026-08-01 07:18 原文链接：http:&amp;#x2F;&amp;#x2F;mp.weixin.qq.com&amp;#x2F;s?__biz&amp;#x3D;MzUyMDE2ODQ1Mg&amp;#x3D;&amp;#x3D;&amp;amp;mid&amp;#x3D;2247484094"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://rebirth100.github.io/posts/6ea727c9.html"><link rel="preconnect" href="//cdn.cbd.int"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/swiper/swiper.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: undefined,
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: {"enable":true,"default":"晚上好👋","list":[{"greeting":"晚安😴","startTime":0,"endTime":5},{"greeting":"早上好鸭👋, 祝你一天好心情！","startTime":6,"endTime":9},{"greeting":"上午好👋, 状态很好，鼓励一下～","startTime":10,"endTime":10},{"greeting":"11点多啦, 在坚持一下就吃饭啦～","startTime":11,"endTime":11},{"greeting":"午安👋, 宝贝","startTime":12,"endTime":14},{"greeting":"🌈充实的一天辛苦啦！","startTime":14,"endTime":18},{"greeting":"19点喽, 奖励一顿丰盛的大餐吧🍔。","startTime":19,"endTime":19},{"greeting":"晚上好👋, 在属于自己的时间好好放松😌~","startTime":20,"endTime":24}]},
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: {"mode":"both","api":"https://img2color-go.vercel.app/api?img=","cover_change":true},
+  authorStatus: {"skills":["🤖️ 数码科技爱好者","🔍 分享与热心帮助","🏠 智能家居小能手","🔨 设计开发一条龙","🤝 专修交互与设计","🏃 脚踏实地行动派","🧱 团队小组发动机","💢 壮汉人狠话不多"]},
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: {"limitDay":60,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章的内容可能已经过时了。"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: rebirth100","link":"链接: ","source":"来源: Rebirth100","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'Rebirth100',
+  title: 'C语言教程-44.for循环：计数循环的标准写法',
+  postAI: '',
+  pageFillDescription: '【若北辰-C语言】《C语言教程》044｜for循环：计数循环的标准写法若北辰语言语言教程循环计数循环的标准写法原文微信公众号若北辰语言原文链接为什么要学习循环前面我们已经学过和适合条件驱动的重复执行适合至少执行一次的场景这一章要学习的循环最适合处理一种非常常见的任务次数明确的重复执行比如输出到重复输入个成绩计算到的和遍历数组里的每个元素打印九九乘法表让某段代码刚好执行次这些任务都有一个共同特点循环从哪里开始什么时候结束每次怎么变化通常都很清楚这种场景用循环写代码会更紧凑也更符合语言程序员的习惯比如输出到用可以这样写用循环可以写成你会发现循环变量的初始化条件判断更新变化都被集中到了后面的括号里这就是循环最大的特点把计数循环的三个关键步骤写在一起所以循环经常被称为计数循环的标准写法循环的基本格式循环的基本格式如下初始化条件表达式更新表达式循环体语句它由四部分组成初始化条件表达式更新表达式循环体看一个完整例子输出结果这段代码的意思是让从开始只要小于等于就执行循环体每执行完一次加写成自然语言就是从数到每数一个数就输出一次这正是循环最擅长的事情循环的执行流程循环看起来只有一行括号但它的执行顺序非常明确执行流程是第一步执行初始化初始化只执行一次第二步判断条件如果条件成立进入循环体第三步执行循环体第四步执行更新表达式第五步回到第二步再次判断条件所以具体过程是等于条件成立输出变成等于条件成立输出变成等于条件成立输出变成等于条件成立输出变成等于条件成立输出变成等于条件不成立循环结束注意更新表达式不是在循环体执行前执行而是在每一轮循环体执行完之后执行这点很重要循环的三个关键表达式括号里有三个表达式中间用分号隔开初始化条件更新循环体第一个表达式初始化它通常用来设置循环变量的起始值或者第二个表达式条件它决定循环是否继续或者第三个表达式更新它决定每轮循环结束后循环变量如何变化或者或者这三个部分刚好对应我们写循环时最该想清楚的三个问题从哪里开始什么时候继续每次怎样变化只要这三个问题清楚循环就不难用输出数字输出到输出到输出到之间的偶数输出到之间的奇数这些例子都属于标准计数循环循环变量像一个计数器从一个起点开始按固定规则变化直到条件不成立用求和循环特别适合做累加比如求到的和到的和是这里的负责从走到负责保存累加结果每一轮循环执行等价于执行到最后里保存的就是到的总和再看一个例子求到的和请输入到的和是这段程序比固定求到更灵活由用户输入循环次数也由用户决定如果用户输入循环从加到如果用户输入循环从加到循环不是只能写固定数字它也可以使用变量作为边界用计算阶乘阶乘是学习循环时很经典的例子的阶乘是也可以写成用计算的阶乘请输入的阶乘是这里不能把初始化为因为阶乘是连乘如果一开始是后面无论乘什么结果都是所以求和时初始值通常是求乘积时初始值通常是这是一个很实用的小规律适合累加适合连乘另外阶乘增长很快所以这里使用保存结果但即使用也不能无限保存很大的阶乘后面学习数据范围和溢出时会更深入理解这个问题循环变量的作用域在以及更新的标准中可以直接在括号里定义循环变量这种写法很常见也很清晰它表示变量只在这个循环中使用循环结束后通常就不能再使用了比如这里可能报错因为的作用域只在循环内部如果你想在循环结束后继续使用可以把定义在外面循环结束后的值是初学阶段如果你的编译环境比较旧可能不支持在里直接写这时可以使用更兼容的写法这两种写法都能见到如果你使用的是现代编译器推荐把只在循环里使用的变量写在括号里作用域更小代码更干净循环和循环的关系循环和循环并不是完全不同的东西很多循环都可以改写成比如可以改写成你会发现只是把循环中的三个部分集中写在一起初始化条件判断更新变化在写法中这三个部分分散在不同位置在写法中它们集中在一行所以更适合这种结构清楚的计数循环更适合那种循环次数不一定明确的场景比如用户输入才停止密码正确才停止文件读完才停止菜单选择退出才停止简单记法次数明确多用条件驱动多用当然这不是绝对规则但足够指导大多数初学场景循环中的边界问题循环边界是最容易出错的地方比如你想输出到如果写成输出结果是到不包含因为当等于时条件不成立如果想包含应该写再看一个常见写法它会输出到一共个数这种写法在数组里特别常见因为数组下标从开始如果数组长度是下标通常是到所以遍历数组时常见写法是访问第个元素现在还没正式学数组但可以先记住这个习惯从开始数常用从开始数常用边界想错循环次数就会错这类错误常被称为差一错误后面写数组和字符串时尤其要小心循环可以省略表达式括号里的三个表达式都可以省略但两个分号不能省比如这里省略了初始化因为已经在前面初始化过了也可以省略更新表达式这里放到了循环体里还可以省略条件表达式如果条件表达式省略默认认为条件一直成立这会形成无限循环最极端的写法是一直循环这是一个死循环这种写法在服务器程序嵌入式程序游戏主循环中可能会见到不过初学阶段不建议随便写死循环除非你非常清楚退出条件在哪里比如循环内部有你输入的是这段代码通过退出循环如果没有它就会一直运行循环中的多个表达式循环的初始化和更新位置可以写多个表达式用逗号分隔比如同时控制两个变量输出结果这里表示初始化两个变量表示每轮循环结束后加减这种写法虽然灵活但不建议初学者滥用如果一个括号里塞太多东西代码会变难读好的循环应该让人一眼看出从哪里开始循环到哪里每次怎么变如果表达式太复杂可以拆开写让代码更清楚循环和配合使用负责重复负责判断二者配合可以解决很多统计问题比如输出到之间所有能被整除的数这里负责让从走到负责判断是否能被整除取余运算如果余数是就说明能被整除再比如统计到之间偶数的个数偶数个数是这个结构很常见遍历一批数据筛选符合条件的数据统计数量以后做成绩统计文本分析数组查找时都会反复用到这个套路循环与可以提前结束循环比如从到寻找第一个能被整除的数找到了程序输出找到了当等于时条件成立执行循环直接结束如果没有程序会继续检查一直到适合这种情况目标已经找到没有必要继续循环再看一个用户输入示例请输入第个数遇到负数提前结束你输入的是这个循环最多执行次但如果用户输入负数就提前结束所以循环不一定非要完整执行到最后配合它可以根据实际情况提前退出循环与用于跳过本轮循环剩下的代码直接进入下一轮比如输出到之间的奇数可以这样写执行逻辑是如果是偶数就会跳过后面的如果是奇数就正常输出所以输出结果是在循环中有一个细节执行后会先执行更新表达式再判断条件也就是说在这个循环里即使遇到仍然会执行这和循环有所不同循环如果写得不小心可能会跳过变量更新导致死循环循环因为更新表达式集中在括号里很多时候更安全一些但这不代表可以随便使用代码清楚永远比技巧重要嵌套循环初识循环可以嵌套也就是一个循环里面再写一个循环嵌套循环常用于处理二维结构比如表格矩阵图形九九乘法表先看一个简单例子打印行列星号输出结果外层循环控制行数内层循环控制每一行打印多少个星号执行过程可以这样理解等于时内层循环打印个星号然后换行等于时内层循环再打印个星号然后换行等于时内层循环再打印个星号然后换行所以最终得到行每行个星号嵌套循环一开始看起来绕但抓住一句话就容易理解外层循环走一轮内层循环完整走一遍后面循环嵌套章节会专门讲打印图形和二维逻辑这里先建立概念用打印九九乘法表九九乘法表是嵌套循环的经典练习输出大致是这段代码里外层控制第几行内层控制每行打印几个式子每一行的从开始到结束比如等于时会取于是输出这就是嵌套循环的威力外层控制整体次数内层控制局部重复常见错误一忘记写更新表达式错误示例这段代码会一直输出因为没有变化条件永远成立修正当然更新表达式也可以放在循环体里但既然使用循环通常更推荐把更新表达式写在括号里这样更符合阅读习惯常见错误二条件边界写错想输出到却写成结果只输出到想循环次从开始写却写成这会执行次因为会取到如果想从开始执行次应该写边界问题没有捷径写之前要先想清楚起点包含吗终点包含吗一共要执行几次常见错误三后面误加分号错误写法很多初学者以为它会输出到实际上后面的分号构成了一个空循环这条语句自己已经把循环执行完了后面的大括号只是普通代码块不属于循环结束时已经变成所以最后可能只输出正确写法记住后面不要随手加分号看到这种写法要特别警惕除非你明确要写空循环否则它大概率是错误常见错误四循环变量方向写反错误示例从开始每次减条件是会变成永远都小于等于所以循环停不下来如果想从到应该递增如果想从到应该这样写循环方向要和条件配合起点小于终点通常递增起点大于终点通常递减这也是检查循环时非常重要的一点常见错误五在循环体里乱改循环变量有些代码在括号里写了又在循环体里额外修改这段代码不会输出到而是输出因为每轮循环中被加了两次一次在循环体里一次在更新表达式里除非你明确想这样做否则不建议在循环体里随意修改循环变量循环变量最好由统一控制如果确实需要复杂变化要写清楚原因避免以后自己都看不懂循环的代码风格建议好的循环应该短清楚边界明确推荐写法不推荐把复杂逻辑塞进括号这种写法不是不能用但对初学者不友好也不利于维护如果初始化判断更新都很复杂可以拆出来写代码不是越短越好而是越清楚越好循环最适合表达清晰的计数逻辑如果逻辑已经不是简单计数可能更自然一个完整练习统计成绩输入名学生的成绩计算总分和平均分请输入第名学生的成绩总分平均分这个程序的思路很清楚循环执行次每次输入一个成绩把成绩累加到中循环结束后计算平均分如果想让学生人数由用户输入可以改成请输入学生人数请输入第名学生的成绩总分平均分学生人数必须大于这里用处理了的情况否则如果等于计算就会出现除以的问题这也说明循环经常要和条件判断搭配使用另一个练习寻找最大值输入个整数找出其中的最大值请输入第个整数请输入第个整数最大值是这段代码有一个细节先输入第一个数并把它作为初始最大值然后从第二个数开始每输入一个数就和比较如果当前数更大就更新这种思路非常常见先假设第一个数据是答案后面每来一个数据就尝试更新答案找最大值找最小值查找目标数据都可以用这个思路循环的实用模板输出固定范围数字执行固定次数要重复执行的代码累加求和筛选统计满足条件遍历数组的常见形式处理第个元素嵌套循环模板行数列数处理当前位置这些模板会在后面的数组二维数组排序和项目章节里反复出现现在把它们理解透后面的内容会轻松很多写循环前先想清楚三件事第一循环变量从哪里开始比如从开始还是从开始第二循环到哪里结束比如包含还是不包含第三每轮之后如何变化比如很多循环错误都是这三件事没想清楚导致的比如适合输出到适合执行次或者访问下标到适合倒序输出到适合输出到之间的偶数一旦起点终点和变化规则确定循环就很好写本章小结循环是语言中非常重要的循环结构特别适合次数明确的重复任务它的基本格式是初始化条件表达式更新表达式循环体初始化通常只执行一次条件表达式决定循环是否继续更新表达式在每轮循环体执行完之后执行循环把初始化条件判断和更新变化集中写在一起因此非常适合计数循环常见应用包括输出数字累加求和计算阶乘统计数量遍历数组打印图形和九九乘法表和可以相互转换一般来说次数明确时更清晰条件驱动时更自然写循环时要特别注意边界条件更新方向是否误加分号是否忘记更新变量以及是否在循环体里乱改循环变量掌握循环之后你就能更自然地写出大量重复处理逻辑后面学习数组字符串排序查找和项目实战时循环会成为最常用的工具之一课后练习使用循环输出到之间的所有整数使用循环输出到之间的所有整数使用循环计算到之间所有整数的和使用循环计算到之间所有偶数的和输入一个正整数使用循环计算到的和输入一个正整数使用循环计算的阶乘输入个整数统计其中正数的个数输入个学生成绩计算总分和平均分使用嵌套循环打印行列星号使用嵌套循环打印九九乘法表',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-10-06 16:37:46',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><script>MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["\\[","\\]"]]}};</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><meta name="generator" content="Hexo 7.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="https://npm.elemecdn.com/anzhiyu-blog-static@1.0.4/img/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><div class="back-home-button"><i class="anzhiyufont anzhiyu-icon-grip-vertical"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" href="https://rebirth100.github.io/" title="博客"><img class="back-menu-item-icon" src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">Github</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/Rebirth100" title="个人主页"><img class="back-menu-item-icon" src="https://image.anheyu.com/favicon.ico" alt="个人主页"/><span class="back-menu-item-text">个人主页</span></a></div></div></div></div><a id="site-name" href="/" accesskey="h"><div class="title">Rebirth100</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索🔍" accesskey="s"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span> 搜索</span></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/C/" style="font-size: 1.05rem;">C<sup>13</sup></a><a href="/tags/C/" style="font-size: 1.05rem;">C++<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 1.05rem;">C语言<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">C语言教程<sup>69</sup></a><a href="/tags/Linux/" style="font-size: 1.05rem;">Linux<sup>14</sup></a><a href="/tags/MySQL/" style="font-size: 1.05rem;">MySQL<sup>11</sup></a><a href="/tags/Python/" style="font-size: 1.05rem;">Python<sup>3</sup></a><a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 1.05rem;">基础<sup>112</sup></a><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 1.05rem;">数据结构<sup>6</sup></a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" style="font-size: 1.05rem;">系统编程<sup>5</sup></a><a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 1.05rem;">编程<sup>109</sup></a><a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 1.05rem;">网络编程<sup>3</sup></a><a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" style="font-size: 1.05rem;">项目实战<sup>3</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/10/"><span class="card-archive-list-date">十月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">7</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/09/"><span class="card-archive-list-date">九月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">32</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/08/"><span class="card-archive-list-date">八月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">50</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/07/"><span class="card-archive-list-date">七月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">14</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/06/"><span class="card-archive-list-date">六月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">20</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" itemprop="url">C语言教程</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E5%9F%BA%E7%A1%80/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>基础</span></a><a class="article-meta__tags" href="/tags/%E7%BC%96%E7%A8%8B/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>编程</span></a><a class="article-meta__tags" href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>C语言教程</span></a></span></div></div><h1 class="post-title" itemprop="name headline">C语言教程-44.for循环：计数循环的标准写法</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-07-31T23:18:00.000Z" title="发表于 2026-08-01 07:18:00">2026-08-01</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-10-06T08:37:46.627Z" title="更新于 2026-10-06 16:37:46">2026-10-06</time></span></div><div class="meta-secondline"><span class="post-meta-separator"></span><span class="post-meta-wordcount"><i class="anzhiyufont anzhiyu-icon-file-word post-meta-icon" title="文章字数"></i><span class="post-meta-label" title="文章字数">字数总计:</span><span class="word-count" title="文章字数">6.5k</span><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-clock post-meta-icon" title="阅读时长"></i><span class="post-meta-label" title="阅读时长">阅读时长:</span><span>24分钟</span></span><span class="post-meta-separator"></span><span class="post-meta-pv-cv" id="" data-flag-title="C语言教程-44.for循环：计数循环的标准写法"><i class="anzhiyufont anzhiyu-icon-fw-eye post-meta-icon"></i><span class="post-meta-label" title="阅读量">阅读量:</span><span id="busuanzi_value_page_pv"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-spin"></i></span></span><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为西安"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>西安</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png"></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="https://rebirth100.github.io/posts/6ea727c9.html"><header><a class="post-meta-categories" href="/categories/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" itemprop="url">C语言教程</a><a href="/tags/%E5%9F%BA%E7%A1%80/" tabindex="-1" itemprop="url">基础</a><a href="/tags/%E7%BC%96%E7%A8%8B/" tabindex="-1" itemprop="url">编程</a><a href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url">C语言教程</a><h1 id="CrawlerTitle" itemprop="name headline">C语言教程-44.for循环：计数循环的标准写法</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">rebirth100</span><time itemprop="dateCreated datePublished" datetime="2026-07-31T23:18:00.000Z" title="发表于 2026-08-01 07:18:00">2026-08-01</time><time itemprop="dateCreated datePublished" datetime="2026-10-06T08:37:46.627Z" title="更新于 2026-10-06 16:37:46">2026-10-06</time></header><h1
+id="若北辰-c语言c语言教程044for循环计数循环的标准写法">【若北辰-C语言】《C语言教程》044｜for循环：计数循环的标准写法</h1>
+<blockquote>
+<p><strong>原文</strong>：微信公众号 · 若北辰-C语言 · 2026-08-01 07:18
+<strong>原文链接</strong>：http://mp.weixin.qq.com/s?__biz=MzUyMDE2ODQ1Mg==&amp;mid=2247484094&amp;idx=1&amp;sn=d75d1e974dd7b5a39b3d04841f8d7476&amp;chksm=f9ef37d5ce98bec38b73bd337eb7d5b123d90a2c1fa72dde9428d5049a1d482c768c19d2138b#rd</p>
+</blockquote>
+<p><strong>为什么要学习for循环</strong></p>
+<p>前面我们已经学过while和do-while。</p>
+<p>while适合条件驱动的重复执行。<br />
+do-while适合至少执行一次的场景。</p>
+<p>这一章要学习的for循环，最适合处理一种非常常见的任务：</p>
+<p>次数明确的重复执行。</p>
+<p>比如：</p>
+<p>输出1到100<br />
+重复输入10个成绩<br />
+计算1到n的和<br />
+遍历数组里的每个元素<br />
+打印九九乘法表<br />
+让某段代码刚好执行5次</p>
+<p>这些任务都有一个共同特点：循环从哪里开始、什么时候结束、每次怎么变化，通常都很清楚。</p>
+<p>这种场景用for循环写，代码会更紧凑，也更符合C语言程序员的习惯。</p>
+<p>比如输出1到5，用while可以这样写：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> i = <span class="number">1</span>; <span class="keyword">while</span> (i &lt;= <span class="number">5</span>) &#123; printf(”%d\n”, i); i++;&#125;</span><br></pre></td></tr></table></figure>
+<p>用for循环可以写成：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++) &#123; printf(”%d\n”, i);&#125;</span><br></pre></td></tr></table></figure>
+<p>你会发现，循环变量的初始化、条件判断、更新变化，都被集中到了for后面的括号里。</p>
+<p>这就是for循环最大的特点：</p>
+<p>把计数循环的三个关键步骤写在一起。</p>
+<p>所以for循环经常被称为计数循环的标准写法。</p>
+<p><strong>for循环的基本格式</strong></p>
+<p>for循环的基本格式如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (初始化; 条件表达式; 更新表达式) &#123; 循环体语句;&#125;</span><br></pre></td></tr></table></figure>
+<p>它由四部分组成：</p>
+<p>初始化<br />
+条件表达式<br />
+更新表达式<br />
+循环体</p>
+<p>看一个完整例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt; int main(void) &#123; int i;  for (i = 1; i &lt;= 5; i++) &#123; printf(”%d\n”, i); &#125;  return 0;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">12345</span></span><br></pre></td></tr></table></figure>
+<p>这段代码的意思是：</p>
+<p>让i从1开始。<br />
+只要i小于等于5，就执行循环体。<br />
+每执行完一次，i加1。</p>
+<p>写成自然语言就是：</p>
+<p>从1数到5，每数一个数就输出一次。</p>
+<p>这正是for循环最擅长的事情。</p>
+<p><strong>for循环的执行流程</strong></p>
+<p>for循环看起来只有一行括号，但它的执行顺序非常明确。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++) &#123; printf(”%d\n”, i);&#125;</span><br></pre></td></tr></table></figure>
+<p>执行流程是：</p>
+<p>第一步，执行初始化：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>初始化只执行一次。</p>
+<p>第二步，判断条件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i &lt;= <span class="number">5</span></span><br></pre></td></tr></table></figure>
+<p>如果条件成立，进入循环体。</p>
+<p>第三步，执行循环体：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">printf(”%d\n”, i);</span><br></pre></td></tr></table></figure>
+<p>第四步，执行更新表达式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i++</span><br></pre></td></tr></table></figure>
+<p>第五步，回到第二步，再次判断条件。</p>
+<p>所以具体过程是：</p>
+<p>i等于1，条件成立，输出1，i变成2<br />
+i等于2，条件成立，输出2，i变成3<br />
+i等于3，条件成立，输出3，i变成4<br />
+i等于4，条件成立，输出4，i变成5<br />
+i等于5，条件成立，输出5，i变成6<br />
+i等于6，条件不成立，循环结束</p>
+<p>注意：更新表达式不是在循环体执行前执行，而是在每一轮循环体执行完之后执行。</p>
+<p>这点很重要。</p>
+<p><strong>for循环的三个关键表达式</strong></p>
+<p>for括号里有三个表达式，中间用分号隔开。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (初始化; 条件; 更新) &#123; 循环体;&#125;</span><br></pre></td></tr></table></figure>
+<p>第一个表达式：初始化。</p>
+<p>它通常用来设置循环变量的起始值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> i = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>或者：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i = <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>第二个表达式：条件。</p>
+<p>它决定循环是否继续。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i &lt;= <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<p>或者：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i &lt; n</span><br></pre></td></tr></table></figure>
+<p>第三个表达式：更新。</p>
+<p>它决定每轮循环结束后，循环变量如何变化。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i++</span><br></pre></td></tr></table></figure>
+<p>或者：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i += <span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p>或者：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i--</span><br></pre></td></tr></table></figure>
+<p>这三个部分刚好对应我们写循环时最该想清楚的三个问题：</p>
+<p>从哪里开始？<br />
+什么时候继续？<br />
+每次怎样变化？</p>
+<p>只要这三个问题清楚，for循环就不难。</p>
+<p><strong>用for输出数字</strong></p>
+<p>输出1到10：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt; int main(void) &#123; int i;  for (i = 1; i &lt;= 10; i++) &#123; printf(”%d\n”, i); &#125;  return 0;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>输出10到1：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt; int main(void) &#123; int i;  for (i = 10; i &gt;= 1; i--) &#123; printf(”%d\n”, i); &#125;  return 0;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>输出1到20之间的偶数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt; int main(void) &#123; int i;  for (i = 2; i &lt;= 20; i += 2) &#123; printf(”%d\n”, i); &#125;  return 0;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>输出1到20之间的奇数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt; int main(void) &#123; int i;  for (i = 1; i &lt;= 20; i += 2) &#123; printf(”%d\n”, i); &#125;  return 0;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这些例子都属于标准计数循环。</p>
+<p>循环变量i像一个计数器，从一个起点开始，按固定规则变化，直到条件不成立。</p>
+<p><strong>用for求和</strong></p>
+<p>for循环特别适合做累加。</p>
+<p>比如求1到100的和：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt; int main(void) &#123; int i; int sum = 0;  for (i = 1; i &lt;= 100; i++) &#123; sum += i; &#125;  printf(”1到100的和是：%d\n”, sum);  return 0;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这里的i负责从1走到100。</p>
+<p>sum负责保存累加结果。</p>
+<p>每一轮循环执行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sum</span> += i;</span><br></pre></td></tr></table></figure>
+<p>等价于：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sum</span> = <span class="built_in">sum</span> + i;</span><br></pre></td></tr></table></figure>
+<p>执行到最后，sum里保存的就是1到100的总和。</p>
+<p>再看一个例子，求1到n的和：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt; int main(void) &#123; int n; int i; int sum = 0;  printf(”请输入n：”); scanf(”%d”, &amp;n);  for (i = 1; i &lt;= n; i++) &#123; sum += i; &#125;  printf(”1到%d的和是：%d\n”, n, sum);  return 0;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这段程序比固定求1到100更灵活。</p>
+<p>n由用户输入，循环次数也由用户决定。</p>
+<p>如果用户输入10，循环从1加到10。<br />
+如果用户输入1000，循环从1加到1000。</p>
+<p>for循环不是只能写固定数字，它也可以使用变量作为边界。</p>
+<p><strong>用for计算阶乘</strong></p>
+<p>阶乘是学习循环时很经典的例子。</p>
+<p>5的阶乘是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5</span> * <span class="number">4</span> * <span class="number">3</span> * <span class="number">2</span> * <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>也可以写成：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> * <span class="number">2</span> * <span class="number">3</span> * <span class="number">4</span> * <span class="number">5</span></span><br></pre></td></tr></table></figure>
+<p>用for计算n的阶乘：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt; int main(void) &#123; int n; int i; long long result = 1;  printf(”请输入n：”); scanf(”%d”, &amp;n);  for (i = 1; i &lt;= n; i++) &#123; result *= i; &#125;  printf(”%d的阶乘是：%lld\n”, n, result);  return 0;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这里不能把result初始化为0。</p>
+<p>因为阶乘是连乘，如果result一开始是0，后面无论乘什么结果都是0。</p>
+<p>所以求和时，初始值通常是0。</p>
+<p>求乘积时，初始值通常是1。</p>
+<p>这是一个很实用的小规律。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> <span class="built_in">sum</span> = <span class="number">0</span>; // 适合累加<span class="built_in">int</span> product = <span class="number">1</span>; // 适合连乘</span><br></pre></td></tr></table></figure>
+<p>另外，阶乘增长很快，所以这里使用long long保存结果。</p>
+<p>但即使用long
+long，也不能无限保存很大的阶乘。后面学习数据范围和溢出时，会更深入理解这个问题。</p>
+<p><strong>for循环变量的作用域</strong></p>
+<p>在C99以及更新的标准中，可以直接在for括号里定义循环变量：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++) &#123; printf(”%d\n”, i);&#125;</span><br></pre></td></tr></table></figure>
+<p>这种写法很常见，也很清晰。</p>
+<p>它表示变量i只在这个for循环中使用。</p>
+<p>循环结束后，i通常就不能再使用了。</p>
+<p>比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++) &#123; printf(”%d\n”, i);&#125; printf(”%d\n”, i); // 这里可能报错</span><br></pre></td></tr></table></figure>
+<p>因为i的作用域只在for循环内部。</p>
+<p>如果你想在循环结束后继续使用i，可以把i定义在for外面：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> i; <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++) &#123; printf(”%d\n”, i);&#125; printf(”循环结束后i的值是：%d\n”, i);</span><br></pre></td></tr></table></figure>
+<p>初学阶段，如果你的编译环境比较旧，可能不支持在for里直接写int i。</p>
+<p>这时可以使用更兼容的写法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> i; <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++) &#123; printf(”%d\n”, i);&#125;</span><br></pre></td></tr></table></figure>
+<p>这两种写法都能见到。</p>
+<p>如果你使用的是现代编译器，推荐把只在循环里使用的变量写在for括号里，作用域更小，代码更干净。</p>
+<p><strong>for循环和while循环的关系</strong></p>
+<p>for循环和while循环并不是完全不同的东西。</p>
+<p>很多for循环都可以改写成while。</p>
+<p>比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++) &#123; printf(”%d\n”, i);&#125;</span><br></pre></td></tr></table></figure>
+<p>可以改写成：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i = <span class="number">1</span>; <span class="keyword">while</span> (i &lt;= <span class="number">5</span>) &#123; printf(”%d\n”, i); i++;&#125;</span><br></pre></td></tr></table></figure>
+<p>你会发现，for只是把while循环中的三个部分集中写在一起。</p>
+<p>初始化：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>条件判断：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i &lt;= <span class="number">5</span></span><br></pre></td></tr></table></figure>
+<p>更新变化：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i++</span><br></pre></td></tr></table></figure>
+<p>在while写法中，这三个部分分散在不同位置。</p>
+<p>在for写法中，它们集中在一行。</p>
+<p>所以，for更适合这种结构清楚的计数循环。</p>
+<p>while更适合那种循环次数不一定明确的场景。</p>
+<p>比如：</p>
+<p>用户输入0才停止<br />
+密码正确才停止<br />
+文件读完才停止<br />
+菜单选择退出才停止</p>
+<p>简单记法：</p>
+<p>次数明确，多用for。<br />
+条件驱动，多用while。</p>
+<p>当然这不是绝对规则，但足够指导大多数初学场景。</p>
+<p><strong>for循环中的边界问题</strong></p>
+<p>循环边界是最容易出错的地方。</p>
+<p>比如你想输出1到10，如果写成：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; <span class="number">10</span>; i++) &#123; printf(”%d\n”, i);&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果是1到9，不包含10。</p>
+<p>因为当i等于10时，条件i &lt; 10不成立。</p>
+<p>如果想包含10，应该写：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">10</span>; i++) &#123; printf(”%d\n”, i);&#125;</span><br></pre></td></tr></table></figure>
+<p>再看一个常见写法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123; printf(”%d\n”, i);&#125;</span><br></pre></td></tr></table></figure>
+<p>它会输出0到9，一共10个数。</p>
+<p>这种写法在数组里特别常见。</p>
+<p>因为数组下标从0开始，如果数组长度是10，下标通常是0到9。</p>
+<p>所以遍历数组时，常见写法是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; length; i++) &#123; 访问第i个元素;&#125;</span><br></pre></td></tr></table></figure>
+<p>现在还没正式学数组，但可以先记住这个习惯：</p>
+<p>从1开始数，常用i &lt;= n。<br />
+从0开始数，常用i &lt; n。</p>
+<p>边界想错，循环次数就会错。</p>
+<p>这类错误常被称为差一错误，后面写数组和字符串时尤其要小心。</p>
+<p><strong>for循环可以省略表达式</strong></p>
+<p>for括号里的三个表达式都可以省略，但两个分号不能省。</p>
+<p>比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> i = <span class="number">1</span>; <span class="keyword">for</span> (; i &lt;= <span class="number">5</span>; i++) &#123; printf(”%d\n”, i);&#125;</span><br></pre></td></tr></table></figure>
+<p>这里省略了初始化，因为i已经在前面初始化过了。</p>
+<p>也可以省略更新表达式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> i; <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">5</span>;) &#123; printf(”%d\n”, i); i++;&#125;</span><br></pre></td></tr></table></figure>
+<p>这里i++放到了循环体里。</p>
+<p>还可以省略条件表达式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">1</span>; ; i++) &#123; printf(”%d\n”, i);&#125;</span><br></pre></td></tr></table></figure>
+<p>如果条件表达式省略，默认认为条件一直成立，这会形成无限循环。</p>
+<p>最极端的写法是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (;;) &#123; printf(”一直循环\n”);&#125;</span><br></pre></td></tr></table></figure>
+<p>这是一个死循环。</p>
+<p>这种写法在服务器程序、嵌入式程序、游戏主循环中可能会见到。</p>
+<p>不过初学阶段不建议随便写死循环。除非你非常清楚退出条件在哪里，比如循环内部有break。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (;;) &#123; scanf(”%d”, &amp;num);  <span class="keyword">if</span> (num == <span class="number">0</span>) &#123; <span class="keyword">break</span>; &#125;  printf(”你输入的是：%d\n”, num);&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码通过break退出循环。</p>
+<p>如果没有break，它就会一直运行。</p>
+<p><strong>for循环中的多个表达式</strong></p>
+<p>for循环的初始化和更新位置，可以写多个表达式，用逗号分隔。</p>
+<p>比如同时控制两个变量：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt; int main(void) &#123; int i, j;  for (i = 1, j = 5; i &lt;= 5; i++, j--) &#123; printf(”i = %d, j = %d\n”, i, j); &#125;  return 0;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i = <span class="number">1</span>, j = 5i = <span class="number">2</span>, j = 4i = <span class="number">3</span>, j = 3i = <span class="number">4</span>, j = 2i = <span class="number">5</span>, j = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>这里：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i = <span class="number">1</span>, j = <span class="number">5</span></span><br></pre></td></tr></table></figure>
+<p>表示初始化两个变量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i++, j--</span><br></pre></td></tr></table></figure>
+<p>表示每轮循环结束后，i加1，j减1。</p>
+<p>这种写法虽然灵活，但不建议初学者滥用。</p>
+<p>如果一个for括号里塞太多东西，代码会变难读。</p>
+<p>好的for循环应该让人一眼看出：</p>
+<p>从哪里开始<br />
+循环到哪里<br />
+每次怎么变</p>
+<p>如果表达式太复杂，可以拆开写，让代码更清楚。</p>
+<p><strong>for循环和if配合使用</strong></p>
+<p>for负责重复，if负责判断。</p>
+<p>二者配合，可以解决很多统计问题。</p>
+<p>比如输出1到100之间所有能被3整除的数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt; int main(void) &#123; int i;  for (i = 1; i &lt;= 100; i++) &#123; if (i % 3 == 0) &#123; printf(”%d\n”, i); &#125; &#125;  return 0;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这里：</p>
+<p>for负责让i从1走到100。</p>
+<p>if负责判断i是否能被3整除。</p>
+<p>取余运算：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i % <span class="number">3</span></span><br></pre></td></tr></table></figure>
+<p>如果余数是0，就说明i能被3整除。</p>
+<p>再比如统计1到100之间偶数的个数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt; int main(void) &#123; int i; int count = 0;  for (i = 1; i &lt;= 100; i++) &#123; if (i % 2 == 0) &#123; count++; &#125; &#125;  printf(”偶数个数是：%d\n”, count);  return 0;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这个结构很常见：</p>
+<p>for遍历一批数据<br />
+if筛选符合条件的数据<br />
+count统计数量</p>
+<p>以后做成绩统计、文本分析、数组查找时，都会反复用到这个套路。</p>
+<p><strong>for循环与break</strong></p>
+<p>break可以提前结束循环。</p>
+<p>比如从1到100寻找第一个能被7整除的数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt; int main(void) &#123; int i;  for (i = 1; i &lt;= 100; i++) &#123; if (i % 7 == 0) &#123; printf(”找到了：%d\n”, i); break; &#125; &#125;  return 0;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>程序输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">找到了：<span class="number">7</span></span><br></pre></td></tr></table></figure>
+<p>当i等于7时，条件成立，执行break，循环直接结束。</p>
+<p>如果没有break，程序会继续检查8、9、10，一直到100。</p>
+<p>break适合这种情况：</p>
+<p>目标已经找到，没有必要继续循环。</p>
+<p>再看一个用户输入示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt; int main(void) &#123; int i; int num;  for (i = 1; i &lt;= 5; i++) &#123; printf(”请输入第%d个数：”, i); scanf(”%d”, &amp;num);  if (num &lt; 0) &#123; printf(”遇到负数，提前结束\n”); break; &#125;  printf(”你输入的是：%d\n”, num); &#125;  return 0;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这个循环最多执行5次。</p>
+<p>但如果用户输入负数，就提前结束。</p>
+<p>所以for循环不一定非要完整执行到最后。配合break，它可以根据实际情况提前退出。</p>
+<p><strong>for循环与continue</strong></p>
+<p>continue用于跳过本轮循环剩下的代码，直接进入下一轮。</p>
+<p>比如输出1到10之间的奇数，可以这样写：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt; int main(void) &#123; int i;  for (i = 1; i &lt;= 10; i++) &#123; if (i % 2 == 0) &#123; continue; &#125;  printf(”%d\n”, i); &#125;  return 0;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>执行逻辑是：</p>
+<p>如果i是偶数，就continue。<br />
+continue会跳过后面的printf。<br />
+如果i是奇数，就正常输出。</p>
+<p>所以输出结果是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">13579</span></span><br></pre></td></tr></table></figure>
+<p>continue在for循环中有一个细节：</p>
+<p>执行continue后，会先执行更新表达式，再判断条件。</p>
+<p>也就是说，在这个循环里：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">10</span>; i++)</span><br></pre></td></tr></table></figure>
+<p>即使遇到continue，i++仍然会执行。</p>
+<p>这和while循环有所不同。while循环如果continue写得不小心，可能会跳过变量更新，导致死循环。</p>
+<p>for循环因为更新表达式集中在括号里，很多时候更安全一些。</p>
+<p>但这不代表可以随便使用continue。代码清楚永远比技巧重要。</p>
+<p><strong>嵌套for循环初识</strong></p>
+<p>for循环可以嵌套，也就是一个for循环里面再写一个for循环。</p>
+<p>嵌套循环常用于处理二维结构，比如表格、矩阵、图形、九九乘法表。</p>
+<p>先看一个简单例子，打印3行5列星号：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt; int main(void) &#123; int row; int col;  for (row = 1; row &lt;= 3; row++) &#123; for (col = 1; col &lt;= 5; col++) &#123; printf(”*”); &#125;  printf(”\n”); &#125;  return 0;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">***************</span><br></pre></td></tr></table></figure>
+<p>外层循环控制行数。</p>
+<p>内层循环控制每一行打印多少个星号。</p>
+<p>执行过程可以这样理解：</p>
+<p>row等于1时，内层循环打印5个星号，然后换行。<br />
+row等于2时，内层循环再打印5个星号，然后换行。<br />
+row等于3时，内层循环再打印5个星号，然后换行。</p>
+<p>所以最终得到3行，每行5个星号。</p>
+<p>嵌套循环一开始看起来绕，但抓住一句话就容易理解：</p>
+<p>外层循环走一轮，内层循环完整走一遍。</p>
+<p>后面循环嵌套章节会专门讲打印图形和二维逻辑，这里先建立概念。</p>
+<p><strong>用for打印九九乘法表</strong></p>
+<p>九九乘法表是嵌套for循环的经典练习。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt; int main(void) &#123; int i, j;  for (i = 1; i &lt;= 9; i++) &#123; for (j = 1; j &lt;= i; j++) &#123; printf(”%d*%d=%-2d ”, j, i, i * j); &#125;  printf(”\n”); &#125;  return 0;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>输出大致是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>*<span class="number">1</span>=<span class="number">11</span>*<span class="number">2</span>=<span class="number">2</span> <span class="number">2</span>*<span class="number">2</span>=<span class="number">41</span>*<span class="number">3</span>=<span class="number">3</span> <span class="number">2</span>*<span class="number">3</span>=<span class="number">6</span> <span class="number">3</span>*<span class="number">3</span>=<span class="number">9.</span>.<span class="number">.1</span>*<span class="number">9</span>=<span class="number">9</span> <span class="number">2</span>*<span class="number">9</span>=<span class="number">18</span> <span class="number">3</span>*<span class="number">9</span>=<span class="number">27</span> ... <span class="number">9</span>*<span class="number">9</span>=<span class="number">81</span></span><br></pre></td></tr></table></figure>
+<p>这段代码里：</p>
+<p>外层i控制第几行。<br />
+内层j控制每行打印几个式子。<br />
+每一行的j从1开始，到i结束。</p>
+<p>比如i等于3时，j会取1、2、3，于是输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>*<span class="number">3</span>=<span class="number">3</span> <span class="number">2</span>*<span class="number">3</span>=<span class="number">6</span> <span class="number">3</span>*<span class="number">3</span>=<span class="number">9</span></span><br></pre></td></tr></table></figure>
+<p>这就是嵌套for循环的威力。</p>
+<p>外层控制整体次数，内层控制局部重复。</p>
+<p><strong>常见错误一：忘记写更新表达式</strong></p>
+<p>错误示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> i; <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">5</span>;) &#123; printf(”%d\n”, i);&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码会一直输出1。</p>
+<p>因为i没有变化，条件i &lt;= 5永远成立。</p>
+<p>修正：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> i; <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++) &#123; printf(”%d\n”, i);&#125;</span><br></pre></td></tr></table></figure>
+<p>当然，更新表达式也可以放在循环体里：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> i; <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">5</span>;) &#123; printf(”%d\n”, i); i++;&#125;</span><br></pre></td></tr></table></figure>
+<p>但既然使用for循环，通常更推荐把更新表达式写在for括号里。</p>
+<p>这样更符合阅读习惯。</p>
+<p><strong>常见错误二：条件边界写错</strong></p>
+<p>想输出1到10，却写成：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; <span class="number">10</span>; i++) &#123; printf(”%d\n”, i);&#125;</span><br></pre></td></tr></table></figure>
+<p>结果只输出1到9。</p>
+<p>想循环10次，从0开始写，却写成：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt;= <span class="number">10</span>; i++) &#123; printf(”%d\n”, i);&#125;</span><br></pre></td></tr></table></figure>
+<p>这会执行11次，因为i会取0到10。</p>
+<p>如果想从0开始执行10次，应该写：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123; printf(”%d\n”, i);&#125;</span><br></pre></td></tr></table></figure>
+<p>边界问题没有捷径，写之前要先想清楚：</p>
+<p>起点包含吗？<br />
+终点包含吗？<br />
+一共要执行几次？</p>
+<p><strong>常见错误三：for后面误加分号</strong></p>
+<p>错误写法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> i; <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++);&#123; printf(”%d\n”, i);&#125;</span><br></pre></td></tr></table></figure>
+<p>很多初学者以为它会输出1到5。</p>
+<p>实际上，for后面的分号构成了一个空循环。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++);</span><br></pre></td></tr></table></figure>
+<p>这条语句自己已经把循环执行完了。</p>
+<p>后面的大括号只是普通代码块，不属于for。</p>
+<p>循环结束时，i已经变成6，所以最后可能只输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">6</span></span><br></pre></td></tr></table></figure>
+<p>正确写法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++) &#123; printf(”%d\n”, i);&#125;</span><br></pre></td></tr></table></figure>
+<p>记住：</p>
+<p>for后面不要随手加分号。</p>
+<p>看到这种写法要特别警惕：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (...);</span><br></pre></td></tr></table></figure>
+<p>除非你明确要写空循环，否则它大概率是错误。</p>
+<p><strong>常见错误四：循环变量方向写反</strong></p>
+<p>错误示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">10</span>; i--) &#123; printf(”%d\n”, i);&#125;</span><br></pre></td></tr></table></figure>
+<p>i从1开始，每次减1。</p>
+<p>条件是i &lt;= 10。</p>
+<p>i会变成0、-1、-2，永远都小于等于10，所以循环停不下来。</p>
+<p>如果想从1到10，应该递增：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">10</span>; i++) &#123; printf(”%d\n”, i);&#125;</span><br></pre></td></tr></table></figure>
+<p>如果想从10到1，应该这样写：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">10</span>; i &gt;= <span class="number">1</span>; i--) &#123; printf(”%d\n”, i);&#125;</span><br></pre></td></tr></table></figure>
+<p>循环方向要和条件配合。</p>
+<p>起点小于终点，通常递增。<br />
+起点大于终点，通常递减。</p>
+<p>这也是检查for循环时非常重要的一点。</p>
+<p><strong>常见错误五：在循环体里乱改循环变量</strong></p>
+<p>有些代码在for括号里写了i++，又在循环体里额外修改i：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">10</span>; i++) &#123; printf(”%d\n”, i); i++;&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码不会输出1到10，而是输出1、3、5、7、9。</p>
+<p>因为每轮循环中，i被加了两次。</p>
+<p>一次在循环体里：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i++;</span><br></pre></td></tr></table></figure>
+<p>一次在for更新表达式里：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i++</span><br></pre></td></tr></table></figure>
+<p>除非你明确想这样做，否则不建议在循环体里随意修改循环变量。</p>
+<p>循环变量最好由for统一控制。</p>
+<p>如果确实需要复杂变化，要写清楚原因，避免以后自己都看不懂。</p>
+<p><strong>for循环的代码风格建议</strong></p>
+<p>好的for循环应该短、清楚、边界明确。</p>
+<p>推荐写法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123; printf(”%d\n”, i);&#125;</span><br></pre></td></tr></table></figure>
+<p>不推荐把复杂逻辑塞进for括号：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = getStart(); check(i) &amp;&amp; flag != <span class="number">0</span>; i = update(i, flag)) &#123; ...&#125;</span><br></pre></td></tr></table></figure>
+<p>这种写法不是不能用，但对初学者不友好，也不利于维护。</p>
+<p>如果初始化、判断、更新都很复杂，可以拆出来写：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> i = getStart(); <span class="keyword">while</span> (check(i) &amp;&amp; flag != <span class="number">0</span>) &#123; ... i = update(i, flag);&#125;</span><br></pre></td></tr></table></figure>
+<p>代码不是越短越好，而是越清楚越好。</p>
+<p>for循环最适合表达清晰的计数逻辑。如果逻辑已经不是简单计数，while可能更自然。</p>
+<p><strong>一个完整练习：统计成绩</strong></p>
+<p>输入5名学生的成绩，计算总分和平均分。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt; int main(void) &#123; int i; double score; double sum = 0; double average;  for (i = 1; i &lt;= 5; i++) &#123; printf(”请输入第%d名学生的成绩：”, i); scanf(”%lf”, &amp;score);  sum += score; &#125;  average = sum / 5;  printf(”总分：%.2f\n”, sum); printf(”平均分：%.2f\n”, average);  return 0;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这个程序的思路很清楚：</p>
+<p>循环执行5次。<br />
+每次输入一个成绩。<br />
+把成绩累加到sum中。<br />
+循环结束后计算平均分。</p>
+<p>如果想让学生人数由用户输入，可以改成：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt; int main(void) &#123; int n; int i; double score; double sum = 0; double average;  printf(”请输入学生人数：”); scanf(”%d”, &amp;n);  for (i = 1; i &lt;= n; i++) &#123; printf(”请输入第%d名学生的成绩：”, i); scanf(”%lf”, &amp;score);  sum += score; &#125;  if (n &gt; 0) &#123; average = sum / n; printf(”总分：%.2f\n”, sum); printf(”平均分：%.2f\n”, average); &#125; else &#123; printf(”学生人数必须大于0\n”); &#125;  return 0;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这里用if处理了n &lt;= 0的情况。</p>
+<p>否则如果n等于0，计算sum / n就会出现除以0的问题。</p>
+<p>这也说明，循环经常要和条件判断搭配使用。</p>
+<p><strong>另一个练习：寻找最大值</strong></p>
+<p>输入5个整数，找出其中的最大值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt; int main(void) &#123; int i; int num; int max;  printf(”请输入第1个整数：”); scanf(”%d”, &amp;max);  for (i = 2; i &lt;= 5; i++) &#123; printf(”请输入第%d个整数：”, i); scanf(”%d”, &amp;num);  if (num &gt; max) &#123; max = num; &#125; &#125;  printf(”最大值是：%d\n”, max);  return 0;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这段代码有一个细节：先输入第一个数，并把它作为初始最大值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scanf(”%d”, &amp;<span class="built_in">max</span>);</span><br></pre></td></tr></table></figure>
+<p>然后从第二个数开始，每输入一个数，就和max比较。</p>
+<p>如果当前数更大，就更新max。</p>
+<p>这种思路非常常见：</p>
+<p>先假设第一个数据是答案。<br />
+后面每来一个数据，就尝试更新答案。</p>
+<p>找最大值、找最小值、查找目标数据，都可以用这个思路。</p>
+<p><strong>for循环的实用模板</strong></p>
+<p>输出固定范围数字：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123; printf(”%d\n”, i);&#125;</span><br></pre></td></tr></table></figure>
+<p>执行固定次数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123; 要重复执行的代码;&#125;</span><br></pre></td></tr></table></figure>
+<p>累加求和：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> <span class="built_in">sum</span> = <span class="number">0</span>; <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123; <span class="built_in">sum</span> += i;&#125;</span><br></pre></td></tr></table></figure>
+<p>筛选统计：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> count = <span class="number">0</span>; <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123; <span class="keyword">if</span> (满足条件) &#123; count++; &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>遍历数组的常见形式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; length; i++) &#123; 处理第i个元素;&#125;</span><br></pre></td></tr></table></figure>
+<p>嵌套循环模板：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> row = <span class="number">1</span>; row &lt;= 行数; row++) &#123; <span class="keyword">for</span> (<span class="built_in">int</span> col = <span class="number">1</span>; col &lt;= 列数; col++) &#123; 处理当前位置; &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>这些模板会在后面的数组、二维数组、排序和项目章节里反复出现。</p>
+<p>现在把它们理解透，后面的内容会轻松很多。</p>
+<p><strong>写for循环前先想清楚三件事</strong></p>
+<p>第一，循环变量从哪里开始？</p>
+<p>比如从1开始，还是从0开始。</p>
+<p>第二，循环到哪里结束？</p>
+<p>比如包含n，还是不包含n。</p>
+<p>第三，每轮之后如何变化？</p>
+<p>比如i++、i–、i += 2。</p>
+<p>很多for循环错误，都是这三件事没想清楚导致的。</p>
+<p>比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">10</span>; i++)</span><br></pre></td></tr></table></figure>
+<p>适合输出1到10。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br></pre></td></tr></table></figure>
+<p>适合执行10次，或者访问下标0到9。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">10</span>; i &gt;= <span class="number">1</span>; i--)</span><br></pre></td></tr></table></figure>
+<p>适合倒序输出10到1。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">2</span>; i &lt;= <span class="number">100</span>; i += <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<p>适合输出2到100之间的偶数。</p>
+<p>一旦起点、终点和变化规则确定，for循环就很好写。</p>
+<p><strong>本章小结</strong></p>
+<p>for循环是C语言中非常重要的循环结构，特别适合次数明确的重复任务。</p>
+<p>它的基本格式是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (初始化; 条件表达式; 更新表达式) &#123; 循环体;&#125;</span><br></pre></td></tr></table></figure>
+<p>初始化通常只执行一次。</p>
+<p>条件表达式决定循环是否继续。</p>
+<p>更新表达式在每轮循环体执行完之后执行。</p>
+<p>for循环把初始化、条件判断和更新变化集中写在一起，因此非常适合计数循环。</p>
+<p>常见应用包括输出数字、累加求和、计算阶乘、统计数量、遍历数组、打印图形和九九乘法表。</p>
+<p>for和while可以相互转换。一般来说，次数明确时for更清晰，条件驱动时while更自然。</p>
+<p>写for循环时，要特别注意边界条件、更新方向、是否误加分号、是否忘记更新变量，以及是否在循环体里乱改循环变量。</p>
+<p>掌握for循环之后，你就能更自然地写出大量重复处理逻辑。后面学习数组、字符串、排序、查找和项目实战时，for循环会成为最常用的工具之一。</p>
+<p><strong>课后练习</strong></p>
+<p>1.使用for循环输出1到100之间的所有整数。</p>
+<p>2.使用for循环输出100到1之间的所有整数。</p>
+<p>3.使用for循环计算1到100之间所有整数的和。</p>
+<p>4.使用for循环计算1到100之间所有偶数的和。</p>
+<p>5.输入一个正整数n，使用for循环计算1到n的和。</p>
+<p>6.输入一个正整数n，使用for循环计算n的阶乘。</p>
+<p>7.输入10个整数，统计其中正数的个数。</p>
+<p>8.输入5个学生成绩，计算总分和平均分。</p>
+<p>9.使用嵌套for循环打印5行5列星号。</p>
+<p>10.使用嵌套for循环打印九九乘法表。</p>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">rebirth100</div><div class="post-copyright__author_desc">爱我的人和我爱的人，都希望你有更好的明天❤️</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="https://rebirth100.github.io/posts/6ea727c9.html">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('https://rebirth100.github.io/posts/6ea727c9.html')">C语言教程-44.for循环：计数循环的标准写法</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"><div class="reward-link mode"><a class="reward-link-button" href="/wechat"><i class="anzhiyufont anzhiyu-icon-plant-fill"></i>运营模式与责任</a></div></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="https://rebirth100.github.io/posts/6ea727c9.html"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=C语言教程-44.for循环：计数循环的标准写法&amp;url=https://rebirth100.github.io/posts/6ea727c9.html&amp;pic=/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://rebirth100.github.io" target="_blank">Rebirth100</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__category-list"><a class="post-meta__box__categoryes" href="/categories/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/"><span class="categoryes-punctuation"> <i class="anzhiyufont anzhiyu-icon-inbox"></i></span>C语言教程<span class="categoryesPageCount">69</span></a></div><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/%E5%9F%BA%E7%A1%80/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>基础<span class="tagsPageCount">112</span></a><a class="post-meta__box__tags" href="/tags/%E7%BC%96%E7%A8%8B/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>编程<span class="tagsPageCount">109</span></a><a class="post-meta__box__tags" href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>C语言教程<span class="tagsPageCount">69</span></a></div></div><div class="post_share"><div class="social-share" data-image="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/159fc078.html"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/sj%20(5).jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Linux应用开发初识.1.Ubuntu安装及相关命令</div></div></a></div><div class="next-post pull-right"><a href="/posts/63c851c1.html"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">C语言教程-45.循环嵌套：打印图形与二维逻辑</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/posts/d3738343.html" title="C语言教程-105.结构体作为函数参数"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-01</div><div class="title">C语言教程-105.结构体作为函数参数</div></div></a></div><div><a href="/posts/6377da75.html" title="C语言教程-108.typedef用法：给类型起别名"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-04</div><div class="title">C语言教程-108.typedef用法：给类型起别名</div></div></a></div><div><a href="/posts/ff0c18e4.html" title="C语言教程-106.结构体指针：高效传递复杂数据"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-02</div><div class="title">C语言教程-106.结构体指针：高效传递复杂数据</div></div></a></div><div><a href="/posts/e9573a32.html" title="C语言教程-107.嵌套结构体：描述复杂实体"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-03</div><div class="title">C语言教程-107.嵌套结构体：描述复杂实体</div></div></a></div><div><a href="/posts/dc0fea1b.html" title="C语言教程-109.联合体union：共享内存的数据类型"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-05</div><div class="title">C语言教程-109.联合体union：共享内存的数据类型</div></div></a></div><div><a href="/posts/395745d4.html" title="C语言教程-110.枚举enum：让常量更可读"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-10-05</div><div class="title">C语言教程-110.枚举enum：让常量更可读</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/08/24/64e6ce9c507bb.png" alt="status"/></div></div><div class="author-info__description">学习笔记，成长记录</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">rebirth100</h1><div class="author-info__desc">爱我的人和我爱的人，都希望你有更好的明天❤️</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/Rebirth100" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="https://rebirth100.github.io/" target="_blank" title="BiliBili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a></div></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake"></i><span>公告</span></div><div class="announcement_content">我写不出细腻的文字了 换句话 我找不到我自己了</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%8B%A5%E5%8C%97%E8%BE%B0-c%E8%AF%AD%E8%A8%80c%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B044for%E5%BE%AA%E7%8E%AF%E8%AE%A1%E6%95%B0%E5%BE%AA%E7%8E%AF%E7%9A%84%E6%A0%87%E5%87%86%E5%86%99%E6%B3%95"><span class="toc-text">【若北辰-C语言】《C语言教程》044｜for循环：计数循环的标准写法</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/4340bc10.html" title="C语言教程-111.位域：按位存储与实现相关陷阱"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-111.位域：按位存储与实现相关陷阱"/></a><div class="content"><a class="title" href="/posts/4340bc10.html" title="C语言教程-111.位域：按位存储与实现相关陷阱">C语言教程-111.位域：按位存储与实现相关陷阱</a><time datetime="2026-10-05T23:18:00.000Z" title="发表于 2026-10-06 07:18:00">2026-10-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/395745d4.html" title="C语言教程-110.枚举enum：让常量更可读"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-110.枚举enum：让常量更可读"/></a><div class="content"><a class="title" href="/posts/395745d4.html" title="C语言教程-110.枚举enum：让常量更可读">C语言教程-110.枚举enum：让常量更可读</a><time datetime="2026-10-05T01:16:00.000Z" title="发表于 2026-10-05 09:16:00">2026-10-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/dc0fea1b.html" title="C语言教程-109.联合体union：共享内存的数据类型"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-109.联合体union：共享内存的数据类型"/></a><div class="content"><a class="title" href="/posts/dc0fea1b.html" title="C语言教程-109.联合体union：共享内存的数据类型">C语言教程-109.联合体union：共享内存的数据类型</a><time datetime="2026-10-04T23:15:00.000Z" title="发表于 2026-10-05 07:15:00">2026-10-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/6377da75.html" title="C语言教程-108.typedef用法：给类型起别名"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-108.typedef用法：给类型起别名"/></a><div class="content"><a class="title" href="/posts/6377da75.html" title="C语言教程-108.typedef用法：给类型起别名">C语言教程-108.typedef用法：给类型起别名</a><time datetime="2026-10-03T23:14:00.000Z" title="发表于 2026-10-04 07:14:00">2026-10-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/e9573a32.html" title="C语言教程-107.嵌套结构体：描述复杂实体"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/posts/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言教程-107.嵌套结构体：描述复杂实体"/></a><div class="content"><a class="title" href="/posts/e9573a32.html" title="C语言教程-107.嵌套结构体：描述复杂实体">C语言教程-107.嵌套结构体：描述复杂实体</a><time datetime="2026-10-02T23:14:00.000Z" title="发表于 2026-10-03 07:14:00">2026-10-03</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="workboard"><img class="workSituationImg boardsign" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-上班摸鱼中.svg" alt="距离月入25k也就还差一个大佬带我~" title="距离月入25k也就还差一个大佬带我~"/><div id="runtimeTextTip"></div></div></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2026 By <a class="footer-bar-link" href="/" title="rebirth100" target="_blank">rebirth100</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" href="/null"></a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">123</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">11</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" href="https://rebirth100.github.io/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">Github</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/Rebirth100" title="个人主页"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://image.anheyu.com/favicon.ico" alt="个人主页"/><span class="back-menu-item-text">个人主页</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/C/" style="font-size: 0.88rem;">C<sup>13</sup></a><a href="/tags/C/" style="font-size: 0.88rem;">C++<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 0.88rem;">C语言<sup>3</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">C语言教程<sup>69</sup></a><a href="/tags/Linux/" style="font-size: 0.88rem;">Linux<sup>14</sup></a><a href="/tags/MySQL/" style="font-size: 0.88rem;">MySQL<sup>11</sup></a><a href="/tags/Python/" style="font-size: 0.88rem;">Python<sup>3</sup></a><a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 0.88rem;">基础<sup>112</sup></a><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 0.88rem;">数据结构<sup>6</sup></a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" style="font-size: 0.88rem;">系统编程<sup>5</sup></a><a href="/tags/%E7%BC%96%E7%A8%8B/" style="font-size: 0.88rem;">编程<sup>109</sup></a><a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 0.88rem;">网络编程<sup>3</sup></a><a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" style="font-size: 0.88rem;">项目实战<sup>3</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.7"></meting-js></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="anzhiyufont anzhiyu-icon-xmark"></i></button></nav><div class="is-center" id="loading-database"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.cbd.int/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("06/10/2026 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2026 By 安知鱼 V1.7.1",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 rebirth100 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><script async="async">(function () {
+  var grt = new Date("06/10/2026 00:00:00"); //设置网站上线时间
+  var now = new Date();
+  var dnum;
+  var hnum;
+  var mnum;
+  var snum;
+  var nowHour;
+
+  // 计算并更新天数、小时数、分钟数和秒数
+  function updateTime() {
+    now = new Date(); // 更新 now 的值
+    nowHour = now.getHours(); // 更新 nowHour 的值
+    var days = (now - grt) / 1000 / 60 / 60 / 24;
+    dnum = Math.floor(days);
+    var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+      hnum = "0" + hnum;
+    }
+    var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+      mnum = "0" + mnum;
+    }
+    var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+      snum = "0" + snum;
+    }
+  }
+
+  // 更新网页中显示的网站运行时间
+  function updateHtml() {
+    const footer = document.getElementById("footer");
+    if (!footer) return
+    let currentTimeHtml = "";
+    if (nowHour < 18 && nowHour >= 9) {
+      // 如果是上班时间，默认就是"安知鱼-上班摸鱼中.svg"图片，不需要更改
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    } else {
+      // 如果是下班时间，插入"安知鱼-下班啦.svg"图片
+      let img = document.querySelector("#workboard .workSituationImg");
+      if (img != null) {
+        img.src = "https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-下班啦.svg";
+        img.title = "下班了就该开开心心的玩耍，嘿嘿~";
+        img.alt = "下班了就该开开心心的玩耍，嘿嘿~";
+      }
+
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    }
+
+    if (document.getElementById("runtimeTextTip")) {
+      document.getElementById("runtimeTextTip").innerHTML = currentTimeHtml;
+    }
+  }
+
+  setInterval(() => {
+    updateTime();
+    updateHtml();
+  }, 1000);
+})();</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><input type="hidden" name="page-type" id="page-type" value="post"></div><script async data-pjax src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.1/bubble/bubble.js"></script><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://cdn.cbd.int/qrcodejs@1.0.0/qrcode.min.js"></script><script src="/js/anzhiyu/right_click_menu.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
